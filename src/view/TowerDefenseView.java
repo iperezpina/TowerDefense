@@ -1,79 +1,73 @@
 package view;
-
-import controller.TowerDefenseController;
+import controller.Clock;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-
-public class TowerDefenseView extends Application {
-
-	private TowerDefenseController tdc = new TowerDefenseController(this);
-	public static Stage stage;
+import model.Enemy;
+import model.TileMap; 
+         
+public class TowerDefenseView extends Application { 
+	public static Canvas canvas;
 	
+	private int[][] tileMap = 
+		{
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 0},
+			{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}
+		};
+	
+     
+   public static void main(String args[]){ 
+      launch(args); 
+   }
+
 	@Override
 	public void start(Stage mainStage) throws Exception {
-		BorderPane bp = new BorderPane();
-		StackPane sp = new StackPane();
-		//Group group = new Group();
-		//group.getChildren().add(sp);
-		setupStartGame(bp);
-		Scene scene = new Scene(bp, 800,600);
-		mainStage.setScene(scene);
 		mainStage.setTitle("Dragon Force Defense");
-		mainStage.getIcons().add(new Image("Images\\Fireball.png"));
-		stage = mainStage;
-		stage.show();
-	}
-	
-	public void setupStartGame(Pane pane) {
-		ImageView imgView = new ImageView();
-		imgView.setImage(new Image("Images\\startscreen.png"));
+		mainStage.getIcons().add(new Image("Images/Fireball.png"));
 		
-		pane.getChildren().add(imgView);
+		HBox hbox = new HBox();
+		BorderPane bp = new BorderPane();
+		canvas = new Canvas(640, 480);
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		bp.setCenter(canvas);
+		hbox.getChildren().add(canvas);
+		
+		setupMainGrid(hbox, canvas);
+		Scene scene = new Scene(hbox, 640, 480 );
+		mainStage.setScene(scene);
+		mainStage.show();
+	} 
 	
-		FlowPane fp = new FlowPane();
-		makeButton(fp, "Start Game", tdc.startGame);
-		makeButton(fp, "Options", tdc.options);
-		makeButton(fp, "Quit", tdc.quit);
+	public void setupMainGrid(HBox hbox, Canvas canvas) {
 
-		fp.setHgap(10);
-		fp.setVgap(50);
-		fp.setPadding(new Insets(200,10,10,800));
-		fp.setAlignment(Pos.BASELINE_CENTER);;
 		
-		pane.getChildren().add(fp);
+		TileMap tm = new TileMap(tileMap);
+		Enemy e = new Enemy(new Image("Images/enemy.png"), tm.GetTile(0, 1), 32, 32, 2);
+				
 		
-	}
-	
-	
-	
-	public void makeButton(GridPane gp, int x, int y, String info) {
-		Button tempButton = new Button(info);
-		gp.add(tempButton, x, y);
-	}
-	
-	public void makeButton(FlowPane fp, String info, EventHandler<ActionEvent> eventHandler) {
-		Button tempButton = new Button(info);
-		tempButton.setMinSize(200, 50);
-		tempButton.setStyle("-fx-background-color: #7CB558; -fx-font-size: 2em");
 		
-		if (eventHandler != null)
-			tempButton.addEventHandler(ActionEvent.ACTION, eventHandler);
-		
-		fp.getChildren().add(tempButton);
-	}
+		tm.Draw();
+		e.Draw();
 
-}
+		
+	}
+	
+} 
