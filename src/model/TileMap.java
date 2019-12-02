@@ -3,9 +3,17 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.util.Duration;
+
 public class TileMap {
 
 	private List<List<Tile>> tileGrid;
+	private static Timeline tl;
 	
 	public TileMap() {
 		this.tileGrid = new ArrayList<List<Tile>>();
@@ -65,5 +73,22 @@ public class TileMap {
 				tile.Draw();
 			}
 		}
+	}
+	
+	public void update() {
+		tl = new Timeline(new KeyFrame(Duration.millis(100), new AnimationHandler() ));
+		tl.setCycleCount(Animation.INDEFINITE);
+		tl.play();
+	}
+	
+	private class AnimationHandler implements EventHandler<ActionEvent>{
+
+		int tick = 0;
+		@Override
+		public void handle(ActionEvent arg0) {
+			tick++;
+			Draw();
+		}
+		
 	}
 }

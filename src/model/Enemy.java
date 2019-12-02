@@ -79,20 +79,28 @@ public class Enemy {
 		getPosX();
 		getPosY();
 		//System.out.println(startLocation.getType());
+		boolean canGoX = x % 32 == 0;
+		boolean canGoY = y % 32 == 0;
 		
-		if (tm.GetTile(posX, posY - 1).getType() == startLocation.getType() && !md.state.equals("down")) {
+		
+		
+		//Goes up
+		if (tm.GetTile(posX, posY - 1).getType() == startLocation.getType() && !md.state.equals("down") && canGoX && canGoY) {
 			//System.out.println("go up");
 			md = MoveDir.UP;
 		}
-		else if (tm.GetTile(posX, posY + 1).getType() == startLocation.getType() && !md.state.equals("up")) {
+		//Goes down
+		else if (tm.GetTile(posX, posY + 1).getType() == startLocation.getType() && !md.state.equals("up")  && canGoX && canGoY ) {
 			//System.out.println("go down");
 			md = MoveDir.DOWN;
 		}
-		else if (tm.GetTile(posX + 1, posY).getType() == startLocation.getType() && !md.state.equals("left")) {
+		//Goes right
+		else if (tm.GetTile(posX + 1, posY).getType() == startLocation.getType() && !md.state.equals("left")  && canGoX && canGoY) {
 			//System.out.println("go right");
 			md = MoveDir.RIGHT;
 		}
-		else if (tm.GetTile(posX - 1, posY).getType() == startLocation.getType() && !md.state.equals("right")) {
+		//Goes left
+		else if (tm.GetTile(posX - 1, posY).getType() == startLocation.getType() && !md.state.equals("right") && canGoX && canGoY) {
 			//System.out.println("go left");
 			md = MoveDir.LEFT;
 		}
@@ -101,7 +109,7 @@ public class Enemy {
 	}
 	
 	public void Draw() {
-		tm.Draw();
+		//tm.Draw();
 		Drawer.DrawImage(img, x, y, width, height);
 		
 	}

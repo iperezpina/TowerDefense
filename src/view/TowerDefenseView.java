@@ -60,9 +60,11 @@ public class TowerDefenseView extends Application {
 
 		TileMap tm = new TileMap(tileMap);
 		Enemy e = new Enemy(new Image("Images/enemy.png"), tm.GetTile(0, 1), 32, 32, 4, tm);
+		Enemy e2 = new Enemy(new Image("Images/enemy2.png"), tm.GetTile(0, 1), 32, 32, 2, tm);
 
-		tm.Draw();
+		tm.update();
 		e.update();
+		e2.update();
 		
 
 
