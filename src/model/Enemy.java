@@ -63,7 +63,7 @@ public class Enemy {
 		public void handle(ActionEvent arg0) {
 			tick++;
 			Draw();
-			System.out.printf("Current x: %d\tCurrent y: %d\nCurrent posX: %d\tCurrent posY: %d\n", x, y, getPosX(), getPosY());
+			//System.out.printf("Current x: %d\tCurrent y: %d\nCurrent posX: %d\tCurrent posY: %d\n", x, y, getPosX(), getPosY());
 			moveTo();
 			x += (int) md.dx * speed;
 			y += (int) md.dy * speed;
