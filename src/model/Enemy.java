@@ -12,8 +12,8 @@ import javafx.util.Duration;
 
 public class Enemy {
 
-	private static int x;
-	private static int y;
+	private int x;
+	private int y;
 	private int width;
 	private int height;
 	private int health;
@@ -22,17 +22,18 @@ public class Enemy {
 	private Tile startLocation;
 	private boolean first = true;
 	private TileMap tm;
-	private static Timeline tl;
-	private static MoveDir md;
+	private Timeline tl;
+	private MoveDir md;
+	private boolean isExited = false;
 	
 	private static int posX, posY;
 	
-	public static int getPosX() {
+	public int getPosX() {
 		posX =(int) Math.floor(x / 32);
 		return posX;
 	}
 
-	public static int getPosY() {
+	public int getPosY() {
 		posY = (int) Math.floor(y / 32);
 		return posY;
 	}
@@ -61,16 +62,18 @@ public class Enemy {
 		int tick = 0;
 		@Override
 		public void handle(ActionEvent arg0) {
+			if (isExited) {
+				tl.stop();
+			}
 			tick++;
 			Draw();
-			//System.out.printf("Current x: %d\tCurrent y: %d\nCurrent posX: %d\tCurrent posY: %d\n", x, y, getPosX(), getPosY());
+			System.out.printf("Current x: %d\tCurrent y: %d\nCurrent posX: %d\tCurrent posY: %d\n", x, y, getPosX(), getPosY());
 			moveTo();
 			x += (int) md.dx * speed;
 			y += (int) md.dy * speed;
 			
 			
-			if (tick >= 1000)
-				tl.stop();
+			
 		}
 		
 	}
@@ -103,6 +106,11 @@ public class Enemy {
 		else if (tm.GetTile(posX - 1, posY).getType() == startLocation.getType() && !md.state.equals("right") && canGoX && canGoY) {
 			//System.out.println("go left");
 			md = MoveDir.LEFT;
+		}
+		else if (tm.GetTile(posX, posY).getType() == TileType.DEBUG && canGoX && canGoY) {
+			//System.out.println("go left");
+			isExited = true;
+			
 		}
 		
 		

@@ -1,15 +1,15 @@
 package view;
 
-import controller.Clock;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Enemy;
+import model.EnemySpawner;
 import model.TileMap;
 
 public class TowerDefenseView extends Application {
@@ -59,12 +59,14 @@ public class TowerDefenseView extends Application {
 	public void setupMainGrid(HBox hbox, Canvas canvas) {
 
 		TileMap tm = new TileMap(tileMap);
-		//Enemy e = new Enemy(new Image("Images/enemy.png"), tm.GetTile(0, 1), 32, 32, 8, tm);
-		Enemy e2 = new Enemy(new Image("Images/enemy2.png"), tm.GetTile(0, 1), 32, 32, 4, tm);
+		Enemy e = new Enemy(new Image("Images/enemy.png"), tm.GetTile(0, 1), 32, 32, 8, tm);
+		EnemySpawner es = new EnemySpawner(5, 3f, e);
+		//Enemy e2 = new Enemy(new Image("Images/enemy2.png"), tm.GetTile(0, 1), 32, 32, 4, tm);
 
 		tm.update();
+		es.update();
 		//e.update();
-		e2.update();
+		//e2.update();
 		
 
 
