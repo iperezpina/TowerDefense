@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 public enum TileType {
 
-	Grass("grass32", true), Dirt("dirt32", false), Water("water32", false); 
+	Grass("grass32", true), Dirt("dirt32", false), Water("water32", false), DEBUG("water32", false);
 	
 	Image img;
 	boolean canPlace;

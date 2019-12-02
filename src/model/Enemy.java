@@ -1,38 +1,109 @@
 package model;
 
+
 import controller.Drawer;
-import controller.Clock;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.util.Duration;
 
 public class Enemy {
 
-	private int x, y, width, height, health;
+	private static int x;
+	private static int y;
+	private int width;
+	private int height;
+	private int health;
 	private float speed;
 	private Image img;
 	private Tile startLocation;
 	private boolean first = true;
+	private TileMap tm;
+	private static Timeline tl;
+	private static MoveDir md;
 	
-	public Enemy(Image img, Tile start, int width, int height, float speed) {
+	private static int posX, posY;
+	
+	public static int getPosX() {
+		posX =(int) Math.floor(x / 32);
+		return posX;
+	}
+
+	public static int getPosY() {
+		posY = (int) Math.floor(y / 32);
+		return posY;
+	}
+
+	public Enemy(Image img, Tile start, int width, int height, float speed, TileMap tm) {
 		this.img = img;
+		this.startLocation = start;
 		this.x = start.getX();
 		this.y = start.getY();
 		this.width = width;
 		this.height = height;
 		this.speed = speed;
-		
+		this.tm = tm;
+		this.md = MoveDir.RIGHT;
 	}
 	
 	public void update() {
-		if (first)
-			first = false;
-		else {
-			x += Clock.Delta() * speed;
-			System.out.println("Moving by: " + x);
+		tl = new Timeline(new KeyFrame(Duration.millis(100), new AnimationHandler() ));
+		tl.setCycleCount(Animation.INDEFINITE);
+		tl.play();
+		
+	}
+	
+	private class AnimationHandler implements EventHandler<ActionEvent>{
+
+		int tick = 0;
+		@Override
+		public void handle(ActionEvent arg0) {
+			tick++;
+			Draw();
+			System.out.printf("Current x: %d\tCurrent y: %d\nCurrent posX: %d\tCurrent posY: %d\n", x, y, getPosX(), getPosY());
+			moveTo();
+			x += (int) md.dx * speed;
+			y += (int) md.dy * speed;
+			
+			
+			if (tick >= 1000)
+				tl.stop();
 		}
+		
+	}
+	
+	public void moveTo() {
+		getPosX();
+		getPosY();
+		//System.out.println(startLocation.getType());
+		
+		if (tm.GetTile(posX, posY - 1).getType() == startLocation.getType() && !md.state.equals("down")) {
+			//System.out.println("go up");
+			md = MoveDir.UP;
+		}
+		else if (tm.GetTile(posX, posY + 1).getType() == startLocation.getType() && !md.state.equals("up")) {
+			//System.out.println("go down");
+			md = MoveDir.DOWN;
+		}
+		else if (tm.GetTile(posX + 1, posY).getType() == startLocation.getType() && !md.state.equals("left")) {
+			//System.out.println("go right");
+			md = MoveDir.RIGHT;
+		}
+		else if (tm.GetTile(posX - 1, posY).getType() == startLocation.getType() && !md.state.equals("right")) {
+			//System.out.println("go left");
+			md = MoveDir.LEFT;
+		}
+		
+		
 	}
 	
 	public void Draw() {
+		tm.Draw();
 		Drawer.DrawImage(img, x, y, width, height);
+		
 	}
 
 	public int getX() {

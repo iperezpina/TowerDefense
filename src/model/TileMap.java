@@ -53,7 +53,10 @@ public class TileMap {
 	}
 
 	public Tile GetTile(int x, int y) {
-		return tileGrid.get(x).get(y);
+		if (x < 0 || y < 0 || x >= 20 || y >= 15) 
+			return new Tile(0, 0, 0, 0, TileType.DEBUG);
+		else
+			return tileGrid.get(x).get(y);
 	}
 	
 	public void Draw() {
