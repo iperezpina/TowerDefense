@@ -1,13 +1,29 @@
 package model;
 
+/**
+ * 
+ * @author Alberto Villareal, Laura [Last Name], Ivan [Last Name], and Marissa
+ *         [Last Name]
+ * 
+ *         Summary: [Summary goes here]
+ *
+ */
 public enum MoveDir {
 
+	// The four basic directions
 	UP("up"), DOWN("down"), RIGHT("right"), LEFT("left");
-	
+
+	// The variables for this enum
 	int dx, dy;
 	String state;
 
-	MoveDir(String state){
+	/**
+	 * The constructor for this enum, takes in a string specifying one of the four
+	 * states
+	 * 
+	 * @param state
+	 */
+	MoveDir(String state) {
 		if (state.toLowerCase().equals("up")) {
 			this.dx = 0;
 			this.dy = -1;
@@ -28,6 +44,6 @@ public enum MoveDir {
 			this.dy = 0;
 			this.state = "left";
 		}
-		
+
 	}
 }
