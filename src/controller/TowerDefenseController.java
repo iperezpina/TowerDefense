@@ -57,7 +57,7 @@ public class TowerDefenseController {
 	public TowerDefenseView getTdv() {
 		return tdv;
 	}
-
+ 
 	public void setTdv(TowerDefenseView tdv) {
 		this.tdv = tdv;
 	}
