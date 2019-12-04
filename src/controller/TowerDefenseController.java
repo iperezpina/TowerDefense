@@ -31,25 +31,24 @@ public class TowerDefenseController {
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() / 32;
 			int y = (int) event.getY() / 32;
-			//System.out.print("Placing at X: " + x);
-			//System.out.print("\tY: " + y + "\n");
+			// System.out.print("Placing at X: " + x);
+			// System.out.print("\tY: " + y + "\n");
 
-			//Only places tower on placeable tiles
+			// Only places tower on placeable tiles
 			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
-				//Tower tempTower = new Tower(towerImage, x * 32, y * 32, 32, 32);
-				DogTower dog = new DogTower(towerImage, x* 32, y *32, 32, 32);
+				// Tower tempTower = new Tower(towerImage, x * 32, y * 32, 32, 32);
+				DogTower dog = new DogTower(towerImage, x * 32, y * 32, 32, 32);
 				tdv.getTowers().addTower2(dog, x, y);
-				
+
 			}
 		}
 	};
-	
+
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent event) {
 			System.out.println("You are choosing a tower!");
-
 
 		}
 	};
@@ -57,7 +56,7 @@ public class TowerDefenseController {
 	public TowerDefenseView getTdv() {
 		return tdv;
 	}
- 
+
 	public void setTdv(TowerDefenseView tdv) {
 		this.tdv = tdv;
 	}
