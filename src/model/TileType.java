@@ -13,6 +13,14 @@ public enum TileType {
 		img = new Image("Images/" + imgName +".png");
 		this.canPlace = canPlace;
 	}
+
+	public boolean isCanPlace() {
+		return canPlace;
+	}
+
+	public void setCanPlace(boolean canPlace) {
+		this.canPlace = canPlace;
+	}
 	
 	
 }
