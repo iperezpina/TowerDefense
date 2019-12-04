@@ -40,7 +40,7 @@ public class Tower {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		update();
+		//update();
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class Tower {
 	 * of the tower
 	 */
 	public void update() {
-		tl = new Timeline(new KeyFrame(Duration.millis(10), new AnimationHandler()));
+		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 	}
@@ -71,5 +71,21 @@ public class Tower {
 	 */
 	public void Draw() {
 		Drawer.DrawImage(img, x, y, width, height);
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 }

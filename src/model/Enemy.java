@@ -64,7 +64,7 @@ public class Enemy {
 	 * Creates an animation of the enemy that moves it along the path
 	 */
 	public void update() {
-		tl = new Timeline(new KeyFrame(Duration.millis(100), new AnimationHandler()));
+		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 

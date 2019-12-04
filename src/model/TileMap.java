@@ -114,7 +114,7 @@ public class TileMap {
 	 * before any other update function in the view.
 	 */
 	public void update() {
-		tl = new Timeline(new KeyFrame(Duration.millis(100), new AnimationHandler()));
+		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 	}
