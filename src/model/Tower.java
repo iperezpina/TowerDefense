@@ -48,7 +48,7 @@ public class Tower {
 	 * of the tower
 	 */
 	public void update() {
-		tl = new Timeline(new KeyFrame(Duration.millis(10), new AnimationHandler()));
+		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 	}
