@@ -9,7 +9,7 @@ import view.TowerDefenseView;
 
 /**
  * 
- * @author Alberto Villareal, Laura [Last Name], Ivan [Last Name], and Marissa
+ * @author Alberto Villareal, Laura [Last Name], Ivan [Last Name], and Marisa
  *         [Last Name]
  * 
  *         Summary: [Summary goes here]
