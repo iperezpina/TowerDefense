@@ -128,7 +128,7 @@ public class TowerDefenseView extends Application {
 		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
 		TileMap tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
-		Enemy e = new Enemy(new Image("Images/enemyFull.png"), tm.GetTile(0, 1), 32, 64, 8, tm);
+		Enemy e = new Enemy(new Image("Images/enemyFull.png"), tm.GetTile(0, 1), 32, 32, 8, tm);
 		//Enemy e = new Enemy(new Image("Images/enemy.png"), tm.GetTile(0, 1), 32, 32, 8, tm);
 
 		EnemySpawner es = new EnemySpawner(5, 5f, e);
