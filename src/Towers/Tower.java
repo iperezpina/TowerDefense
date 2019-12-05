@@ -1,5 +1,7 @@
 package Towers;
 
+import java.util.concurrent.TimeUnit;
+
 import controller.Drawer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -11,6 +13,7 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import model.Enemy;
 import model.EnemyLocator;
+import model.TimerAll;
 
 /**
  * 
@@ -27,6 +30,10 @@ public class Tower {
 	private int x, y, width, height;
 	private Timeline tl;
 	private int range = 100;
+	
+	private int lastTimeAttacked = 0;
+	private int currentTime = 0;
+	private int attackRate = 3;
 
 	/**
 	 * The basic constructor for this class, takes in an img, x and y position,
@@ -66,13 +73,26 @@ public class Tower {
 		@Override
 		public void handle(ActionEvent arg0) {
 			Draw();
-			drawRange();
+			
+			currentTime = TimerAll.getTimeInSeconds();
+			if (Math.abs(currentTime - lastTimeAttacked) >= attackRate) {
+				lastTimeAttacked = currentTime;
+				
+				drawRange();
+			}
+			//if (timer.getCheck()) {
+			//	drawRange();
+			//}
 			
 		}
 
 	}
 	
+	//private TimerAll timer = new TimerAll();
+	
 	public void drawRange() {
+		
+		
 		for(Enemy e: EnemyLocator.getEnemies()) {
 			int x2 = e.getX();
 			int y2 = e.getY();
@@ -80,6 +100,7 @@ public class Tower {
 			
 			if (distance < range) {
 				//minus hp
+				
 				System.out.println("enemy entered range");
 				
 			}
