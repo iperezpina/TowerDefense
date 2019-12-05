@@ -24,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Enemy;
+import model.EnemyLocator;
 import model.EnemySpawner;
 import model.TileMap;
 import model.TowerHolder;
@@ -124,13 +125,12 @@ public class TowerDefenseView extends Application {
 	 * @param canvas
 	 */
 	public void setupMainGrid(HBox hbox, Canvas canvas) {
-
 		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
 		tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
 		Enemy e = new Enemy(new Image("Images/enemy.png"), tm.GetTile(0, 1), 32, 32, 8, tm);
 		EnemySpawner es = new EnemySpawner(5, 5f, e);
-
+		
 		tm.update();
 		towers.update();
 		es.update();
