@@ -35,6 +35,7 @@ public class Enemy {
 	private MoveDir md;
 	private boolean isExited = false, isDead = false;
 	private int posX, posY;
+	private String imgPath;
 
 	/**
 	 * The constructor method of the enemy class, takes in an img, a tile where the
@@ -48,8 +49,11 @@ public class Enemy {
 	 * @param speed
 	 * @param tm
 	 */
-	public Enemy(Image img, Tile start, int width, int height, float speed, TileMap tm) {
-		this.img = img;
+	public Enemy(String imgPath, Tile start, int width, int height, float speed, TileMap tm) {
+		if (img == null) {
+			img = new Image(imgPath);
+		}
+		this.imgPath = imgPath;
 		this.startLocation = start;
 		this.x = start.getX();
 		this.y = start.getY();
@@ -64,7 +68,7 @@ public class Enemy {
 	 * Creates an animation of the enemy that moves it along the path
 	 */
 	public void update() {
-		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
+		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 
@@ -238,5 +242,13 @@ public class Enemy {
 
 	public void setDead(boolean isDead) {
 		this.isDead = isDead;
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 }

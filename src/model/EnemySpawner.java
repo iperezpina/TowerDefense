@@ -19,6 +19,7 @@ public class EnemySpawner {
 	private float intervalsBetween;
 	private Enemy[] enemies;
 	private Enemy enemyToSpawn;
+	private boolean isDone;
 
 	/**
 	 * A constructor for this class that takes in how many to spawn for this
@@ -34,6 +35,7 @@ public class EnemySpawner {
 		this.enemyToSpawn = e;
 		this.enemies = new Enemy[amtToSpawn];
 		this.index = 0;
+		this.isDone = false;
 	}
 
 	// A timer that will be used to spawn an enemy every so often
@@ -54,6 +56,7 @@ public class EnemySpawner {
 			}
 			if (counter == amtToSpawn) {
 				System.out.println("All enemies in EnemySpawner are dead");
+				isDone = true;
 			}
 		}
 
@@ -80,7 +83,7 @@ public class EnemySpawner {
 	 */
 	public void spawnEnemy() {
 		if (index < amtToSpawn) {
-			enemies[index] = new Enemy(enemyToSpawn.getImg(), enemyToSpawn.getStartLocation(), enemyToSpawn.getWidth(),
+			enemies[index] = new Enemy(enemyToSpawn.getImgPath(), enemyToSpawn.getStartLocation(), enemyToSpawn.getWidth(),
 					enemyToSpawn.getHeight(), enemyToSpawn.getSpeed(), enemyToSpawn.getTm());
 			enemies[index].update();
 			index++;
@@ -107,6 +110,14 @@ public class EnemySpawner {
 
 		return result;
 
+	}
+
+	public boolean isDone() {
+		return isDone;
+	}
+
+	public void setDone(boolean isDone) {
+		this.isDone = isDone;
 	}
 
 }

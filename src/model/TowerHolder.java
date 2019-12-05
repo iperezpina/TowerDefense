@@ -16,30 +16,27 @@ import javafx.util.Duration;
 public class TowerHolder {
 
 	private TileMap map;
-	private List<Tower> towers;
+	//private List<Tower> towers;
 	private HashMap<String, Tower> towers2;
 	private Timeline tl;
 	
 	public TowerHolder(TileMap map) {
 		this.map = map;
-		this.towers = new ArrayList<Tower>();
+		//this.towers = new ArrayList<Tower>();
 		this.towers2 = new HashMap<String, Tower>();
 	}
 	
-	public void addTower(Tower newTower) {
-		towers.add(newTower);
-		System.out.println("Added a tower!");
-	}
+//	public void addTower(Tower newTower) {
+//		towers.add(newTower);
+//		System.out.println("Added a tower!");
+//	}
 	
 	public void addTower2(Tower newTower, int x, int y) {
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
 			System.out.println("A tower already exists there!");
 			Tower temp = towers2.get(newKey);
-			if (temp instanceof DogTower) {
-				DogTower dogTemp = (DogTower)temp;
-				
-			}
+			temp.DrawRange();
 		}
 		else {
 			towers2.put(newKey, newTower);
@@ -47,7 +44,7 @@ public class TowerHolder {
 	}
 	
 	public void update() {
-		tl = new Timeline(new KeyFrame(Duration.millis(10), new AnimationHandler()));
+		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 	}

@@ -2,9 +2,7 @@ package controller;
 
 import Towers.DogTower;
 import javafx.event.EventHandler;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import model.Tower;
 import view.TowerDefenseView;
 
 /**
@@ -18,8 +16,7 @@ import view.TowerDefenseView;
 public class TowerDefenseController {
 
 	// Variables for this class
-	private Image towerImage = new Image("Images/temptower.png");
-	private TowerDefenseView tdv;
+	TowerDefenseView tdv;
 
 	/**
 	 * Add the onclick for the canvas to spawn a tower, NOTE: this is a test will be
@@ -37,7 +34,7 @@ public class TowerDefenseController {
 			//Only places tower on placeable tiles
 			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
 				//Tower tempTower = new Tower(towerImage, x * 32, y * 32, 32, 32);
-				DogTower dog = new DogTower(towerImage, x* 32, y *32, 32, 32);
+				DogTower dog = new DogTower(ResourceManager.dogTowerImg, x* 32, y *32, 32, 32);
 				tdv.getTowers().addTower2(dog, x, y);
 				
 			}
