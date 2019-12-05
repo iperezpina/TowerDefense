@@ -40,6 +40,8 @@ public class TowerDefenseView extends Application {
 	public static Canvas canvas;
 	public static TowerDefenseController tdc = new TowerDefenseController();
 	private static TowerHolder towers;
+	//private Image towerImg;
+	//private ImageView img;
 
 	// Essentially the map of the level
 	private int[][] tileMap = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -124,7 +126,7 @@ public class TowerDefenseView extends Application {
 	 * @param canvas
 	 */
 	public void setupMainGrid(HBox hbox, Canvas canvas) {
-
+		//canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.placeTower);
 		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
 		TileMap tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
@@ -153,6 +155,7 @@ public class TowerDefenseView extends Application {
 			Image towerImg = new Image("Images/tower" + (i+1) + ".png");
 			ImageView img = new ImageView(towerImg);
 			img.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.chooseTower);
+			
 			if (i % 2 == 0) {
 				gp.add(img, 0, row);
 			}
@@ -179,6 +182,7 @@ public class TowerDefenseView extends Application {
 	public static void setTowers(TowerHolder towers) {
 		TowerDefenseView.towers = towers;
 	}
+	
 	
 	
 
