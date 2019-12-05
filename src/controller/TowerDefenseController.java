@@ -1,10 +1,11 @@
 package controller;
 
-import Towers.DogTower;
+
+import Towers.BasicTower;
+import Towers.Tower;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import model.Tower;
 import view.TowerDefenseView;
 
 /**
@@ -37,7 +38,7 @@ public class TowerDefenseController {
 			//Only places tower on placeable tiles
 			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
 				//Tower tempTower = new Tower(towerImage, x * 32, y * 32, 32, 32);
-				DogTower dog = new DogTower(towerImage, x* 32, y *32, 32, 32);
+				BasicTower dog = new BasicTower(towerImage, x* 32, y *32, 32, 32);
 				tdv.getTowers().addTower2(dog, x, y);
 				
 			}

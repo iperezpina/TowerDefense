@@ -1,4 +1,4 @@
-package model;
+package Towers;
 
 import controller.Drawer;
 import javafx.animation.Animation;
@@ -7,7 +7,10 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+import model.Enemy;
+import model.EnemyLocator;
 
 /**
  * 
@@ -23,6 +26,7 @@ public class Tower {
 	private Image img;
 	private int x, y, width, height;
 	private Timeline tl;
+	private int range = 100;
 
 	/**
 	 * The basic constructor for this class, takes in an img, x and y position,
@@ -62,9 +66,29 @@ public class Tower {
 		@Override
 		public void handle(ActionEvent arg0) {
 			Draw();
+			drawRange();
+			
 		}
 
 	}
+	
+	public void drawRange() {
+		for(Enemy e: EnemyLocator.getEnemies()) {
+			int x2 = e.getX();
+			int y2 = e.getY();
+			double distance = Math.hypot(getX()-x2, getY()-y2);
+			
+			if (distance < range) {
+				//minus hp
+				System.out.println("enemy entered range");
+				
+			}
+			
+			
+		}
+	}
+	
+	
 
 	/**
 	 * Draws the tower image

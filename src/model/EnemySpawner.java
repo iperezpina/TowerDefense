@@ -82,6 +82,7 @@ public class EnemySpawner {
 		if (index < amtToSpawn) {
 			enemies[index] = new Enemy(enemyToSpawn.getImg(), enemyToSpawn.getStartLocation(), enemyToSpawn.getWidth(),
 					enemyToSpawn.getHeight(), enemyToSpawn.getSpeed(), enemyToSpawn.getTm());
+			EnemyLocator.addEnemy(enemies[index]);
 			enemies[index].update();
 			index++;
 		}
@@ -94,7 +95,7 @@ public class EnemySpawner {
 	 * 
 	 * @return
 	 */
-	private String printSpawner() {
+	public String printSpawner() {
 		String result = "[";
 		for (Enemy e : enemies) {
 			if (e == null) {
@@ -107,6 +108,11 @@ public class EnemySpawner {
 
 		return result;
 
+	}
+	
+	public Enemy[] getEnemys() {
+		return enemies;
+		
 	}
 
 }
