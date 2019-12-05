@@ -53,16 +53,16 @@ public class TowerDefenseController {
 		@Override
 		public void handle(MouseEvent event) {
 			System.out.println("You are choosing a tower!");
-			/*currTowerImgView = (ImageView) event.getSource();
+			currTowerImgView = (ImageView) event.getSource();
 			currTowerImg = (Image) currTowerImgView.getImage();
-			System.out.println("You got a tower!" + currTowerImg);*/
+			System.out.println("You got a tower!" + currTowerImg);
 			
 
 
 		}
 	};
 	
-	/*public EventHandler<MouseEvent> placeTower = new EventHandler<MouseEvent>() {
+	public EventHandler<MouseEvent> placeTower = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent event) {
@@ -75,12 +75,12 @@ public class TowerDefenseController {
 				currTower = new Tower(currTowerImg, x*32, y*32, 32, 32);
 				System.out.println("Can create currTower in place");
 				tdv.getTowers().addTower2(currTower, x, y);
-				tdv.getTm().GetTile(x, y).getType().setCanPlace(false);
+				//tdv.getTm().GetTile(x, y).getType().setCanPlace(false);
 				
 			}
 		}
 		
-	};*/
+	};
 
 	public TowerDefenseView getTdv() {
 		return tdv;
