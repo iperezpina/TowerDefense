@@ -1,3 +1,4 @@
+
 package view;
 
 import java.io.File;
@@ -132,7 +133,7 @@ public class TowerDefenseView extends Application {
 		//canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
 		tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
-		Enemy e = new Enemy(new Image("Images/enemyFull.png"), tm.GetTile(0, 1), 32, 32, 8, tm);
+		Enemy e = new Enemy(new Image("Images/ghost.png"), tm.GetTile(0, 1), 32, 32, 8, tm);
 		
 
 		EnemySpawner es = new EnemySpawner(5, 5f, e);
@@ -188,3 +189,4 @@ public class TowerDefenseView extends Application {
 	
 
 }
+
