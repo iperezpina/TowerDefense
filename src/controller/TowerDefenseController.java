@@ -58,8 +58,6 @@ public class TowerDefenseController {
 			currTowerImg = (Image) currTowerImgView.getImage();
 			System.out.println("You got a tower!" + currTowerImg);
 			
-
-
 		}
 	};
 	

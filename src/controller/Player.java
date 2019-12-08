@@ -48,13 +48,14 @@ public class Player {
 	
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
 
-		@SuppressWarnings("deprecation")
+		
 		@Override
 		public void handle(MouseEvent event) {
 			System.out.println("You are choosing a tower!");
 			currTowerImgView = (ImageView) event.getSource();
 			currTowerImg = (Image) currTowerImgView.getImage();
 			System.out.println("You got a tower!" + currTowerImg);
+			
 			
 			
 		}

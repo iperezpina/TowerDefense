@@ -4,6 +4,7 @@ package view;
 import java.io.File;
 import java.util.ArrayList;
 
+import Towers.Tower1;
 import controller.Player;
 import controller.TowerDefenseController;
 import javafx.application.Application;
@@ -45,7 +46,7 @@ public class TowerDefenseView extends Application {
 	public static TowerDefenseController tdc = new TowerDefenseController();
 	private static TowerHolder towers;
 	private static Player currPlayer = new Player();
-	private String[] imgURL = new String[8];
+	
 	
 
 	// Essentially the map of the level
@@ -159,12 +160,11 @@ public class TowerDefenseView extends Application {
 		gp.setVgap(50);
 		int row = 0;
 		for(int i = 0; i < 8; i++) {
-			//imgURL.add("tower" + (i+1) + ".png");
-			imgURL[i] = "tower" + (i+1) + ".png";
 			
-			Image towerImg = new Image("tower" + (i+1) + ".png");
+			Image towerImg = new Image("Images/tower" + (i+1) + ".png");
 			ImageView img = new ImageView(towerImg);
 			img.addEventHandler(MouseEvent.MOUSE_CLICKED, currPlayer.chooseTower);
+			
 			if (i % 2 == 0) {
 				gp.add(img, 0, row);
 			}
@@ -191,6 +191,7 @@ public class TowerDefenseView extends Application {
 	public static void setTowers(TowerHolder towers) {
 		TowerDefenseView.towers = towers;
 	}
+
 	
 	
 	
