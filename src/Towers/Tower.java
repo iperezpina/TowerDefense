@@ -28,11 +28,14 @@ public class Tower {
 	// Variables for this class
 	private Image img;
 	private int x, y, width, height;
-	private int range = 100;
-	
-	private int currentTime = 0;
-	private int lastTimeAttacked = 0;
-	private int attackRate = 3;
+
+	protected int range = 100;
+	int currentTime = 0;
+	int lastTimeAttacked = 0;
+	int attackRate = 3;
+	private int towerCost = 0, towerSpent = 0;
+	private int damage = 0, towersDestroyed = 0;
+	private String towerName = "";
 
 	/**
 	 * The basic constructor for this class, takes in an img, x and y position,
@@ -50,8 +53,10 @@ public class Tower {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		//update();
+
 	}
+
+
 
 
 
@@ -77,4 +82,5 @@ public class Tower {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
 }
