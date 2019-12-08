@@ -28,10 +28,6 @@ public class TowerHolder {
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
 			System.out.println("A tower already exists there!");
-			Tower temp = towers2.get(newKey);
-			if (temp instanceof BasicTower) {
-				BasicTower dogTemp = (BasicTower)temp;
-			}
 		}
 		else {
 			towers2.put(newKey, newTower);
@@ -50,8 +46,11 @@ public class TowerHolder {
 		public void handle(ActionEvent arg0) {
 			Collection<Tower> temp =  towers2.values();
 			for (Tower t: temp) {
-				BasicTower newtemp = (BasicTower) t;
-				newtemp.update();
+				if (t instanceof BasicTower) {
+					BasicTower newtemp = (BasicTower) t;
+					newtemp.update();
+				}
+				
 			}
 		}
 
