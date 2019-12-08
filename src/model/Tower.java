@@ -1,6 +1,7 @@
 package model;
 
 import controller.Drawer;
+import controller.ResourceManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -35,7 +36,9 @@ public class Tower {
 	 * @param height
 	 */
 	public Tower(Image img, int x, int y, int width, int height) {
-		this.img = img;
+		if (this.img == null) {
+			this.img = img;
+		}
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -48,7 +51,7 @@ public class Tower {
 	 * of the tower
 	 */
 	public void update() {
-		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
+		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 	}
@@ -71,6 +74,10 @@ public class Tower {
 	 */
 	public void Draw() {
 		Drawer.DrawImage(img, x, y, width, height);
+	}
+	
+	public void DrawRange() {
+		Drawer.DrawCircle(100, x, y);
 	}
 
 	public int getX() {
