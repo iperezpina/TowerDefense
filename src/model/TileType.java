@@ -1,6 +1,7 @@
 
 package model;
 
+import controller.ResourceManager;
 import javafx.scene.image.Image;
 
 public enum TileType {
@@ -10,7 +11,7 @@ public enum TileType {
 	boolean canPlace;
 	
 	TileType(String imgName, boolean canPlace) {
-		img = new Image("Images/" + imgName +".png");
+		img = ResourceManager.QuickLoad(imgName);
 		this.canPlace = canPlace;
 	}
 

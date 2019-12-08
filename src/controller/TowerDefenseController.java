@@ -1,7 +1,8 @@
+
 package controller;
 
 
-import Towers.BasicTower;
+
 import Towers.Tower;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
@@ -20,34 +21,12 @@ import view.TowerDefenseView;
 public class TowerDefenseController {
 
 	// Variables for this class
-	private Image towerImage = new Image("Images/temptower.png");
 	private TowerDefenseView tdv;
 	private ImageView currTowerImgView;
 	private Image currTowerImg;
 	private Tower currTower;
 
-	/**
-	 * Add the onclick for the canvas to spawn a tower, NOTE: this is a test will be
-	 * restructured to put the tower in a collection.
-	 */
-	public EventHandler<MouseEvent> debug = new EventHandler<MouseEvent>() {
-
-		@Override
-		public void handle(MouseEvent event) {
-			int x = (int) event.getX() / 32;
-			int y = (int) event.getY() / 32;
-			//System.out.print("Placing at X: " + x);
-			//System.out.print("\tY: " + y + "\n");
-
-			//Only places tower on placeable tiles
-			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
-				//Tower tempTower = new Tower(towerImage, x * 32, y * 32, 32, 32);
-				BasicTower dog = new BasicTower(towerImage, x* 32, y *32, 32, 32);
-				tdv.getTowers().addTower2(dog, x, y);
-				
-			}
-		}
-	};
+	
 	
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
 
@@ -81,7 +60,7 @@ public class TowerDefenseController {
 		
 	};
 	
-	public EventHandler<MouseEvent> hurtEnemy = new EventHandler<MouseEvent>() {
+	/*public EventHandler<MouseEvent> hurtEnemy = new EventHandler<MouseEvent>() {
 		// to debug health issues only
 
 		@Override
@@ -89,7 +68,7 @@ public class TowerDefenseController {
 			
 		}
 		
-	};
+	};*/
 
 	public TowerDefenseView getTdv() {
 		return tdv;
@@ -99,3 +78,4 @@ public class TowerDefenseController {
 		this.tdv = tdv;
 	}
 }
+
