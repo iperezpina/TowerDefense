@@ -29,6 +29,14 @@ public class Tower {
 	private Image img;
 	private int x, y, width, height;
 
+	protected int range = 100;
+	int currentTime = 0;
+	int lastTimeAttacked = 0;
+	int attackRate = 3;
+	private int towerCost = 0, towerSpent = 0;
+	private int damage = 0, towersDestroyed = 0;
+	private String towerName = "";
+
 	/**
 	 * The basic constructor for this class, takes in an img, x and y position,
 	 * width and height.
@@ -45,10 +53,7 @@ public class Tower {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		
-		//update();
-	}
-	
+}
 	/**
 	 * Draws the tower image
 	 */
@@ -71,4 +76,5 @@ public class Tower {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
 }

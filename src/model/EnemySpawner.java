@@ -53,6 +53,7 @@ public class EnemySpawner {
 			for (Enemy e : enemies) {
 				if (e != null) {
 					if (e.isDead()) {
+						EnemyLocator.killEnemy(e);
 						counter += 1;
 					}
 				}

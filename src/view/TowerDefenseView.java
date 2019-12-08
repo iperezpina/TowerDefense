@@ -2,7 +2,6 @@
 package view;
 
 import java.io.File;
-
 import controller.Player;
 import controller.TowerDefenseController;
 import javafx.application.Application;
