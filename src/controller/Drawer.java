@@ -11,8 +11,8 @@ import view.TowerDefenseView;
 public class Drawer {
 	private static Timeline circleTL;
 
-	public static void DrawImage(Image img, int x, int y, int width, int height) {
-		TowerDefenseView.canvas.getGraphicsContext2D().drawImage(img, x, y, width, height);
+	public static void DrawImage(Image img, int x, int y, double d, double e) {
+		TowerDefenseView.canvas.getGraphicsContext2D().drawImage(img, x, y, d, e);
 	}
 	
 	public static void DrawImage2(Image img, int x, int y) {

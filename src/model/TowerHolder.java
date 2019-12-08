@@ -18,28 +18,29 @@ public class TowerHolder {
 	private TileMap map;
 	private HashMap<String, Tower> towers2;
 	private Timeline tl;
-	
+
 	public TowerHolder(TileMap map) {
 		this.map = map;
 		this.towers2 = new HashMap<String, Tower>();
 	}
-	
+
 	public void addTower2(Tower newTower, int x, int y) {
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
 			System.out.println("A tower already exists there!");
 		}
 		else {
+
 			towers2.put(newKey, newTower);
 		}
 	}
-	
+
 	public void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 	}
-	
+
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
 		@Override
@@ -51,9 +52,10 @@ public class TowerHolder {
 					newtemp.update();
 				}
 				
+
 			}
 		}
 
 	}
-	
+
 }

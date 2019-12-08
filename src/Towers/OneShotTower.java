@@ -62,6 +62,10 @@ public class OneShotTower extends Tower {
 
 	}
 	
+	public void TowerDamage(Enemy e) {
+		
+		e.setHealth(e.getHealth() - 10000000);
+	}
 	//private TimerAll timer = new TimerAll();
 	
 	public void drawRange() {
@@ -73,7 +77,7 @@ public class OneShotTower extends Tower {
 			double distance = Math.hypot(getX()-x2, getY()-y2);
 			if (distance < range) {
 				//destroy everything in immidieate path
-				
+				TowerDamage(e);
 				System.out.println("enemy entered range");
 				
 			}

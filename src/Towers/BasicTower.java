@@ -1,5 +1,7 @@
 package Towers;
 
+import Projectile.Projectile;
+import Projectile.boneProjectile;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,9 +18,12 @@ public class BasicTower extends Tower {
 
 	// Tl is the animation timeline
 	private Timeline tl;
+	private boneProjectile projectile;
+	
 
 	public BasicTower(Image img, int x, int y, int width, int height) {
 		super(img, x, y, width, height);
+		this.projectile= new boneProjectile("Bone", 6, x, y);
 	}
 
 	public void printTowerData() {
@@ -43,17 +48,30 @@ public class BasicTower extends Tower {
 
 		@Override
 		public void handle(ActionEvent arg0) {
+			//System.out.println("fdfddfdfdfdf");
 			Draw();
 			currentTime = TimerAll.getTimeInSeconds();
 			if (Math.abs(currentTime - lastTimeAttacked) >= attackRate) {
 				lastTimeAttacked = currentTime;
 
 				drawRange();
+				
+				
 			}
 
 		}
 
 	}
+
+	
+	public void TowerDamage(Enemy e) {
+		
+		e.setHealth(e.getHealth() - 1);
+	}
+	
+	
+	
+	
 	public void drawRange() {
 
 		for (Enemy e : EnemyLocator.getEnemies()) {
@@ -61,8 +79,9 @@ public class BasicTower extends Tower {
 			int y2 = e.getY();
 			double distance = Math.hypot(getX() - x2, getY() - y2);
 			if (distance < range) {
-				// minus hp
-				e.setHealth(e.getHealth() - 1);
+
+				
+				TowerDamage(e);
 				System.out.println("enemy entered range");
 
 			}
