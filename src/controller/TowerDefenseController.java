@@ -42,7 +42,8 @@ public class TowerDefenseController {
 			//Only places tower on placeable tiles
 			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
 				//Tower tempTower = new Tower(towerImage, x * 32, y * 32, 32, 32);
-				Tower dog = new Tower(currTowerImg, x* 32, y *32, 32, 32);
+				System.out.println("fdfdf");
+				BasicTower dog = new BasicTower(currTowerImg, x* 32, y *32, 32, 32);
 				//BasicTower dog = new BasicTower(towerImage, x* 32, y *32, 32, 32);
 				tdv.getTowers().addTower2(dog, x, y);
 				
@@ -74,7 +75,7 @@ public class TowerDefenseController {
 			System.out.println("can get y");
 			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
 				System.out.println("Can place");
-				currTower = new Tower(currTowerImg, x*32, y*32, 32, 32);
+				Tower currTower = new BasicTower(currTowerImg, x*32, y*32, 32, 32);
 				System.out.println("Can create currTower in place");
 				tdv.getTowers().addTower2(currTower, x, y);
 				//tdv.getTm().GetTile(x, y).getType().setCanPlace(false);

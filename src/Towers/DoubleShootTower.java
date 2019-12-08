@@ -61,6 +61,13 @@ public class DoubleShootTower extends Tower {
 
 	}
 	
+	
+	
+	public void TowerDamage(Enemy e) {
+		
+		e.setHealth(e.getHealth() - 2);
+	}
+	
 	//private TimerAll timer = new TimerAll();
 	
 	public void drawRange() {
@@ -73,9 +80,9 @@ public class DoubleShootTower extends Tower {
 			if (distance < range) {
 				//minus hp
 				//minus hp twice to stimulate the double shots
+				TowerDamage(e);
 				
-				
-				System.out.println("enemy entered range");
+				//System.out.println("enemy entered range");
 				
 			}
 			

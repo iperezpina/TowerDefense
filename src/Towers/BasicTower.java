@@ -27,6 +27,7 @@ public class BasicTower extends Tower {
 	private final int range = 100;
 	private int attackRate = 3;
 	private Timeline tl;
+	
 
 	private int lastTimeAttacked = 0;
 	private int currentTime = 0;
@@ -58,17 +59,30 @@ public class BasicTower extends Tower {
 
 		@Override
 		public void handle(ActionEvent arg0) {
+			//System.out.println("fdfddfdfdfdf");
 			Draw();
 			currentTime = TimerAll.getTimeInSeconds();
 			if (Math.abs(currentTime - lastTimeAttacked) >= attackRate) {
 				lastTimeAttacked = currentTime;
 
 				drawRange();
+				
+				
 			}
 
 		}
 
 	}
+	
+	
+	public void TowerDamage(Enemy e) {
+		
+		e.setHealth(e.getHealth() - 1);
+	}
+	
+	
+	
+	
 
 	public void drawRange() {
 
@@ -77,8 +91,8 @@ public class BasicTower extends Tower {
 			int y2 = e.getY();
 			double distance = Math.hypot(getX() - x2, getY() - y2);
 			if (distance < range) {
-				// minus hp
-
+				
+				TowerDamage(e);
 				System.out.println("enemy entered range");
 
 			}

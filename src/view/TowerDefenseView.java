@@ -100,7 +100,7 @@ public class TowerDefenseView extends Application {
 		setupMainGrid(hbox, canvas);
 		
 		//Rightpane will have the info about the player and where the available towers will be located
-		VBox rightPane = new VBox(new Label("Money: $1000\nHealth: 100"));
+		//VBox rightPane = new VBox(new Label("Money: $1000\nHealth: 100"));
 		VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() + "\nCoins: " + currPlayer.getCoins()));
 
     rightPane.resize(160, 480);
