@@ -58,7 +58,7 @@ public class TowerDefenseController {
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() / 32;
 			int y = (int) event.getY() / 32;
-			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
+			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg != null) {
 
 				System.out.println("Can place");
 				Tower currTower = new BasicTower(currTowerImg, x*32, y*32, 32, 32);
