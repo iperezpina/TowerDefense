@@ -55,6 +55,7 @@ public class TowerDefenseView extends Application {
 	private Background bgd3 = new Background(new BackgroundFill(Color.LIGHTSTEELBLUE, CornerRadii.EMPTY, Insets.EMPTY));
 	private Media media = new Media(new File("src/Sounds/whoosh.wav").toURI().toString());
 	private MediaPlayer mediaPlayer = new MediaPlayer(media);
+	private static Player currPlayer;
 
 
 	// Essentially the map of the level
@@ -83,7 +84,8 @@ public class TowerDefenseView extends Application {
 	 */
 	public void start(Stage mainStage) throws Exception {
 		//Add the view to the controller class
-		Player currPlayer = new Player();
+		//TODO error below
+		//currPlayer.setTdv(this);
 		tdc.setTdv(this);
 		TimerAll.run();
 		
@@ -103,8 +105,8 @@ public class TowerDefenseView extends Application {
 		setupMainGrid(hbox, canvas);
 		
 		//Rightpane will have the info about the player and where the available towers will be located
-		//VBox rightPane = new VBox(new Label("Money: $1000\nHealth: 100"));
-		VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() + "\nCoins: " + currPlayer.getCoins()));
+		VBox rightPane = new VBox(new Label("Money: $1000\nHealth: 100"));
+		//VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() + "\nCoins: " + currPlayer.getCoins()));
 
     rightPane.resize(160, 480);
 		rightPane.setPrefWidth(160);
@@ -255,5 +257,6 @@ public class TowerDefenseView extends Application {
 		TowerDefenseView.towers = towers;
 	}
 	
+
 }
 
