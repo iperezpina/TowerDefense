@@ -2,6 +2,7 @@
 package model;
 
 import controller.Drawer;
+import controller.ResourceManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,7 +23,7 @@ public class Enemy {
 
 	// Variables for the enemy class most are self explanatory, some might be
 	// removed
-	private int x, y, width, height, health, posX, posY;
+	private int x, y, width, height, health, maxHealth, posX, posY;
 	private float speed;
 	private Image img;
 	private Tile startLocation;
@@ -58,6 +59,7 @@ public class Enemy {
 		this.tm = tm;
 		this.md = MoveDir.RIGHT;
 		this.health = 3;
+		this.maxHealth = this.health;
 	}
 
 	/**
@@ -79,6 +81,11 @@ public class Enemy {
 
 		@Override
 		public void handle(ActionEvent arg0) {
+			if (health <= 0) {
+				tl.stop();
+				isDead = true;
+			}
+			
 			if (isExited) {
 				tl.stop();
 			}
@@ -135,10 +142,15 @@ public class Enemy {
 	public void Draw() {
 		// tm.Draw();
 		Drawer.DrawImage(img, x, y, width, height);
+		DrawHealth();
 
 	}
 	
 	public void DrawHealth() {
+		int newWidth = (width / maxHealth);
+		int healthWidth = newWidth * health;
+		Drawer.DrawImage(ResourceManager.QuickLoad("redbar"), x, y + 16, newWidth * maxHealth, 32);
+		Drawer.DrawImage(ResourceManager.QuickLoad("greenbar"), x, y + 16, healthWidth, 32);
 		
 	}
 

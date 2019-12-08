@@ -89,7 +89,7 @@ public class Tower {
 			if (distance < range) {
 				if (Math.abs(currentTime- lastTimeAttacked) >= attackRate) {
 					lastTimeAttacked = currentTime;
-					//minus hp
+					e.setHealth(e.getHealth() - 1);
 					System.out.println("enemy entered range");
 				}
 			}

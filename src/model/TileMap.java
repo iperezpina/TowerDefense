@@ -113,7 +113,7 @@ public class TileMap {
 	 * before any other update function in the view.
 	 */
 	public void update() {
-		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
+		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 	}
@@ -124,11 +124,8 @@ public class TileMap {
 	 */
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
-		int tick = 0;
-
 		@Override
 		public void handle(ActionEvent arg0) {
-			tick++;
 			Draw();
 		}
 
