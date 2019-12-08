@@ -26,6 +26,7 @@ import model.Enemy;
 import model.EnemySpawner;
 import model.RoundManager;
 import model.TileMap;
+import model.TimerAll;
 import model.TowerHolder;
 
 /**
@@ -76,6 +77,7 @@ public class TowerDefenseView extends Application {
 	public void start(Stage mainStage) throws Exception {
 		//Add the view to the controller class
 		tdc.setTdv(this);
+		TimerAll.run();
 		
 		// Setting up title and icon for app
 		mainStage.setTitle("Dragon Force Defense");
@@ -134,7 +136,7 @@ public class TowerDefenseView extends Application {
 		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
 		tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
-		Enemy e = new Enemy("Images/enemy.png", tm.GetTile(0, 1), 32, 32, 32, tm);
+		Enemy e = new Enemy("Images/enemy.png", tm.GetTile(0, 1), 32, 32, 4, tm);
 		rm = new RoundManager(5, 5f, e);
 
 		tm.update();

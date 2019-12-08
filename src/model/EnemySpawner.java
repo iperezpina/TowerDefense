@@ -21,6 +21,9 @@ public class EnemySpawner {
 	private Enemy enemyToSpawn;
 	private boolean isDone;
 
+	private int lastTimeSpawned = 0;
+	private int currentTime = 0;
+
 	/**
 	 * A constructor for this class that takes in how many to spawn for this
 	 * EnemySpawner, the time between each enemy spawned, and the enemy to spawn
@@ -75,7 +78,24 @@ public class EnemySpawner {
 	 * enemies after a certain time.
 	 */
 	public void update() {
-		start();
+		int counter = 0;
+		currentTime = TimerAll.getTimeInSeconds();
+		if (index < amtToSpawn) {
+			if (Math.abs(currentTime - lastTimeSpawned) >= intervalsBetween) {
+				lastTimeSpawned = currentTime;
+				spawnEnemy();
+			}
+		}
+		for (Enemy e : enemies) {
+			if (e != null) {
+				if (e.isDead()) {
+					counter += 1;
+				}
+			}
+		}
+		if (counter == amtToSpawn) {
+			isDone = true;
+		}
 	}
 
 	/**
@@ -83,8 +103,8 @@ public class EnemySpawner {
 	 */
 	public void spawnEnemy() {
 		if (index < amtToSpawn) {
-			enemies[index] = new Enemy(enemyToSpawn.getImgPath(), enemyToSpawn.getStartLocation(), enemyToSpawn.getWidth(),
-					enemyToSpawn.getHeight(), enemyToSpawn.getSpeed(), enemyToSpawn.getTm());
+			enemies[index] = new Enemy(enemyToSpawn.getImgPath(), enemyToSpawn.getStartLocation(),
+					enemyToSpawn.getWidth(), enemyToSpawn.getHeight(), enemyToSpawn.getSpeed(), enemyToSpawn.getTm());
 			enemies[index].update();
 			index++;
 		}

@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class RoundManager {
 
 	private int amtToSpawn, waveNumber;
@@ -19,23 +22,32 @@ public class RoundManager {
 	}
 
 	public void update() {
-		if (es != null) {
-			if (es.isDone() == true) {
-				System.out.println("ok boomer");
-				startedRound = false;
-				newWave();
-			} else {
-				if (startedRound)
-					es.update();
-			}
-		}	
+		timer.scheduleAtFixedRate(timerTask, 0, 500);
 	}
+	
+	Timer timer = new Timer();
+
+	// A task that will occur every so often that spawns an enemy if it can, and
+	// checks if all the enemies are all dead.
+	TimerTask timerTask = new TimerTask() {
+		public void run() {
+			if (es != null) {
+				if (es.isDone() == true) {
+					startedRound = false;
+					newWave();
+				} else {
+					es.update();
+				}
+			}	
+		}
+
+	};
 
 	public void newWave() {
-		es = new EnemySpawner(amtToSpawn, intervalsBetween, e);
+		es = new EnemySpawner(amtToSpawn += 2, intervalsBetween -= .5f, e);
 		startedRound = true;
 		waveNumber++;
-		System.out.println("Beginning wave: " + waveNumber);
+		//System.out.println("Beginning wave: " + waveNumber);
 	}
 	
 
