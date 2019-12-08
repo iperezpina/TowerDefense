@@ -27,15 +27,19 @@ public class Tower {
 
 	// Variables for this class
 	private Image img;
-	private int x, y, width, height;
+	protected int x;
+	protected int y;
+	private int width;
+	private int height;
 
-	protected int range = 100;
-	int currentTime = 0;
-	int lastTimeAttacked = 0;
-	int attackRate = 3;
+	protected int range = 100, cost = 0;
+	protected int currentTime = 0;
+	protected int lastTimeAttacked = 0;
+	protected int attackRate = 3;
 	private int towerCost = 0, towerSpent = 0;
-	private int damage = 0, towersDestroyed = 0;
-	private String towerName = "";
+	protected int damage = 0;
+	private int towersDestroyed = 0;
+	protected String towerName = "";
 
 	/**
 	 * The basic constructor for this class, takes in an img, x and y position,
@@ -56,16 +60,12 @@ public class Tower {
 
 	}
 
-
-
-
-
 	/**
 	 * Draws the tower image
 	 */
 	public void Draw() {
 		Drawer.DrawImage(img, x, y, width, height);
-		
+
 	}
 
 	public int getX() {
@@ -83,5 +83,5 @@ public class Tower {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
 }

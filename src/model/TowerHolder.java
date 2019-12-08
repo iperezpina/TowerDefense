@@ -4,9 +4,15 @@ package model;
 import java.util.Collection;
 import java.util.HashMap;
 
-import Towers.BasicTower;
-
 import Towers.Tower;
+import Towers.Tower1;
+import Towers.Tower2;
+import Towers.Tower3;
+import Towers.Tower4;
+import Towers.Tower5;
+import Towers.Tower6;
+import Towers.Tower7;
+import Towers.Tower8;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -48,8 +54,36 @@ public class TowerHolder {
 		public void handle(ActionEvent arg0) {
 			Collection<Tower> temp =  towers2.values();
 			for (Tower t: temp) {
-				if (t instanceof BasicTower) {
-					BasicTower newtemp = (BasicTower) t;
+				if (t instanceof Tower1) {
+					Tower1 newtemp = (Tower1) t;
+					newtemp.update();
+				}
+				if (t instanceof Tower2) {
+					Tower2 newtemp = (Tower2) t;
+					newtemp.update();
+				}
+				if (t instanceof Tower3) {
+					Tower3 newtemp = (Tower3) t;
+					newtemp.update();
+				}
+				if (t instanceof Tower4) {
+					Tower4 newtemp = (Tower4) t;
+					newtemp.update();
+				}
+				if (t instanceof Tower5) {
+					Tower5 newtemp = (Tower5) t;
+					newtemp.update();
+				}
+				if (t instanceof Tower6) {
+					Tower6 newtemp = (Tower6) t;
+					newtemp.update();
+				}
+				if (t instanceof Tower7) {
+					Tower7 newtemp = (Tower7) t;
+					newtemp.update();
+				}
+				if (t instanceof Tower8) {
+					Tower8 newtemp = (Tower8) t;
 					newtemp.update();
 				}
 				
