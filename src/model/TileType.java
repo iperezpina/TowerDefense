@@ -1,16 +1,17 @@
+
 package model;
 
+import controller.ResourceManager;
 import javafx.scene.image.Image;
 
 public enum TileType {
 
-	Grass("grass32", true), Dirt("dirt32", false), Water("water32", false), DEBUG("water32", false);
-	
+	Grass("lava", true), Dirt("road", false), Water("lava", false), DEBUG("lava", false);
 	Image img;
 	boolean canPlace;
 	
 	TileType(String imgName, boolean canPlace) {
-		img = new Image("Images/" + imgName +".png");
+		img = ResourceManager.QuickLoad(imgName);
 		this.canPlace = canPlace;
 	}
 
@@ -24,3 +25,4 @@ public enum TileType {
 	
 	
 }
+

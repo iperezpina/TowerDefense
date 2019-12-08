@@ -1,3 +1,4 @@
+
 package model;
 
 /**
@@ -47,3 +48,4 @@ public enum MoveDir {
 
 	}
 }
+
