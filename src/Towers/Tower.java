@@ -53,50 +53,6 @@ public class Tower {
 		//update();
 	}
 
-	/**
-	 * Update method in charge of any movement (rotation) of the tower and drawing
-	 * of the tower
-	 */
-	public void update() {
-		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
-		tl.setCycleCount(Animation.INDEFINITE);
-		tl.play();
-	}
-
-	/**
-	 * A basic animation handler that just draws the tower at the moment
-	 *
-	 */
-	private class AnimationHandler implements EventHandler<ActionEvent> {
-
-		@Override
-		public void handle(ActionEvent arg0) {
-			Draw();
-			drawRange();
-			
-		}
-
-	}
-	
-	public void drawRange() {
-		for(Enemy e: EnemyLocator.getEnemies()) {
-			int x2 = e.getX();
-			int y2 = e.getY();
-			double distance = Math.hypot(getX()-x2, getY()-y2);
-			
-			
-			
-			currentTime = TimerAll.getTimeInSeconds();
-			if (distance < range) {
-				if (Math.abs(currentTime- lastTimeAttacked) >= attackRate) {
-					lastTimeAttacked = currentTime;
-					e.setHealth(e.getHealth() - 1);
-					System.out.println("enemy entered range");
-				}
-			}
-		}
-	}
-	
 
 
 	/**

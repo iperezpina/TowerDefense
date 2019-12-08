@@ -55,4 +55,4 @@ public class TimerAll {
 		deltaTime = .1f;
 	}
 }
-}
+
