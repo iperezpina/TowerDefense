@@ -1,5 +1,7 @@
 package Towers;
 
+import Projectile.Projectile;
+import Projectile.boneProjectile;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,10 +18,12 @@ public class BasicTower extends Tower {
 
 	// Tl is the animation timeline
 	private Timeline tl;
+	private boneProjectile projectile;
 	
 
 	public BasicTower(Image img, int x, int y, int width, int height) {
 		super(img, x, y, width, height);
+		this.projectile= new boneProjectile("Bone", 6, x, y);
 	}
 
 	public void printTowerData() {
