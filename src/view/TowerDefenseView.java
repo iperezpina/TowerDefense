@@ -2,12 +2,16 @@
 package view;
 
 import java.io.File;
+
 import controller.Player;
 import controller.TowerDefenseController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +20,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,7 +29,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Enemy;
-import model.EnemyLocator;
 import model.EnemySpawner;
 import model.RoundManager;
 import model.TileMap;
@@ -112,6 +116,7 @@ public class TowerDefenseView extends Application {
 		bottomPane.resize(800, 120);
 		bottomPane.setPrefHeight(120);
 		bottomPane.setBackground(bgd3);
+		drawBottomPane(bottomPane);
 		
 		//Add the nodes to the borderpane
 		bp.setCenter(hbox);
@@ -178,6 +183,61 @@ public class TowerDefenseView extends Application {
 		}
 		rightPane.getChildren().add(gp);
 	}
+	
+	/**
+	 * Adds the tower info and play button to the bottomPane.
+	 * @param bottomPane
+	 */
+	private void drawBottomPane(VBox bottomPane) {
+		BorderPane bpBottom = new BorderPane();
+		
+		
+		//Left part that has some info about the tower
+		FlowPane fp = new FlowPane();
+		Label towerNameLabel = new Label("Tower Name Here");
+		Label killCountLabel = new Label("Enemies Destroyed: 666");
+		Button sellButton = new Button("Sell for $150");
+		fp.getChildren().add(towerNameLabel);
+		fp.getChildren().add(killCountLabel);
+		fp.getChildren().add(sellButton);
+		fp.setOrientation(Orientation.VERTICAL);
+		fp.setPrefWidth(200);
+		fp.setStyle("-fx-background-color: Yellow; -fx-border-radius: 5px; -fx-border-width: 5px;" + 
+				"-fx-border-color: Gold;");
+		
+		//The center part that has the available upgrade
+		BorderPane bpUpgrade = new BorderPane();
+		Label upgradeNameLabel = new Label("Cool upgrade name");
+		Label upgradeDetailLabel = new Label("Description of the upgrade here, does not have to be very specific.");
+		upgradeDetailLabel.setPrefWidth(440);
+		Label upgradeCostLabel = new Label("$123");
+		//Add the items to the bp
+		bpUpgrade.setTop(upgradeNameLabel);
+		bpUpgrade.setCenter(upgradeDetailLabel);
+		bpUpgrade.setBottom(upgradeCostLabel);
+		//Setting their alignment
+		bpUpgrade.setAlignment(bpUpgrade.getTop(), Pos.TOP_LEFT);	
+		bpUpgrade.setAlignment(bpUpgrade.getCenter(), Pos.CENTER_LEFT);
+		bpUpgrade.setAlignment(bpUpgrade.getBottom(), Pos.BOTTOM_RIGHT);
+		bpUpgrade.setStyle("-fx-background-color: CadetBlue; -fx-border-radius: 5px; -fx-border-width: 5px;" + 
+				"-fx-border-color: black;");
+		bpUpgrade.setPrefSize(200, 100);
+		
+		//Go button that will start the round, will turn into a x2 and then a pause.
+		Button goButton = new Button("GO");
+		goButton.setPrefSize(150, 100);
+		goButton.setStyle("-fx-background-color:Lime; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
+				"-fx-border-color: Green;");
+		
+		//Add the three big items into the borderpane
+		bpBottom.setLeft(fp);
+		bpBottom.setCenter(bpUpgrade);
+		bpBottom.setRight(goButton);
+		
+		//Adding to bottomPane
+		bottomPane.getChildren().add(bpBottom);
+		}
+	
 
 	public TileMap getTm() {
 		return tm;
