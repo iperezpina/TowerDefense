@@ -51,10 +51,10 @@ public class TowerDefenseController {
 			currURL = currTowerImg.impl_getUrl();
 			id = currURL.substring(currURL.length()-10);
 
-			
-		}
-	};
-	
+
+
+
+
 	public EventHandler<MouseEvent> placeTower = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -63,7 +63,7 @@ public class TowerDefenseController {
 			System.out.println("can get x");
 			int y = (int) event.getY() / 32;
 			System.out.println("can get y");
-			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
+			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg !- ) {
 				System.out.println("Can place");
 				currTower = new BasicTower(currTowerImg, x*32, y*32, 32, 32);
 				System.out.println("Can create currTower in place");
