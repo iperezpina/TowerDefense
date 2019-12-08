@@ -11,6 +11,7 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import model.Enemy;
 import model.EnemyLocator;
+import model.TimerAll;
 
 /**
  * 
@@ -27,6 +28,10 @@ public class Tower {
 	private int x, y, width, height;
 	private Timeline tl;
 	private int range = 100;
+	
+	private int currentTime = 0;
+	private int lastTimeAttacked = 0;
+	private int attackRate = 3;
 
 	/**
 	 * The basic constructor for this class, takes in an img, x and y position,
@@ -78,13 +83,16 @@ public class Tower {
 			int y2 = e.getY();
 			double distance = Math.hypot(getX()-x2, getY()-y2);
 			
+			
+			
+			currentTime = TimerAll.getTimeInSeconds();
 			if (distance < range) {
-				//minus hp
-				System.out.println("enemy entered range");
-				
+				if (Math.abs(currentTime- lastTimeAttacked) >= attackRate) {
+					lastTimeAttacked = currentTime;
+					//minus hp
+					System.out.println("enemy entered range");
+				}
 			}
-			
-			
 		}
 	}
 	

@@ -22,20 +22,14 @@ public class Enemy {
 
 	// Variables for the enemy class most are self explanatory, some might be
 	// removed
-	private int x;
-	private int y;
-	private int width;
-	private int height;
-	private int health;
+	private int x, y, width, height, health, posX, posY;
 	private float speed;
 	private Image img;
 	private Tile startLocation;
-	private boolean first = true;
 	private TileMap tm;
 	private Timeline tl;
 	private MoveDir md;
 	private boolean isExited = false, isDead = false;
-	private int posX, posY;
 	private String imgPath;
 
 	/**
@@ -63,6 +57,7 @@ public class Enemy {
 		this.speed = speed;
 		this.tm = tm;
 		this.md = MoveDir.RIGHT;
+		this.health = 3;
 	}
 
 	/**
@@ -88,8 +83,6 @@ public class Enemy {
 				tl.stop();
 			}
 			Draw();
-			// System.out.printf("Current x: %d\tCurrent y: %d\nCurrent posX: %d\tCurrent
-			// posY: %d\n", x, y, getPosX(), getPosY());
 			moveTo();
 			x += (int) md.dx * speed;
 			y += (int) md.dy * speed;
@@ -144,6 +137,10 @@ public class Enemy {
 		Drawer.DrawImage(img, x, y, width, height);
 
 	}
+	
+	public void DrawHealth() {
+		
+	}
 
 //	The getters and setters are below=================================================================
 
@@ -189,10 +186,6 @@ public class Enemy {
 		return startLocation;
 	}
 
-	public boolean isFirst() {
-		return first;
-	}
-
 	public void setX(int x) {
 		this.x = x;
 	}
@@ -225,9 +218,7 @@ public class Enemy {
 		this.startLocation = startLocation;
 	}
 
-	public void setFirst(boolean first) {
-		this.first = first;
-	}
+	
 
 	public TileMap getTm() {
 		return tm;
