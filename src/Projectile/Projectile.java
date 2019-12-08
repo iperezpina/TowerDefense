@@ -15,10 +15,10 @@ import javafx.util.Duration;
 
 public class Projectile {
 
-	private Image Amunition;
+	Image Amunition;
 	int speed;
 	int x;
-	private int y;
+	int y;
 	private Timeline tl;
 
 	
