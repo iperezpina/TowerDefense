@@ -1,7 +1,9 @@
+
 package view;
 
 import java.io.File;
 
+import controller.Player;
 import controller.TowerDefenseController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -77,6 +79,7 @@ public class TowerDefenseView extends Application {
 	 * The basic setup of the application
 	 */
 	public void start(Stage mainStage) throws Exception {
+		Player currPlayer = new Player();
 		tdc.setTdv(this);
 		
 		// Setting up title and icon for app
@@ -93,7 +96,7 @@ public class TowerDefenseView extends Application {
 		hbox.getChildren().add(canvas);
 		setupMainGrid(hbox, canvas);
 		
-		VBox rightPane = new VBox(new Label("Money: $1000\nHealth: 100"));
+		VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() + "\nCoins: " + currPlayer.getCoins()));
 		rightPane.resize(160, 480);
 		rightPane.setPrefWidth(160);
 		rightPane.setBackground(bgd2);
@@ -132,7 +135,7 @@ public class TowerDefenseView extends Application {
 		//canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
 		tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
-		Enemy e = new Enemy(new Image("Images/enemyFull.png"), tm.GetTile(0, 1), 32, 32, 8, tm);
+		Enemy e = new Enemy(new Image("Images/ghost.png"), tm.GetTile(0, 1), 32, 32, 8, tm);
 		
 
 		EnemySpawner es = new EnemySpawner(5, 5f, e);
@@ -188,3 +191,4 @@ public class TowerDefenseView extends Application {
 	
 
 }
+
