@@ -28,6 +28,7 @@ public class Tower {
 	// Variables for this class
 	private Image img;
 	private int x, y, width, height;
+
 	protected int range = 100;
 	int currentTime = 0;
 	int lastTimeAttacked = 0;
@@ -52,8 +53,7 @@ public class Tower {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-	}
-
+}
 	/**
 	 * Draws the tower image
 	 */

@@ -36,13 +36,6 @@ public class TowerDefenseController {
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() / 32;
 			int y = (int) event.getY() / 32;
-
-			// Only places tower on placeable tiles
-//			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
-//				BasicTower temp = new BasicTower(currTowerImg, x, y, 32, 32);
-//				tdv.getTowers().addTower2(temp, x, y);
-//
-//			}
 		}
 	};
 
@@ -66,7 +59,13 @@ public class TowerDefenseController {
 			int x = (int) event.getX() / 32;
 			int y = (int) event.getY() / 32;
 			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
+
+				System.out.println("Can place");
+				Tower currTower = new BasicTower(currTowerImg, x*32, y*32, 32, 32);
+				System.out.println("Can create currTower in place");
+
 				currTower = new BasicTower(currTowerImg, x * 32, y * 32, 32, 32);
+
 				tdv.getTowers().addTower2(currTower, x, y);
 				
 			}
