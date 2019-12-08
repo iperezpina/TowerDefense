@@ -2,6 +2,7 @@
 package view;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import controller.Player;
 import controller.TowerDefenseController;
@@ -43,8 +44,9 @@ public class TowerDefenseView extends Application {
 	public static Canvas canvas;
 	public static TowerDefenseController tdc = new TowerDefenseController();
 	private static TowerHolder towers;
-	//private Image towerImg;
-	//private ImageView img;
+	private static Player currPlayer = new Player();
+	private String[] imgURL = new String[8];
+	
 
 	// Essentially the map of the level
 	private int[][] tileMap = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -79,8 +81,8 @@ public class TowerDefenseView extends Application {
 	 * The basic setup of the application
 	 */
 	public void start(Stage mainStage) throws Exception {
-		Player currPlayer = new Player();
 		tdc.setTdv(this);
+		currPlayer.setTdv(this);
 		
 		// Setting up title and icon for app
 		mainStage.setTitle("Dragon Force Defense");
@@ -131,8 +133,8 @@ public class TowerDefenseView extends Application {
 	 */
 	public void setupMainGrid(HBox hbox, Canvas canvas) {
 
-		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.placeTower);
-		//canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
+		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, currPlayer.placeTower);
+		
 		tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
 		Enemy e = new Enemy(new Image("Images/ghost.png"), tm.GetTile(0, 1), 32, 32, 8, tm);
@@ -157,9 +159,12 @@ public class TowerDefenseView extends Application {
 		gp.setVgap(50);
 		int row = 0;
 		for(int i = 0; i < 8; i++) {
-			Image towerImg = new Image("Images/tower" + (i+1) + ".png");
+			//imgURL.add("tower" + (i+1) + ".png");
+			imgURL[i] = "tower" + (i+1) + ".png";
+			
+			Image towerImg = new Image("tower" + (i+1) + ".png");
 			ImageView img = new ImageView(towerImg);
-			img.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.chooseTower);
+			img.addEventHandler(MouseEvent.MOUSE_CLICKED, currPlayer.chooseTower);
 			if (i % 2 == 0) {
 				gp.add(img, 0, row);
 			}

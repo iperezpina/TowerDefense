@@ -15,7 +15,7 @@ import model.EnemyLocator;
 
 public class BasicTower extends Tower {
 
-	private String towerName = "Dog";
+	private String towerName = "Images/tower1.png";
 	private float towerSpeed = 2f;
 	private int towersDestroyed = 0;
 	private float range = 50f;

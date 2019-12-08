@@ -40,6 +40,7 @@ public class TowerHolder {
 			Tower temp = towers2.get(newKey);
 			if (temp instanceof BasicTower) {
 				BasicTower dogTemp = (BasicTower)temp;
+				System.out.println("made basic tower");
 				
 			}
 		}
