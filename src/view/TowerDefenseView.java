@@ -1,3 +1,4 @@
+
 package view;
 
 import java.io.File;
@@ -23,6 +24,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Enemy;
+import model.EnemyLocator;
 import model.EnemySpawner;
 import model.RoundManager;
 import model.TileMap;
@@ -49,6 +51,7 @@ public class TowerDefenseView extends Application {
 	private Background bgd3 = new Background(new BackgroundFill(Color.LIGHTSTEELBLUE, CornerRadii.EMPTY, Insets.EMPTY));
 	private Media media = new Media(new File("src/Sounds/whoosh.wav").toURI().toString());
 	private MediaPlayer mediaPlayer = new MediaPlayer(media);
+
 
 	// Essentially the map of the level
 	private int[][] tileMap = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -133,12 +136,16 @@ public class TowerDefenseView extends Application {
 	 */
 	public void setupMainGrid(HBox hbox, Canvas canvas) {
 
-		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
+		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.placeTower);
+		//canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
 		tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
-		Enemy e = new Enemy("Images/enemy.png", tm.GetTile(0, 1), 32, 32, 4, tm);
+		Enemy e = new Enemy("Images/ghost.png", tm.GetTile(0, 1), 32, 32, 8, tm);
 		rm = new RoundManager(5, 5f, e);
+		
 
+		EnemySpawner es = new EnemySpawner(5, 5f, e);
+		
 		tm.update();
 		towers.update();
 		rm.update();
@@ -185,6 +192,5 @@ public class TowerDefenseView extends Application {
 		TowerDefenseView.towers = towers;
 	}
 	
-	
-
 }
+

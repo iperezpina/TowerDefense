@@ -5,7 +5,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import Towers.DogTower;
+import Towers.BasicTower;
+
+import Towers.Tower;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -36,7 +38,14 @@ public class TowerHolder {
 		if (towers2.containsKey(newKey)) {
 			System.out.println("A tower already exists there!");
 			Tower temp = towers2.get(newKey);
+<<<<<<< HEAD
 			temp.DrawRange();
+=======
+			if (temp instanceof BasicTower) {
+				BasicTower dogTemp = (BasicTower)temp;
+				
+			}
+>>>>>>> refs/remotes/origin/master
 		}
 		else {
 			towers2.put(newKey, newTower);

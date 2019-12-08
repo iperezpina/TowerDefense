@@ -1,3 +1,4 @@
+
 package model;
 
 import controller.Drawer;
@@ -11,7 +12,7 @@ import javafx.util.Duration;
 
 /**
  * 
- * @author Alberto Villareal, Laura [Last Name], Ivan [Last Name], and Marissa
+ * @author Alberto Villareal, Laura Bolanos, Ivan [Last Name], and Marissa
  *         [Last Name]
  * 
  *         Summary: [Summary goes here]
@@ -252,3 +253,6 @@ public class Enemy {
 		this.imgPath = imgPath;
 	}
 }
+
+	
+

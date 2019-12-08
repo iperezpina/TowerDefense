@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -114,7 +113,7 @@ public class TileMap {
 	 * before any other update function in the view.
 	 */
 	public void update() {
-		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
+		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 	}

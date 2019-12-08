@@ -1,3 +1,4 @@
+
 package model;
 
 import controller.ResourceManager;
@@ -5,8 +6,7 @@ import javafx.scene.image.Image;
 
 public enum TileType {
 
-	Grass("grass32", true), Dirt("dirt32", false), Water("water32", false), DEBUG("water32", false);
-	
+	Grass("lava", true), Dirt("road", false), Water("lava", false), DEBUG("lava", false);
 	Image img;
 	boolean canPlace;
 	
@@ -25,3 +25,4 @@ public enum TileType {
 	
 	
 }
+

@@ -10,9 +10,10 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-import model.Tower;
+import model.Enemy;
+import model.EnemyLocator;
 
-public class DogTower extends Tower {
+public class BasicTower extends Tower {
 
 	private String towerName = "Dog";
 	private float towerSpeed = 2f;
@@ -20,7 +21,7 @@ public class DogTower extends Tower {
 	private float range = 50f;
 	private Timeline tl;
 
-	public DogTower(Image img, int x, int y, int width, int height) {
+	public BasicTower(Image img, int x, int y, int width, int height) {
 		super(img, x, y, width, height);
 	}
 
@@ -29,8 +30,10 @@ public class DogTower extends Tower {
 				towerSpeed);
 	}
 
-	public void drawRange() {
-
+	
+	
+	public void rangeCircle() {
+		
 	}
 
 }
