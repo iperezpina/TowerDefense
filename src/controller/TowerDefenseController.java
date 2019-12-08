@@ -82,6 +82,16 @@ public class TowerDefenseController {
 		}
 		
 	};
+	
+	public EventHandler<MouseEvent> hurtEnemy = new EventHandler<MouseEvent>() {
+		// to debug health issues only
+
+		@Override
+		public void handle(MouseEvent event) {
+			
+		}
+		
+	};
 
 	public TowerDefenseView getTdv() {
 		return tdv;
