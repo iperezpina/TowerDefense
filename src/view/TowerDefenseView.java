@@ -29,6 +29,7 @@ import model.Enemy;
 import model.EnemyLocator;
 import model.EnemySpawner;
 import model.TileMap;
+import model.TimerAll;
 import model.TowerHolder;
 
 /**
@@ -81,6 +82,7 @@ public class TowerDefenseView extends Application {
 	public void start(Stage mainStage) throws Exception {
 		Player currPlayer = new Player();
 		tdc.setTdv(this);
+		TimerAll.run();
 		
 		// Setting up title and icon for app
 		mainStage.setTitle("Dragon Force Defense");
