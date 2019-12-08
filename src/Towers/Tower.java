@@ -59,6 +59,7 @@ public class Tower {
 	 */
 	public void Draw() {
 		Drawer.DrawImage(img, x, y, width, height);
+		
 	}
 
 	public int getX() {

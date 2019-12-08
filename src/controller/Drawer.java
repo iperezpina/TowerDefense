@@ -26,6 +26,12 @@ public class Drawer {
 		
 	}
 	
+	public static void RotateImage(Image img, float angle, int x, int y) {
+		TowerDefenseView.canvas.getGraphicsContext2D().rotate(angle);
+		TowerDefenseView.canvas.getGraphicsContext2D().drawImage(img, x, y);
+		TowerDefenseView.canvas.getGraphicsContext2D().restore();
+	}
+	
 	private static class AnimationHandler implements EventHandler<ActionEvent> {
 
 		int x, y, r;
