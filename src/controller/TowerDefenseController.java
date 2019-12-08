@@ -1,6 +1,5 @@
 package controller;
 
-
 import Towers.BasicTower;
 import Towers.Tower;
 import javafx.event.EventHandler;
@@ -26,6 +25,7 @@ public class TowerDefenseController {
 	private Image currTowerImg;
 	private Tower currTower;
 
+
 	/**
 	 * Add the onclick for the canvas to spawn a tower, NOTE: this is a test will be
 	 * restructured to put the tower in a collection.
@@ -42,7 +42,8 @@ public class TowerDefenseController {
 			//Only places tower on placeable tiles
 			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
 				//Tower tempTower = new Tower(towerImage, x * 32, y * 32, 32, 32);
-				BasicTower dog = new BasicTower(towerImage, x* 32, y *32, 32, 32);
+				Tower dog = new Tower(currTowerImg, x* 32, y *32, 32, 32);
+				//BasicTower dog = new BasicTower(towerImage, x* 32, y *32, 32, 32);
 				tdv.getTowers().addTower2(dog, x, y);
 				
 			}
