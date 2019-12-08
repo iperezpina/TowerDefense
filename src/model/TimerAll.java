@@ -54,5 +54,5 @@ public class TimerAll {
 	private static void resetDeltaTime() {
 		deltaTime = .1f;
 	}
-}
+
 }
