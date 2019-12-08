@@ -1,5 +1,7 @@
 package Towers;
 
+import java.util.concurrent.TimeUnit;
+
 import controller.Drawer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -26,7 +28,6 @@ public class Tower {
 	// Variables for this class
 	private Image img;
 	private int x, y, width, height;
-	private Timeline tl;
 	private int range = 100;
 	
 	private int currentTime = 0;
@@ -96,7 +97,7 @@ public class Tower {
 		}
 	}
 	
-	
+
 
 	/**
 	 * Draws the tower image

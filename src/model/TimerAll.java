@@ -24,23 +24,11 @@ public class TimerAll {
 		return timeInMill;
 	}
 	
-//	static class Switch extends TimerTask {
-//		public void run() {
-//			timeInMill+= deltaTime;
-//			seconds = (int) Math.floor(timeInMill);
-//			System.out.println(timeInMill);
-//			System.out.println(seconds);
-//			check = true;
-//			timer.cancel();
-//			
-//		}
-//	}
-	
 	private static TimerTask tt = new TimerTask() {
 		public void run() {
 			timeInMill += deltaTime;
 			seconds = (int) timeInMill;
-		}
+    }
 	};
 	
 	public static int getTimeInSeconds() {
@@ -66,6 +54,5 @@ public class TimerAll {
 	private static void resetDeltaTime() {
 		deltaTime = .1f;
 	}
-	
-
+}
 }

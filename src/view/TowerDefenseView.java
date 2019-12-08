@@ -3,6 +3,7 @@ package view;
 
 import java.io.File;
 
+import controller.Player;
 import controller.TowerDefenseController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -79,6 +80,7 @@ public class TowerDefenseView extends Application {
 	 */
 	public void start(Stage mainStage) throws Exception {
 		//Add the view to the controller class
+		Player currPlayer = new Player();
 		tdc.setTdv(this);
 		TimerAll.run();
 		
@@ -99,7 +101,9 @@ public class TowerDefenseView extends Application {
 		
 		//Rightpane will have the info about the player and where the available towers will be located
 		VBox rightPane = new VBox(new Label("Money: $1000\nHealth: 100"));
-		rightPane.resize(160, 480);
+		VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() + "\nCoins: " + currPlayer.getCoins()));
+
+    rightPane.resize(160, 480);
 		rightPane.setPrefWidth(160);
 		rightPane.setBackground(bgd2);
 		drawRightPane(rightPane);
