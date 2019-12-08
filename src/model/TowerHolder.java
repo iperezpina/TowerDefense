@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import Towers.BasicTower;
+
 import Towers.Tower;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -49,7 +50,8 @@ public class TowerHolder {
 		public void handle(ActionEvent arg0) {
 			Collection<Tower> temp =  towers2.values();
 			for (Tower t: temp) {
-				t.update();
+				BasicTower newtemp = (BasicTower) t;
+				newtemp.update();
 			}
 		}
 

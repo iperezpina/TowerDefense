@@ -13,6 +13,11 @@ public class EnemyLocator {
 	public static ArrayList<Enemy> getEnemies() {
 		return listofE;
 	}
+	
+	
+	public static void killEnemy(Enemy e) {
+		listofE.remove(e);
+	}
 
 
 }
