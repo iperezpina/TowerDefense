@@ -34,7 +34,11 @@ public class TowerHolder {
 	public void addTower2(Tower newTower, int x, int y) {
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
+			Tower tower = towers2.get(newKey);
 			System.out.println("A tower already exists there!");
+			System.out.println("Before: " + tower.isSelected());
+			tower.setIsSelected(!(tower.isSelected()));
+			System.out.println("After: " + tower.isSelected());
 		}
 		else {
 

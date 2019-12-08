@@ -23,6 +23,7 @@ public class EnemySpawner {
 
 	private int lastTimeSpawned = 0;
 	private int currentTime = 0;
+	private int healthIncr = 0;
 
 	/**
 	 * A constructor for this class that takes in how many to spawn for this
@@ -32,13 +33,14 @@ public class EnemySpawner {
 	 * @param intervalsBetween
 	 * @param e
 	 */
-	public EnemySpawner(int amtToSpawn, float intervalsBetween, Enemy e) {
+	public EnemySpawner(int amtToSpawn, float intervalsBetween, int healthIncr, Enemy e) {
 		this.amtToSpawn = amtToSpawn;
 		this.intervalsBetween = intervalsBetween;
 		this.enemyToSpawn = e;
 		this.enemies = new Enemy[amtToSpawn];
 		this.index = 0;
 		this.isDone = false;
+		this.healthIncr = healthIncr;
 	}
 
 	// A timer that will be used to spawn an enemy every so often
@@ -105,7 +107,7 @@ public class EnemySpawner {
 	public void spawnEnemy() {
 		if (index < amtToSpawn) {
 			enemies[index] = new Enemy(enemyToSpawn.getImgPath(), enemyToSpawn.getStartLocation(),
-					enemyToSpawn.getWidth(), enemyToSpawn.getHeight(), enemyToSpawn.getSpeed(), enemyToSpawn.getTm());
+					enemyToSpawn.getWidth(), enemyToSpawn.getHeight(), enemyToSpawn.getSpeed(), enemyToSpawn.getHealth() + healthIncr, enemyToSpawn.getTm());
 			EnemyLocator.addEnemy(enemies[index]);
 			enemies[index].update();
 			index++;

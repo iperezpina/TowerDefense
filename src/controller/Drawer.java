@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -21,7 +22,7 @@ public class Drawer {
 	
 	public static void DrawCircle(int r, int x, int y) {
 		circleTL = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler(r, x, y)));
-		circleTL.setCycleCount(5);
+		circleTL.setCycleCount(1);
 		circleTL.play();
 		
 	}
@@ -43,7 +44,7 @@ public class Drawer {
 
 		@Override
 		public void handle(ActionEvent arg0) {
-			TowerDefenseView.canvas.getGraphicsContext2D().strokeOval(x-32, y-32, r, r);
+			TowerDefenseView.canvas.getGraphicsContext2D().strokeOval(x - ((r-32)/2), y - ((r-32)/2), r, r);
 		}
 
 	}
