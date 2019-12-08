@@ -2,6 +2,7 @@ package view;
 
 import java.io.File;
 
+import controller.Player;
 import controller.TowerDefenseController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -77,6 +78,7 @@ public class TowerDefenseView extends Application {
 	 * The basic setup of the application
 	 */
 	public void start(Stage mainStage) throws Exception {
+		Player currPlayer = new Player();
 		tdc.setTdv(this);
 		
 		// Setting up title and icon for app
@@ -93,7 +95,7 @@ public class TowerDefenseView extends Application {
 		hbox.getChildren().add(canvas);
 		setupMainGrid(hbox, canvas);
 		
-		VBox rightPane = new VBox(new Label("Money: $1000\nHealth: 100"));
+		VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() + "\nCoins: " + currPlayer.getCoins()));
 		rightPane.resize(160, 480);
 		rightPane.setPrefWidth(160);
 		rightPane.setBackground(bgd2);
