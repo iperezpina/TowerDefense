@@ -36,7 +36,7 @@ public class TowerDefenseController {
 	private Tower currTower;
 	private String currURL;
 	private String id;
-
+	private Player player;
 	
 	
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
@@ -45,10 +45,8 @@ public class TowerDefenseController {
 		@SuppressWarnings( "deprecation" )
 		@Override
 		public void handle(MouseEvent event) {
-			//System.out.println("You are choosing a tower!");
 			currTowerImgView = (ImageView) event.getSource();
 			currTowerImg = (Image) currTowerImgView.getImage();
-			//System.out.println("You got a tower!");
 			currURL = currTowerImg.impl_getUrl();
 			id = currURL.substring(currURL.length()-10);
 			System.out.println("Tower chosen: " + id);
@@ -57,52 +55,45 @@ public class TowerDefenseController {
 	};
 
 
-
-	public EventHandler<MouseEvent> placeTower = new EventHandler<MouseEvent>() {
-
-		@Override
-		public void handle(MouseEvent event) {
-			int x = (int) event.getX() / 32;
-			//System.out.println("can get x");
-			int y = (int) event.getY() / 32;
-			//System.out.println("can get y");
-			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg != null ) {
-				//System.out.println("Can place");
-				//currTower = new BasicTower(currTowerImg, x*32, y*32, 32, 32);
-				//System.out.println("Can create currTower in place");
-				if (id.equals("tower1.png")) {
-					currTower = new Tower1(currTowerImg, x*32, y*32, 32, 32);
-				}
-				if (id.equals("tower2.png")) {
-					currTower = new Tower2(currTowerImg, x*32, y*32, 32, 32);
-				}
-				if (id.equals("tower3.png")) {
-					currTower = new Tower3(currTowerImg, x*32, y*32, 32, 32);
-				}
-				if (id.equals("tower4.png")) {
-					currTower = new Tower4(currTowerImg, x*32, y*32, 32, 32);
-				}
-				if (id.equals("tower5.png")) {
-					currTower = new Tower5(currTowerImg, x*32, y*32, 32, 32);
-				}
-				if (id.equals("tower6.png")) {
-					currTower = new Tower6(currTowerImg, x*32, y*32, 32, 32);
-				}
-				if (id.equals("tower7.png")) {
-					currTower = new Tower7(currTowerImg, x*32, y*32, 32, 32);
-				}
-				if (id.equals("tower8.png")) {
-					currTower = new Tower8(currTowerImg, x*32, y*32, 32, 32);
-				}
-				if (currTower != null) {
-					tdv.getTowers().addTower2(currTower, x, y);
-				}
-
-				
-			}
-		}
-		
-	};
+//	public EventHandler<MouseEvent> placeTower = new EventHandler<MouseEvent>() {
+//
+//		@Override
+//		public void handle(MouseEvent event) {
+//			int x = (int) event.getX() / 32;
+//			int y = (int) event.getY() / 32;
+//			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg != null ) {
+//
+//				if (id.equals("tower1.png")) {
+//					currTower = new Tower1(currTowerImg, x*32, y*32, 32, 32);
+//				}
+//				if (id.equals("tower2.png")) {
+//					currTower = new Tower2(currTowerImg, x*32, y*32, 32, 32);
+//				}
+//				if (id.equals("tower3.png")) {
+//					currTower = new Tower3(currTowerImg, x*32, y*32, 32, 32);
+//				}
+//				if (id.equals("tower4.png")) {
+//					currTower = new Tower4(currTowerImg, x*32, y*32, 32, 32);
+//				}
+//				if (id.equals("tower5.png")) {
+//					currTower = new Tower5(currTowerImg, x*32, y*32, 32, 32);
+//				}
+//				if (id.equals("tower6.png")) {
+//					currTower = new Tower6(currTowerImg, x*32, y*32, 32, 32);
+//				}
+//				if (id.equals("tower7.png")) {
+//					currTower = new Tower7(currTowerImg, x*32, y*32, 32, 32);
+//				}
+//				if (id.equals("tower8.png")) {
+//					currTower = new Tower8(currTowerImg, x*32, y*32, 32, 32);
+//				}
+//				if (currTower != null) {
+//					tdv.getTowers().addTower2(currTower, x, y);
+//				}
+//			}
+//		}
+//		
+//	};
 	
 	public EventHandler<MouseEvent> hurtEnemy = new EventHandler<MouseEvent>() {
 		// to debug health issues only

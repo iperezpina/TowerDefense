@@ -45,7 +45,7 @@ public class Enemy {
 	 * @param speed
 	 * @param tm
 	 */
-	public Enemy(String imgPath, Tile start, int width, int height, float speed, TileMap tm) {
+	public Enemy(String imgPath, Tile start, int width, int height, float speed, int health, TileMap tm) {
 		if (img == null) {
 			img = new Image(imgPath);
 		}
@@ -58,7 +58,7 @@ public class Enemy {
 		this.speed = speed;
 		this.tm = tm;
 		this.md = MoveDir.RIGHT;
-		this.health = 3;
+		this.health = health;
 		this.maxHealth = this.health;
 	}
 

@@ -24,11 +24,8 @@ public class Projectile {
 	
 	
 	public Projectile( String imageName, int speed, int x, int y) {
-		System.out.println(imageName);
 		if(this.Amunition == null) {
 			this.Amunition= ResourceManager.QuickLoad(imageName);
-			System.out.println(this.Amunition);
-					
 		}
 		this.x= x;
 		this.y= y;

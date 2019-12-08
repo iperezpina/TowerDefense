@@ -45,6 +45,7 @@ import model.TowerHolder;
  */
 public class TowerDefenseView extends Application {
 	
+	//Variables here are in charge of various view stuff
 	public static Canvas canvas;
 	public static TowerDefenseController tdc = new TowerDefenseController();
 	private static TowerHolder towers;
@@ -55,9 +56,12 @@ public class TowerDefenseView extends Application {
 	private Background bgd3 = new Background(new BackgroundFill(Color.LIGHTSTEELBLUE, CornerRadii.EMPTY, Insets.EMPTY));
 	private Media media = new Media(new File("src/Sounds/whoosh.wav").toURI().toString());
 	private MediaPlayer mediaPlayer = new MediaPlayer(media);
-	private static Player currPlayer;
-
-
+	private static Player currPlayer = new Player();
+	
+	//Variables here relate to the gui elements
+	
+	
+	//Other variables below
 	// Essentially the map of the level
 	private int[][] tileMap = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
@@ -74,6 +78,7 @@ public class TowerDefenseView extends Application {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 } };
+	
 
 	public static void main(String args[]) {
 		launch(args);
@@ -84,8 +89,7 @@ public class TowerDefenseView extends Application {
 	 */
 	public void start(Stage mainStage) throws Exception {
 		//Add the view to the controller class
-		//TODO error below
-		//currPlayer.setTdv(this);
+		currPlayer.setTdv(this);
 		tdc.setTdv(this);
 		TimerAll.run();
 		
@@ -105,7 +109,7 @@ public class TowerDefenseView extends Application {
 		setupMainGrid(hbox, canvas);
 		
 		//Rightpane will have the info about the player and where the available towers will be located
-		VBox rightPane = new VBox(new Label("Money: $1000\nHealth: 100"));
+		VBox rightPane = new VBox(new Label("Money: " + currPlayer.getCoins() + "\nHealth: " + currPlayer.getHP()));
 		//VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() + "\nCoins: " + currPlayer.getCoins()));
 
     rightPane.resize(160, 480);
@@ -146,15 +150,15 @@ public class TowerDefenseView extends Application {
 	 */
 	public void setupMainGrid(HBox hbox, Canvas canvas) {
 
-		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.placeTower);
+		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, currPlayer.placeTower);
 		//canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
 		tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
-		Enemy e = new Enemy("Images/ghost.png", tm.GetTile(0, 1), 32, 32, 8, tm);
+		Enemy e = new Enemy("Images/ghost.png", tm.GetTile(0, 1), 32, 32, 8, 5, tm);
 		rm = new RoundManager(5, 5f, e);
 		
 
-		EnemySpawner es = new EnemySpawner(5, 5f, e);
+		//EnemySpawner es = new EnemySpawner(5, 5f, e);
 		
 		tm.update();
 		towers.update();
@@ -174,7 +178,7 @@ public class TowerDefenseView extends Application {
 		for(int i = 0; i < 8; i++) {
 			Image towerImg = new Image("Images/tower" + (i+1) + ".png");
 			ImageView img = new ImageView(towerImg);
-			img.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.chooseTower);
+			img.addEventHandler(MouseEvent.MOUSE_CLICKED, currPlayer.chooseTower);
 			if (i % 2 == 0) {
 				gp.add(img, 0, row);
 			}

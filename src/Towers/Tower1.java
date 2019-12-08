@@ -26,7 +26,7 @@ public class Tower1 extends Tower {
 	
 	public void additionalInfo() {
 		this.attackRate = 4;
-		this.cost = 300;
+		this.towerCost = 300;
 		this.damage = 2;
 		this.range = 150;
 		this.towerName = "Fire Tower";
@@ -82,10 +82,9 @@ public class Tower1 extends Tower {
 			int x2 = e.getX();
 			int y2 = e.getY();
 			double distance = Math.hypot(getX() - x2, getY() - y2);
-			if (distance < range) {
+			if (distance + 20 < range && !e.isDead()) {
 				shoot();
 				TowerDamage(e);
-				// System.out.println("enemy entered range");
 
 			}
 

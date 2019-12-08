@@ -1,19 +1,7 @@
 package Towers;
 
-import java.util.concurrent.TimeUnit;
-
 import controller.Drawer;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Circle;
-import javafx.util.Duration;
-import model.Enemy;
-import model.EnemyLocator;
-import model.TimerAll;
 
 /**
  * 
@@ -32,14 +20,15 @@ public class Tower {
 	private int width;
 	private int height;
 
-	protected int range = 100, cost = 0;
+	protected int range = 100;
 	protected int currentTime = 0;
 	protected int lastTimeAttacked = 0;
 	protected int attackRate = 3;
-	private int towerCost = 0, towerSpent = 0;
+	protected int towerCost = 0, towerSpent = 0;
 	protected int damage = 0;
 	private int towersDestroyed = 0;
 	protected String towerName = "";
+	protected boolean isSelected = false;
 
 	/**
 	 * The basic constructor for this class, takes in an img, x and y position,
@@ -65,7 +54,12 @@ public class Tower {
 	 */
 	public void Draw() {
 		Drawer.DrawImage(img, x, y, width, height);
-
+		if (isSelected)
+			showRange();
+	}
+	
+	public void showRange() {
+		Drawer.DrawCircle(range, x, y);
 	}
 
 	public int getX() {
@@ -83,5 +77,23 @@ public class Tower {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	public void setIsSelected(boolean value) {
+		this.isSelected = value;
+	}
+	
+	public boolean isSelected() {
+		return this.isSelected;
+	}
+
+	public int getTowerCost() {
+		return towerCost;
+	}
+
+	public void setTowerCost(int towerCost) {
+		this.towerCost = towerCost;
+	}
+	
+	
 
 }

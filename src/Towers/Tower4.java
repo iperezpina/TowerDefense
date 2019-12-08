@@ -26,7 +26,7 @@ public class Tower4 extends Tower{
 	
 	public void additionalInfo() {
 		this.attackRate = 3;
-		this.cost = 750;
+		this.towerCost = 750;
 		this.damage = 3;
 		this.range = 250;
 		this.towerName = "Lightning Tower";

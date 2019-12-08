@@ -25,7 +25,7 @@ public class ResourceManager {
 	public static Image Tower8img = QuickLoad("tower8");
 	
 	//All the projectiles
-	//public static Image img = QuickLoad("");
+	public static Image bloodProjimg = QuickLoad("blood");
 	
 	//All the tiles
 	public static Image grass32Img = QuickLoad("grass32");

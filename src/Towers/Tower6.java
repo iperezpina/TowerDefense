@@ -26,7 +26,7 @@ public class Tower6 extends Tower{
 	
 	public void additionalInfo() {
 		this.attackRate = 6;
-		this.cost = 666;
+		this.towerCost = 666;
 		this.damage = 1;
 		this.range = 250;
 		this.towerName = "Blood Tower";

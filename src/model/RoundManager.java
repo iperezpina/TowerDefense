@@ -9,6 +9,7 @@ public class RoundManager {
 	private float intervalsBetween;
 	private EnemySpawner es;
 	private boolean startedRound;
+	private int healthIncr;
 	Enemy e;
 
 	public RoundManager(int amtToSpawn, float intervalsBetween, Enemy e) {
@@ -17,6 +18,7 @@ public class RoundManager {
 		this.e = e;
 		this.es = null;
 		this.waveNumber = 0;
+		this.healthIncr = 5;
 		this.startedRound = false;
 		newWave();
 	}
@@ -44,7 +46,7 @@ public class RoundManager {
 	};
 
 	public void newWave() {
-		es = new EnemySpawner(amtToSpawn += 2, intervalsBetween -= .5f, e);
+		es = new EnemySpawner(amtToSpawn += 2, intervalsBetween -= .5f, healthIncr += 5, e);
 		startedRound = true;
 		waveNumber++;
 		//System.out.println("Beginning wave: " + waveNumber);

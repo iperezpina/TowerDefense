@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.File;
+
 import Towers.BasicTower;
 import Towers.Tower;
 import Towers.Tower1;
@@ -14,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.AudioClip;
 import view.TowerDefenseView;
 
 public class Player {
@@ -59,17 +62,14 @@ public class Player {
 	
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
 
-		@SuppressWarnings("deprecation")
+		@SuppressWarnings( "deprecation" )
 		@Override
 		public void handle(MouseEvent event) {
-			System.out.println("You are choosing a tower!");
 			currTowerImgView = (ImageView) event.getSource();
 			currTowerImg = (Image) currTowerImgView.getImage();
-			System.out.println("You got a tower!");
 			currURL = currTowerImg.impl_getUrl();
 			id = currURL.substring(currURL.length()-10);
-
-			
+			System.out.println("Tower chosen: " + id);
 		}
 	};
 	
@@ -78,40 +78,41 @@ public class Player {
 		@Override
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() / 32;
-			System.out.println("can get x");
 			int y = (int) event.getY() / 32;
-			System.out.println("can get y");
-			if (tdv.getTm().GetTile(x, y).getType().isCanPlace()) {
-				System.out.println("Can place");
-				currTower = new BasicTower(currTowerImg, x*32, y*32, 32, 32);
-				System.out.println("Can create currTower in place");
-				/*if(id.equals("tower1.png")) {
-					currTower = (Tower1) currTower;
+			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg != null ) {
+
+				if (id.equals("tower1.png")) {
+					currTower = new Tower1(currTowerImg, x*32, y*32, 32, 32);
 				}
-				if(id.equals("tower2.png")) {
-					currTower = (Tower2) currTower;
+				if (id.equals("tower2.png")) {
+					currTower = new Tower2(currTowerImg, x*32, y*32, 32, 32);
 				}
-				if(id.equals("tower3.png")) {
-					currTower = (Tower3) currTower;
+				if (id.equals("tower3.png")) {
+					currTower = new Tower3(currTowerImg, x*32, y*32, 32, 32);
 				}
-				if(id.equals("tower4.png")) {
-					currTower = (Tower4) currTower;
+				if (id.equals("tower4.png")) {
+					currTower = new Tower4(currTowerImg, x*32, y*32, 32, 32);
 				}
-				if(id.equals("tower5.png")) {
-					currTower = (Tower5) currTower;
+				if (id.equals("tower5.png")) {
+					currTower = new Tower5(currTowerImg, x*32, y*32, 32, 32);
 				}
-				if(id.equals("tower6.png")) {
-					currTower = (Tower6) currTower;
+				if (id.equals("tower6.png")) {
+					currTower = new Tower6(currTowerImg, x*32, y*32, 32, 32);
 				}
-				if(id.equals("tower7.png")) {
-					currTower = (Tower7) currTower;
+				if (id.equals("tower7.png")) {
+					currTower = new Tower7(currTowerImg, x*32, y*32, 32, 32);
 				}
-				if(id.equals("tower8.png")) {
-					currTower = (Tower8) currTower;
-				}*/
-				tdv.getTowers().addTower2(currTower, x, y);
-				//tdv.getTm().GetTile(x, y).getType().setCanPlace(false);
-				
+				if (id.equals("tower8.png")) {
+					currTower = new Tower8(currTowerImg, x*32, y*32, 32, 32);
+				}
+				if (currTower != null && coins >= currTower.getTowerCost()) {
+					AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
+					coin.play();
+					
+					coins -= currTower.getTowerCost();
+					System.out.println(coins);
+					tdv.getTowers().addTower2(currTower, x, y);
+				}
 			}
 		}
 		
