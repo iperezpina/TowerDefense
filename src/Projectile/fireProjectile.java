@@ -46,6 +46,7 @@ public class fireProjectile extends Projectile {
 			y = y + ((EtoShoot.getY() - y) / length * speed);
 
 			if (handleCol()) {
+				
 				fireSound.play();
 				TowerDamage(EtoShoot);
 				tl.stop();
