@@ -36,9 +36,7 @@ public class TowerHolder {
 		if (towers2.containsKey(newKey)) {
 			Tower tower = towers2.get(newKey);
 			System.out.println("A tower already exists there!");
-			System.out.println("Before: " + tower.isSelected());
 			tower.setIsSelected(!(tower.isSelected()));
-			System.out.println("After: " + tower.isSelected());
 		}
 		else {
 

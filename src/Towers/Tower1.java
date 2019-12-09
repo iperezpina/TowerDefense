@@ -24,6 +24,9 @@ public class Tower1 extends Tower {
 		additionalInfo();
 	}
 	
+	/**
+	 * Adds specific information related to this tower class
+	 */
 	public void additionalInfo() {
 		this.attackRate = 4;
 		this.towerCost = 300;
@@ -39,6 +42,9 @@ public class Tower1 extends Tower {
 		return url;
 	}
 	
+	/**
+	 * Shoots out a projectile
+	 */
 	public void shoot() {
 		ammo = new fireProjectile("Fireball", 5, x, y);
 	}

@@ -2,6 +2,7 @@
 package model;
 
 import controller.Drawer;
+import controller.Player;
 import controller.ResourceManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -32,6 +33,7 @@ public class Enemy {
 	private MoveDir md;
 	private boolean isExited = false, isDead = false;
 	private String imgPath;
+	private int cashBack;
 
 	/**
 	 * The constructor method of the enemy class, takes in an img, a tile where the
@@ -133,6 +135,7 @@ public class Enemy {
 		else if (tm.GetTile(posX, posY).getType() == TileType.DEBUG && canGoX && canGoY) {
 			isExited = true;
 			isDead = true;
+			Player.takeDmg();
 		}
 	}
 
