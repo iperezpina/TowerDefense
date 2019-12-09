@@ -17,12 +17,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
+import model.TimerAll;
 import view.TowerDefenseView;
 
 public class Player {
-	private int health;
-	private int coins;
-	private TowerDefenseView tdv;
+	private static int health;
+	private static int coins;
+	private static TowerDefenseView tdv;
 	private ImageView currTowerImgView;
 	private Image currTowerImg;
 	private Tower currTower;
@@ -46,16 +47,39 @@ public class Player {
 		return tdv;
 	}
 
+	public static void takeDmg() {
+		health -= 1;
+		updatePlayerGUI();
+		gameOver();
+	}
+
+	private static void gameOver() {
+		if (health <= 0) {
+			System.out.println("GAME OVER!");
+			TimerAll.pause();
+		}
+	}
+
 	public void setTdv(TowerDefenseView tdv) {
 		this.tdv = tdv;
 	}
 
 	public void decreaseCoins(int shift) {
 		coins -= shift;
+		updatePlayerGUI();
 	}
 
 	public void increaseCoins(int shift) {
 		coins += shift;
+	}
+
+	public static void addCash(int cash) {
+		coins += cash;
+		updatePlayerGUI();
+	}
+
+	public static void updatePlayerGUI() {
+		tdv.getRightLabel().setText("Money: " + coins + "\nHealth: " + health);
 	}
 
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
@@ -104,12 +128,13 @@ public class Player {
 					currTower = new Tower8(currTowerImg, x * 32, y * 32, 32, 32);
 				}
 				if (currTower != null && coins >= currTower.getTowerCost()) {
-					AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
-					coin.play();
+					
+					if (tdv.getTowers().addTower2(currTower, x, y)) {
+						AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
+						coin.play();
+						decreaseCoins(currTower.getTowerCost());
+					}
 
-					decreaseCoins(currTower.getTowerCost());
-					tdv.getRightLabel().setText("Money: " + getCoins() + "\nHealth: " + getHP());
-					tdv.getTowers().addTower2(currTower, x, y);
 				}
 			}
 		}
