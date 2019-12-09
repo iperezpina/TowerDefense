@@ -41,7 +41,7 @@ public class Tower5 extends Tower {
 	}
 
 	public void shoot() {
-		ammo = new rockProjectile("rock", 3, x, y,  currEnemy);
+		ammo = new rockProjectile("rock", 3, x, y,  currEnemy, damage);
 	}
 
 	/**
@@ -72,10 +72,6 @@ public class Tower5 extends Tower {
 
 	}
 
-	public void TowerDamage(Enemy e) {
-
-		e.setHealth(e.getHealth() - damage);
-	}
 
 	private Enemy currEnemy = null;
 
@@ -94,8 +90,6 @@ public class Tower5 extends Tower {
 		
 
 				shoot();
-				TowerDamage(e);
-
 			}
 
 		}

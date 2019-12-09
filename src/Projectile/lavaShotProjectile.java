@@ -12,8 +12,8 @@ public class lavaShotProjectile extends Projectile {
 
 	private Timeline tl;
 
-	public lavaShotProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot) {
-		super(imageName, speed, x, y, EtoShoot);
+	public lavaShotProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
+		super(imageName, speed, x, y, EtoShoot, damage);
 		update();
 
 	}
@@ -41,6 +41,11 @@ public class lavaShotProjectile extends Projectile {
 
 			y = y + ((EtoShoot.getY() - y) / length * speed);
 
+			if (handleCol()) {
+				TowerDamage(EtoShoot);
+				tl.stop();
+			}
+			
 			draw();
 			count++;
 		}

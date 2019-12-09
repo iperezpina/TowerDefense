@@ -41,7 +41,7 @@ public class Tower7 extends Tower {
 	}
 
 	public void shoot() {
-		ammo = new arrowProjectile("arrow", 7, x, y, currEnemy);
+		ammo = new arrowProjectile("arrow", 7, x, y, currEnemy, damage);
 	}
 
 	/**
@@ -72,12 +72,9 @@ public class Tower7 extends Tower {
 
 	}
 
-	public void TowerDamage(Enemy e) {
-
-		e.setHealth(e.getHealth() - damage);
-	}
 
 	private Enemy currEnemy = null;
+	
 
 	public void drawRange() {
 
@@ -85,16 +82,15 @@ public class Tower7 extends Tower {
 			int x2 = e.getX();
 			int y2 = e.getY();
 			double distance = Math.hypot(getX() - x2, getY() - y2);
-			if (distance < range && !e.isDead()) {
-
+			if (distance + 20 < range && !e.isDead()) {
 				currEnemy = e;
 
 				shoot();
-				TowerDamage(e);
 
 			}
 
 		}
+		
 	}
 
 	public Enemy getcurrEnemy() {

@@ -53,9 +53,7 @@ public class Drawer {
 	public static void DrawImageDouble(Image amunition, double x, double y, double d, double e) {
 		// TODO Auto-generated method stub
 		TowerDefenseView.canvas.getGraphicsContext2D().drawImage(amunition, x, y, d, e);
-		
-		
-	}
 
+	}
 
 }
