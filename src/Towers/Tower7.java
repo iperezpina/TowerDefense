@@ -13,17 +13,17 @@ import model.Enemy;
 import model.EnemyLocator;
 import model.TimerAll;
 
-public class Tower7 extends Tower{
-	
+public class Tower7 extends Tower {
+
 	private String url;
 	private Projectile ammo;
 	private Timeline tl;
-	
+
 	public Tower7(Image img, int x, int y, int width, int height) {
 		super(img, x, y, width, height);
 		additionalInfo();
 	}
-	
+
 	public void additionalInfo() {
 		this.attackRate = 3;
 		this.towerCost = 800;
@@ -31,18 +31,19 @@ public class Tower7 extends Tower{
 		this.range = 500;
 		this.towerName = "Arrow Tower";
 	}
-	
+
 	public void setURL(String str) {
 		url = str;
 	}
+
 	public String getURL() {
 		return url;
 	}
-	
+
 	public void shoot() {
-		ammo = new arrowProjectile("arrow", 7, x, y);
+		ammo = new arrowProjectile("arrow", 7, x, y, currEnemy);
 	}
-	
+
 	/**
 	 * Update method in charge of any movement (rotation) of the tower and drawing
 	 * of the tower
@@ -76,6 +77,8 @@ public class Tower7 extends Tower{
 		e.setHealth(e.getHealth() - damage);
 	}
 
+	private Enemy currEnemy = null;
+
 	public void drawRange() {
 
 		for (Enemy e : EnemyLocator.getEnemies()) {
@@ -83,11 +86,18 @@ public class Tower7 extends Tower{
 			int y2 = e.getY();
 			double distance = Math.hypot(getX() - x2, getY() - y2);
 			if (distance < range && !e.isDead()) {
+
+				currEnemy = e;
+
 				shoot();
 				TowerDamage(e);
 
 			}
 
 		}
+	}
+
+	public Enemy getcurrEnemy() {
+		return currEnemy;
 	}
 }
