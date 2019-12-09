@@ -55,6 +55,8 @@ public class RoundManager {
 		public void run() {
 			if (es != null) {
 				if (es.isDone() == true && startedRound) {
+					// TODO implement add money back after round ends
+					// add money to player
 					startedRound = false;
 					System.out.println("Round " + waveNumber + " ended!");
 					// newWave();
@@ -94,6 +96,9 @@ public class RoundManager {
 		}
 	};
 
+	public EnemySpawner getES() {
+		return es;
+	}
 
 
 }

@@ -12,8 +12,16 @@ public class TimerAll {
 	private static boolean check = false;
 	
 	public static void run() {
+		resetDeltaTime();
 		timer = new Timer();
+		TimerTask tt = new TimerTask() {
+			public void run() {
+				timeInMill += deltaTime;
+				seconds = (int) timeInMill;
+	    }
+		};
 		timer.scheduleAtFixedRate(tt, 0, 100);
+		
 	}
 	
 	public boolean getCheck() {
@@ -24,12 +32,7 @@ public class TimerAll {
 		return timeInMill;
 	}
 	
-	private static TimerTask tt = new TimerTask() {
-		public void run() {
-			timeInMill += deltaTime;
-			seconds = (int) timeInMill;
-    }
-	};
+	
 	
 	public static int getTimeInSeconds() {
 		return seconds;
@@ -41,6 +44,7 @@ public class TimerAll {
 	
 	public static void pause() {
 		deltaTime = 0f;
+		
 	}
 	
 	public static void play() {
@@ -53,5 +57,8 @@ public class TimerAll {
 	
 	private static void resetDeltaTime() {
 		deltaTime = .1f;
+	}
+	public static void cancel() {
+		timer.cancel();
 	}
 }
