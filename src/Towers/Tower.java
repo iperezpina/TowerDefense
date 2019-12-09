@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 public class Tower {
 
 	// Variables for this class
-	private Image img;
+	protected Image img;
 	protected int x;
 	protected int y;
 	private int width;

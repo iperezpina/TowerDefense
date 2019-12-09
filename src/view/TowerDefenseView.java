@@ -174,7 +174,7 @@ public class TowerDefenseView extends Application {
 		rm = new RoundManager(5, 5f, e);
 		
 
-		//EnemySpawner es = new EnemySpawner(5, 5f, e);
+		
 		
 		tm.update();
 		towers.update();

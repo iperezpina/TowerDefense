@@ -6,7 +6,8 @@ import javafx.scene.image.Image;
 
 public enum TileType {
 
-	Grass("lava", true), Dirt("road", false), Water("lava", false), DEBUG("lava", false);
+	Grass("lava", true), Dirt("road", false), Water("lava", false), HellGround1("hellground1", true),
+	HellGround2("hellground2", true), HellGround3("hellground3", true), DEBUG("lava", false);
 	Image img;
 	boolean canPlace;
 	
