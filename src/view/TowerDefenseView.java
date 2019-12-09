@@ -59,6 +59,7 @@ public class TowerDefenseView extends Application {
 	private Media media = new Media(new File("src/Sounds/whoosh.wav").toURI().toString());
 	private MediaPlayer mediaPlayer = new MediaPlayer(media);
 	private static Player currPlayer = new Player();
+	private Label rightLabel;
 	
 	//Variables here relate to the gui elements
 	FlowPane fp = new FlowPane();
@@ -123,10 +124,11 @@ public class TowerDefenseView extends Application {
 		setupMainGrid(hbox, canvas);
 		
 		//Rightpane will have the info about the player and where the available towers will be located
-		VBox rightPane = new VBox(new Label("Money: " + currPlayer.getCoins() + "\nHealth: " + currPlayer.getHP()));
+		rightLabel = new Label("Money: " + currPlayer.getCoins() + "\nHealth: " + currPlayer.getHP());
+		VBox rightPane = new VBox(rightLabel);
 		//VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() + "\nCoins: " + currPlayer.getCoins()));
 
-    rightPane.resize(160, 480);
+		rightPane.resize(160, 480);
 		rightPane.setPrefWidth(160);
 		rightPane.setBackground(bgd2);
 		drawRightPane(rightPane);
@@ -202,6 +204,10 @@ public class TowerDefenseView extends Application {
 			}
 		}
 		rightPane.getChildren().add(gp);
+	}
+	
+	public Label getRightLabel() {
+		return rightLabel;
 	}
 	
 	/**
