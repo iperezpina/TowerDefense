@@ -32,6 +32,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Enemy;
 import model.EnemySpawner;
+import model.FileReader;
 import model.RoundManager;
 import model.TileMap;
 import model.TimerAll;
@@ -53,6 +54,7 @@ public class TowerDefenseView extends Application {
 	private static TowerHolder towers;
 	private final int MAX_X = 800, MAX_Y = 600;
 	private TileMap tm;
+	private FileReader fr;
 	private RoundManager rm;
 	private Background bgd2 = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
 	private Background bgd3 = new Background(new BackgroundFill(Color.LIGHTSTEELBLUE, CornerRadii.EMPTY, Insets.EMPTY));
@@ -60,6 +62,7 @@ public class TowerDefenseView extends Application {
 	private MediaPlayer mediaPlayer = new MediaPlayer(media);
 	private static Player currPlayer = new Player();
 	private Label rightLabel;
+	private Label roundLabel;
 	private BorderPane bpRightButtons;
 	//private Button goButton;
 	
@@ -139,7 +142,8 @@ public class TowerDefenseView extends Application {
 		drawRightPane(rightPane);
 		
 		//Bottompane will show information on a selected tower, upgrades for that tower and a pause/start/2x speed button
-		VBox bottomPane = new VBox(new Label("Tower Info/Upgrades"));
+		roundLabel = new Label("Round 0");
+		VBox bottomPane = new VBox(roundLabel);
 		bottomPane.resize(800, 120);
 		bottomPane.setPrefHeight(120);
 		bottomPane.setBackground(bgd3);
@@ -180,11 +184,10 @@ public class TowerDefenseView extends Application {
 		//canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
 		tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
-		Enemy e = new Enemy("Images/ghost.png", tm.GetTile(0, 1), 32, 32, 4, 5, tm);
-		rm = new RoundManager(5, 5f, e);
-		
-
-		
+		Enemy e = new Enemy("ghost", tm.GetTile(0, 1), 32, 32, 4, 5, tm);
+		fr = new FileReader(tm, tm.GetTile(0, 1));
+		fr.read("src/level1.txt");
+		rm = new RoundManager(fr.getEnemies(), 5f, this);
 		
 		tm.update();
 		towers.update();
@@ -320,6 +323,14 @@ public class TowerDefenseView extends Application {
 
 	public static void setTowers(TowerHolder towers) {
 		TowerDefenseView.towers = towers;
+	}
+
+	public Label getRoundLabel() {
+		return roundLabel;
+	}
+
+	public void setRoundLabel(Label roundLabel) {
+		this.roundLabel = roundLabel;
 	}
 	
 	public void play() {
