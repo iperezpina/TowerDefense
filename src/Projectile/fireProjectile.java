@@ -6,14 +6,15 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
+import model.Enemy;
 
-public class fireProjectile extends Projectile{
+public class fireProjectile extends Projectile {
 	private Timeline tl;
-	
-	public fireProjectile(String imageName, int speed, int x, int y) {
-		super(imageName, speed, x, y);
+
+	public fireProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot) {
+		super(imageName, speed, x, y, EtoShoot);
 		update();
-		
+
 	}
 
 	public void update() {
@@ -22,18 +23,26 @@ public class fireProjectile extends Projectile{
 		tl.play();
 
 	}
-	
+
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
 		int count = 0;
+
 		@Override
 		public void handle(ActionEvent arg0) {
-			if(count>20) {
+			if (count > 20) {
 				tl.stop();
 			}
-				x= x+speed;
-				draw();
-				count++;
+			// System.out.println(EtoShoot);
+			double length = Math.sqrt(
+					(EtoShoot.getX() - x) * (EtoShoot.getX() - x) + (EtoShoot.getY() - y) * (EtoShoot.getY() - y));
+			x = x + ((EtoShoot.getX() - x) / length * speed);
+
+			y = y + ((EtoShoot.getY() - y) / length * speed);
+
+			draw();
+			count++;
+
 		}
 
 	}

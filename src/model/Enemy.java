@@ -2,6 +2,7 @@
 package model;
 
 import controller.Drawer;
+import controller.Player;
 import controller.ResourceManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -32,6 +33,7 @@ public class Enemy {
 	private MoveDir md;
 	private boolean isExited = false, isDead = false;
 	private String imgPath;
+	private int cashBack;
 
 	/**
 	 * The constructor method of the enemy class, takes in an img, a tile where the
@@ -60,6 +62,13 @@ public class Enemy {
 		this.md = MoveDir.RIGHT;
 		this.health = health;
 		this.maxHealth = this.health;
+		this.cashBack = calculateCashBack();
+	}
+	
+	private int calculateCashBack() {
+		int temp = 0;
+		temp += (health / 4) + speed;
+		return temp;
 	}
 
 	/**
@@ -91,6 +100,7 @@ public class Enemy {
 			if (health <= 0) {
 				tl.stop();
 				isDead = true;
+				Player.addCash(cashBack);
 			}
 			
 			if (isExited) {
@@ -140,6 +150,7 @@ public class Enemy {
 		else if (tm.GetTile(posX, posY).getType() == TileType.DEBUG && canGoX && canGoY) {
 			isExited = true;
 			isDead = true;
+			Player.takeDmg();
 		}
 	}
 
