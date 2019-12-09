@@ -173,9 +173,6 @@ public class TowerDefenseView extends Application {
 		Enemy e = new Enemy("Images/ghost.png", tm.GetTile(0, 1), 32, 32, 4, 5, tm);
 		rm = new RoundManager(5, 5f, e);
 		
-
-		
-		
 		tm.update();
 		towers.update();
 		rm.update();
