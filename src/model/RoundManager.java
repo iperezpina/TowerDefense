@@ -28,7 +28,7 @@ public class RoundManager {
 	public void update() {
 		timer.scheduleAtFixedRate(timerTask, 0, 500);
 	}
-	
+
 	Timer timer = new Timer();
 
 	// A task that will occur every so often that spawns an enemy if it can, and
@@ -39,11 +39,11 @@ public class RoundManager {
 				if (es.isDone() == true) {
 					startedRound = false;
 					System.out.println("Round " + waveNumber + " endede!");
-					//newWave();
+					// newWave();
 				} else {
 					es.update();
 				}
-			}	
+			}
 		}
 
 	};
@@ -53,10 +53,11 @@ public class RoundManager {
 		startedRound = true;
 		waveNumber++;
 	}
-	
+
 	/**
-	 * Event handler that will start a new round will turn the into a x2 button if clicked on, then paused button
-	 * if pressed again it will cycle between those two until the round is over and return to a go button.
+	 * Event handler that will start a new round will turn the into a x2 button if
+	 * clicked on, then paused button if pressed again it will cycle between those
+	 * two until the round is over and return to a go button.
 	 */
 	public EventHandler<ActionEvent> startRound = new EventHandler<ActionEvent>() {
 
@@ -65,6 +66,5 @@ public class RoundManager {
 			newWave();
 		}
 	};
-	
 
 }
