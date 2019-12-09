@@ -62,6 +62,13 @@ public class Enemy {
 		this.md = MoveDir.RIGHT;
 		this.health = health;
 		this.maxHealth = this.health;
+		this.cashBack = calculateCashBack();
+	}
+	
+	private int calculateCashBack() {
+		int temp = 0;
+		temp += (health / 4) + speed;
+		return temp;
 	}
 
 	/**
@@ -86,6 +93,7 @@ public class Enemy {
 			if (health <= 0) {
 				tl.stop();
 				isDead = true;
+				Player.addCash(cashBack);
 			}
 			
 			if (isExited) {

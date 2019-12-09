@@ -23,8 +23,8 @@ import view.TowerDefenseView;
 
 public class Player {
 	private static int health;
-	private int coins;
-	private TowerDefenseView tdv;
+	private static int coins;
+	private static TowerDefenseView tdv;
 	private ImageView currTowerImgView;
 	private Image currTowerImg;
 	private Tower currTower;
@@ -50,8 +50,8 @@ public class Player {
 	}
 	
 	public static void takeDmg() {
-		health--;
-		//System.out.println(health);
+		health -= 1;
+		updatePlayerGUI();
 		gameOver();
 	}
 	
@@ -68,10 +68,20 @@ public class Player {
 	
 	public void decreaseCoins(int shift) {
 		coins -= shift;
+		updatePlayerGUI();
 	}
 	
 	public void increaseCoins(int shift) {
 		coins += shift;
+	}
+	
+	public static void addCash(int cash) {
+		coins += cash;
+		updatePlayerGUI();
+	}
+	
+	public static void updatePlayerGUI() {
+		tdv.getRightLabel().setText("Money: " + coins + "\nHealth: " + health);
 	}
 	
 	
@@ -125,7 +135,6 @@ public class Player {
 						AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
 						coin.play();
 						decreaseCoins(currTower.getTowerCost());
-						tdv.getRightLabel().setText("Money: " + getCoins() + "\nHealth: " + getHP());
 					}
 					
 					

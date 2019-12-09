@@ -38,7 +38,7 @@ public class RoundManager {
 			if (es != null) {
 				if (es.isDone() == true) {
 					startedRound = false;
-					System.out.println("Round " + waveNumber + " endede!");
+					System.out.println("Round " + waveNumber + " ended!");
 					// newWave();
 				} else {
 					es.update();
