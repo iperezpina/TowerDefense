@@ -31,16 +31,18 @@ public class TowerHolder {
 		this.towers2 = new HashMap<String, Tower>();
 	}
 
-	public void addTower2(Tower newTower, int x, int y) {
+	public boolean addTower2(Tower newTower, int x, int y) {
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
 			Tower tower = towers2.get(newKey);
 			System.out.println("A tower already exists there!");
 			tower.setIsSelected(!(tower.isSelected()));
+			return false;
 		}
 		else {
 
 			towers2.put(newKey, newTower);
+			return true;
 		}
 	}
 
