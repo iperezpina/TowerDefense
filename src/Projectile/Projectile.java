@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
+import model.Enemy;
 
 
 
@@ -17,53 +18,34 @@ public class Projectile {
 
 	Image Amunition;
 	int speed;
-	int x;
-	int y;
+	double x;
+	double y;
+	Enemy EtoShoot;
 	private Timeline tl;
-
 	
 	
-	public Projectile( String imageName, int speed, int x, int y) {
+	
+	public Projectile( String imageName, int speed, int x, int y, Enemy EtoShoot) {
 		if(this.Amunition == null) {
 			this.Amunition= ResourceManager.QuickLoad(imageName);
 		}
 		this.x= x;
 		this.y= y;
 		this.speed= speed;
+		this.EtoShoot = EtoShoot;
 		//update();
 		
 	}
 	
 	
 	public void draw() {
-		Drawer.DrawImage(Amunition, x, y, Amunition.getWidth(), Amunition.getHeight());
+		
+		Drawer.DrawImageDouble(Amunition, x, y, Amunition.getWidth(), Amunition.getHeight());
 		
 	}
 	
 	
-	
-//	public void update() {
-//		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
-//		tl.setCycleCount(Animation.INDEFINITE);
-//		tl.play();
-//
-//	}
-//	
-//	
-//	private class AnimationHandler implements EventHandler<ActionEvent> {
-//
-//		int count = 0;
-//		@Override
-//		public void handle(ActionEvent arg0) {
-//			if(count>20) {
-//				tl.stop();
-//			}
-//				x= x+speed;
-//				draw();
-//				count++;
-//		}
-//
-//	}
+
 	
 	
 }
