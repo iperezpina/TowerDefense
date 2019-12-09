@@ -59,9 +59,26 @@ public class TowerDefenseView extends Application {
 	private static Player currPlayer = new Player();
 	private Label rightLabel;
 
-	// Variables here relate to the gui elements
 
-	// Other variables below
+	private BorderPane bpRightButtons;
+	
+	
+	//Variables here relate to the gui elements
+	FlowPane fp = new FlowPane();
+	Label towerNameLabel = new Label("Tower Name Here");
+	Label killCountLabel = new Label("Enemies Destroyed: 666");
+	Button sellButton = new Button("Sell for $150");
+	
+	BorderPane bpUpgrade = new BorderPane();
+	Label upgradeNameLabel = new Label("Cool upgrade name");
+	Label upgradeDetailLabel = new Label("Description of the upgrade here, does not have to be very specific.");
+	Label upgradeCostLabel = new Label("$123");
+	
+	Button goButton = new Button("GO");
+	BorderPane bpBottom = new BorderPane();
+	
+	
+  // Other variables below
 	// Essentially the map of the level
 	private int[][] tileMap = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
@@ -90,7 +107,8 @@ public class TowerDefenseView extends Application {
 		// Add the view to the controller class
 		currPlayer.setTdv(this);
 		tdc.setTdv(this);
-		TimerAll.run();
+
+		TimerAll.pause();
 
 		// Setting up title and icon for app
 		mainStage.setTitle("Dragon Force Defense");
@@ -137,7 +155,13 @@ public class TowerDefenseView extends Application {
 		mainStage.setScene(scene);
 		mainStage.show();
 
-		// Loops the music for forever
+		// TODO below doesnt work
+		/*mainStage.setOnCloseRequest(closeEvent -> {
+		       TimerAll.cancel();  
+		});*/
+
+		//Loops the music for forever
+
 		mediaPlayer.setAutoPlay(true);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 	}
@@ -157,8 +181,6 @@ public class TowerDefenseView extends Application {
 		towers = new TowerHolder(tm);
 		Enemy e = new Enemy("Images/ghost.png", tm.GetTile(0, 1), 32, 32, 8, 5, tm);
 		rm = new RoundManager(5, 5f, e);
-
-		// EnemySpawner es = new EnemySpawner(5, 5f, e);
 
 		tm.update();
 		towers.update();
@@ -233,19 +255,53 @@ public class TowerDefenseView extends Application {
 				+ "-fx-border-color: black;");
 		bpUpgrade.setPrefSize(200, 100);
 
-		// Go button that will start the round, will turn into a x2 and then a pause.
-		Button goButton = new Button("GO");
-		goButton.setPrefSize(150, 100);
-		goButton.setStyle("-fx-background-color:Lime; -fx-border-radius: 2px; -fx-border-width: 2px;"
-				+ "-fx-border-color: Green;");
+		
+		bpRightButtons = new BorderPane();
+		
+		//Go button that will start the round, will turn into a x2 and then a pause.
 
-		// Add the three big items into the borderpane
+		drawGoButton();
+
+		
+		//Add the three big items into the borderpane
 		bpBottom.setLeft(fp);
 		bpBottom.setCenter(bpUpgrade);
-		bpBottom.setRight(goButton);
-
-		// Adding to bottomPane
+		bpBottom.setRight(bpRightButtons);
+		
+		
+		//Adding to bottomPane
 		bottomPane.getChildren().add(bpBottom);
+		}
+	
+	public BorderPane getBPRight() {
+		return bpRightButtons;
+	}
+	
+	public void drawExtraButtons() {
+		Button pause = new Button("Pause");
+		pause.setPrefSize(150, 50);
+		pause.setStyle("-fx-background-color:tomato; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
+				"-fx-border-color:red;");
+		bpRightButtons.setTop(pause);
+		pause.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.pause);
+		
+		Button fast = new Button("x2");
+		fast.setPrefSize(150, 50);
+		fast.setStyle("-fx-background-color:cornflowerblue; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
+				"-fx-border-color:blue;");
+		bpRightButtons.setBottom(fast);
+		
+	}
+	
+	public void drawGoButton() {
+		Button goButton = new Button("GO");
+		goButton.setPrefSize(150, 50);
+		goButton.setStyle("-fx-background-color:springgreen; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
+				"-fx-border-color: Green;");
+		goButton.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.resume);
+		
+		bpRightButtons.setTop(goButton);
+		bpRightButtons.setBottom(null);
 	}
 
 	public TileMap getTm() {
@@ -263,5 +319,16 @@ public class TowerDefenseView extends Application {
 	public static void setTowers(TowerHolder towers) {
 		TowerDefenseView.towers = towers;
 	}
+
+	
+	public void play() {
+		//TimerAll.play();
+		TimerAll.run();
+	}
+	public void pause() {
+		TimerAll.pause();
+		//TimerAll.run();
+	}
+
 
 }
