@@ -60,6 +60,8 @@ public class TowerDefenseView extends Application {
 	private MediaPlayer mediaPlayer = new MediaPlayer(media);
 	private static Player currPlayer = new Player();
 	private Label rightLabel;
+	private BorderPane bpRightButtons;
+	//private Button goButton;
 	
 	//Variables here relate to the gui elements
 	FlowPane fp = new FlowPane();
@@ -94,7 +96,7 @@ public class TowerDefenseView extends Application {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 } };
 	
-
+	
 	public static void main(String args[]) {
 		launch(args);
 	}
@@ -106,7 +108,11 @@ public class TowerDefenseView extends Application {
 		//Add the view to the controller class
 		currPlayer.setTdv(this);
 		tdc.setTdv(this);
-		TimerAll.run();
+		
+		
+		TimerAll.pause();
+		//TimerAll.run();
+		//play();
 		
 		// Setting up title and icon for app
 		mainStage.setTitle("Dragon Force Defense");
@@ -149,6 +155,11 @@ public class TowerDefenseView extends Application {
 		Scene scene = new Scene(bp, MAX_X, MAX_Y);
 		mainStage.setScene(scene);
 		mainStage.show();
+		
+		// TODO below doesnt work
+		/*mainStage.setOnCloseRequest(closeEvent -> {
+		       TimerAll.cancel();  
+		});*/
 		
 		
 		
@@ -249,23 +260,53 @@ public class TowerDefenseView extends Application {
 				"-fx-border-color: black;");
 		bpUpgrade.setPrefSize(200, 100);
 		
+		bpRightButtons = new BorderPane();
+		
 		//Go button that will start the round, will turn into a x2 and then a pause.
-		goButton = new Button("GO");
-		goButton.setOnAction(rm.startRound);
-		goButton.setPrefSize(150, 100);
-		goButton.setStyle("-fx-background-color:Lime; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
-				"-fx-border-color: Green;");
+
+		drawGoButton();
+
 		
 		//Add the three big items into the borderpane
 		bpBottom.setLeft(fp);
 		bpBottom.setCenter(bpUpgrade);
-		bpBottom.setRight(goButton);
+		bpBottom.setRight(bpRightButtons);
+		
 		
 		//Adding to bottomPane
 		bottomPane.getChildren().add(bpBottom);
 		}
 	
-
+	public BorderPane getBPRight() {
+		return bpRightButtons;
+	}
+	
+	public void drawExtraButtons() {
+		Button pause = new Button("Pause");
+		pause.setPrefSize(150, 50);
+		pause.setStyle("-fx-background-color:tomato; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
+				"-fx-border-color:red;");
+		bpRightButtons.setTop(pause);
+		pause.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.pause);
+		
+		Button fast = new Button("x2");
+		fast.setPrefSize(150, 50);
+		fast.setStyle("-fx-background-color:cornflowerblue; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
+				"-fx-border-color:blue;");
+		bpRightButtons.setBottom(fast);
+		
+	}
+	
+	public void drawGoButton() {
+		Button goButton = new Button("GO");
+		goButton.setPrefSize(150, 50);
+		goButton.setStyle("-fx-background-color:springgreen; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
+				"-fx-border-color: Green;");
+		goButton.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.resume);
+		
+		bpRightButtons.setTop(goButton);
+		bpRightButtons.setBottom(null);
+	}
 	public TileMap getTm() {
 		return tm;
 	}
@@ -280,6 +321,15 @@ public class TowerDefenseView extends Application {
 
 	public static void setTowers(TowerHolder towers) {
 		TowerDefenseView.towers = towers;
+	}
+	
+	public void play() {
+		//TimerAll.play();
+		TimerAll.run();
+	}
+	public void pause() {
+		TimerAll.pause();
+		//TimerAll.run();
 	}
 	
 
