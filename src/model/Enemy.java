@@ -71,6 +71,14 @@ public class Enemy {
 		tl.play();
 
 	}
+	//TODO remove below two methods
+	public void pause() {
+		tl.pause();
+	}
+	
+	public void play() {
+		tl.play();
+	}
 
 	/**
 	 * An animation handler that moves the enemy along various directions along a
