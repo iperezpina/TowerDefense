@@ -44,7 +44,7 @@ public class TowerDefenseController {
 
 		@Override
 		public void handle(MouseEvent event) {
-			//tdv.play();
+			tdv.play();
 			tdv.drawExtraButtons();
 		}
 		
@@ -54,7 +54,7 @@ public class TowerDefenseController {
 
 		@Override
 		public void handle(MouseEvent event) {
-			//tdv.pause();
+			tdv.pause();
 			tdv.drawGoButton();
 		}
 		
@@ -78,15 +78,7 @@ public class TowerDefenseController {
 
 
 	
-	public EventHandler<MouseEvent> addExtraButtons = new EventHandler<MouseEvent>(){
-
-		@Override
-		public void handle(MouseEvent event) {
-			
-			tdv.drawExtraButtons();
-		}
-		
-	};
+	
 	
 
 	public TowerDefenseView getTdv() {

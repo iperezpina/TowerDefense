@@ -95,6 +95,7 @@ public class TowerDefenseView extends Application {
 		currPlayer.setTdv(this);
 		tdc.setTdv(this);
 		
+		
 		TimerAll.pause();
 		//TimerAll.run();
 		//play();
@@ -140,6 +141,11 @@ public class TowerDefenseView extends Application {
 		Scene scene = new Scene(bp, MAX_X, MAX_Y);
 		mainStage.setScene(scene);
 		mainStage.show();
+		
+		// TODO below doesnt work
+		/*mainStage.setOnCloseRequest(closeEvent -> {
+		       TimerAll.cancel();  
+		});*/
 		
 		
 		
@@ -302,11 +308,12 @@ public class TowerDefenseView extends Application {
 	}
 	
 	public void play() {
-		TimerAll.play();
+		//TimerAll.play();
 		TimerAll.run();
 	}
 	public void pause() {
 		TimerAll.pause();
+		//TimerAll.run();
 	}
 	
 
