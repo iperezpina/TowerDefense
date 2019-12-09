@@ -13,8 +13,8 @@ public class boneProjectile extends Projectile {
 
 	private Timeline tl;
 
-	public boneProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot) {
-		super(imageName, speed, x, y, EtoShoot);
+	public boneProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
+		super(imageName, speed, x, y, EtoShoot, damage);
 		update();
 
 	}
@@ -41,6 +41,12 @@ public class boneProjectile extends Projectile {
 			x = x + ((EtoShoot.getX() - x) / length * speed);
 
 			y = y + ((EtoShoot.getY() - y) / length * speed);
+			
+			if (handleCol()) {
+				TowerDamage(EtoShoot);
+				tl.stop();
+			}
+			
 
 			draw();
 			count++;

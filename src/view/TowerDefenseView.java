@@ -44,8 +44,8 @@ import model.TowerHolder;
  *
  */
 public class TowerDefenseView extends Application {
-	
-	//Variables here are in charge of various view stuff
+
+	// Variables here are in charge of various view stuff
 	public static Canvas canvas;
 	public static TowerDefenseController tdc = new TowerDefenseController();
 	private static TowerHolder towers;
@@ -58,11 +58,10 @@ public class TowerDefenseView extends Application {
 	private MediaPlayer mediaPlayer = new MediaPlayer(media);
 	private static Player currPlayer = new Player();
 	private Label rightLabel;
-	
-	//Variables here relate to the gui elements
-	
-	
-	//Other variables below
+
+	// Variables here relate to the gui elements
+
+	// Other variables below
 	// Essentially the map of the level
 	private int[][] tileMap = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
@@ -79,7 +78,6 @@ public class TowerDefenseView extends Application {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 } };
-	
 
 	public static void main(String args[]) {
 		launch(args);
@@ -89,56 +87,57 @@ public class TowerDefenseView extends Application {
 	 * The basic setup of the application
 	 */
 	public void start(Stage mainStage) throws Exception {
-		//Add the view to the controller class
+		// Add the view to the controller class
 		currPlayer.setTdv(this);
 		tdc.setTdv(this);
 		TimerAll.run();
-		
+
 		// Setting up title and icon for app
 		mainStage.setTitle("Dragon Force Defense");
 		mainStage.getIcons().add(new Image("Images/Fireball.png"));
-		
-		//Creating a borderpane
+
+		// Creating a borderpane
 		BorderPane bp = new BorderPane();
-		
+
 		// Applying an hbox that contains a canvas that will draw everything
 		HBox hbox = new HBox();
 		hbox.setPrefWidth(640);
 		canvas = new Canvas(640, 480);
-		//GraphicsContext gc = canvas.getGraphicsContext2D();
+		// GraphicsContext gc = canvas.getGraphicsContext2D();
 		hbox.getChildren().add(canvas);
 		setupMainGrid(hbox, canvas);
-		
-		//Rightpane will have the info about the player and where the available towers will be located
+
+		// Rightpane will have the info about the player and where the available towers
+		// will be located
 		rightLabel = new Label("Money: " + currPlayer.getCoins() + "\nHealth: " + currPlayer.getHP());
 		VBox rightPane = new VBox(rightLabel);
-		//VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() + "\nCoins: " + currPlayer.getCoins()));
+		// VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() +
+		// "\nCoins: " + currPlayer.getCoins()));
 
 		rightPane.resize(160, 480);
 		rightPane.setPrefWidth(160);
 		rightPane.setBackground(bgd2);
 		drawRightPane(rightPane);
-		
-		//Bottompane will show information on a selected tower, upgrades for that tower and a pause/start/2x speed button
+
+		// Bottompane will show information on a selected tower, upgrades for that tower
+		// and a pause/start/2x speed button
 		VBox bottomPane = new VBox(new Label("Tower Info/Upgrades"));
 		bottomPane.resize(800, 120);
 		bottomPane.setPrefHeight(120);
 		bottomPane.setBackground(bgd3);
 		drawBottomPane(bottomPane);
-		
-		//Add the nodes to the borderpane
+
+		// Add the nodes to the borderpane
 		bp.setCenter(hbox);
 		bp.setRight(rightPane);
 		bp.setBottom(bottomPane);
-		
-		//Add to a scene and show the stage
+
+		// Add to a scene and show the stage
 		Scene scene = new Scene(bp, MAX_X, MAX_Y);
 		mainStage.setScene(scene);
 		mainStage.show();
-		
-		
-		
-		//Loops the music for forever
+
+		// Loops the music for forever
 		mediaPlayer.setAutoPlay(true);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 	}
@@ -153,58 +152,57 @@ public class TowerDefenseView extends Application {
 	public void setupMainGrid(HBox hbox, Canvas canvas) {
 
 		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, currPlayer.placeTower);
-		//canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
+		// canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
 		tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
 		Enemy e = new Enemy("Images/ghost.png", tm.GetTile(0, 1), 32, 32, 8, 5, tm);
 		rm = new RoundManager(5, 5f, e);
-		
 
-		//EnemySpawner es = new EnemySpawner(5, 5f, e);
-		
+		// EnemySpawner es = new EnemySpawner(5, 5f, e);
+
 		tm.update();
 		towers.update();
 		rm.update();
 	}
-	
+
 	/**
-	 * Adds the tower imgs to the rightPane.  Only 8 towers at the moment.
+	 * Adds the tower imgs to the rightPane. Only 8 towers at the moment.
+	 * 
 	 * @param rightPane
 	 */
 	private void drawRightPane(VBox rightPane) {
 		GridPane gp = new GridPane();
-		gp.setPadding(new Insets(50,0,0,20));
+		gp.setPadding(new Insets(50, 0, 0, 20));
 		gp.setHgap(50);
 		gp.setVgap(50);
 		int row = 0;
-		for(int i = 0; i < 8; i++) {
-			Image towerImg = new Image("Images/tower" + (i+1) + ".png");
+		for (int i = 0; i < 8; i++) {
+			Image towerImg = new Image("Images/tower" + (i + 1) + ".png");
 			ImageView img = new ImageView(towerImg);
 			img.addEventHandler(MouseEvent.MOUSE_CLICKED, currPlayer.chooseTower);
 			if (i % 2 == 0) {
 				gp.add(img, 0, row);
-			}
-			else {
+			} else {
 				gp.add(img, 1, row);
 				row++;
 			}
 		}
 		rightPane.getChildren().add(gp);
 	}
-	
+
 	public Label getRightLabel() {
 		return rightLabel;
 	}
-	
+
 	/**
 	 * Adds the tower info and play button to the bottomPane.
+	 * 
 	 * @param bottomPane
 	 */
 	private void drawBottomPane(VBox bottomPane) {
 		BorderPane bpBottom = new BorderPane();
-		
-		
-		//Left part that has some info about the tower
+
+		// Left part that has some info about the tower
 		FlowPane fp = new FlowPane();
 		Label towerNameLabel = new Label("Tower Name Here");
 		Label killCountLabel = new Label("Enemies Destroyed: 666");
@@ -214,42 +212,41 @@ public class TowerDefenseView extends Application {
 		fp.getChildren().add(sellButton);
 		fp.setOrientation(Orientation.VERTICAL);
 		fp.setPrefWidth(200);
-		fp.setStyle("-fx-background-color: Yellow; -fx-border-radius: 5px; -fx-border-width: 5px;" + 
-				"-fx-border-color: Gold;");
-		
-		//The center part that has the available upgrade
+		fp.setStyle("-fx-background-color: Yellow; -fx-border-radius: 5px; -fx-border-width: 5px;"
+				+ "-fx-border-color: Gold;");
+
+		// The center part that has the available upgrade
 		BorderPane bpUpgrade = new BorderPane();
 		Label upgradeNameLabel = new Label("Cool upgrade name");
 		Label upgradeDetailLabel = new Label("Description of the upgrade here, does not have to be very specific.");
 		upgradeDetailLabel.setPrefWidth(440);
 		Label upgradeCostLabel = new Label("$123");
-		//Add the items to the bp
+		// Add the items to the bp
 		bpUpgrade.setTop(upgradeNameLabel);
 		bpUpgrade.setCenter(upgradeDetailLabel);
 		bpUpgrade.setBottom(upgradeCostLabel);
-		//Setting their alignment
-		bpUpgrade.setAlignment(bpUpgrade.getTop(), Pos.TOP_LEFT);	
+		// Setting their alignment
+		bpUpgrade.setAlignment(bpUpgrade.getTop(), Pos.TOP_LEFT);
 		bpUpgrade.setAlignment(bpUpgrade.getCenter(), Pos.CENTER_LEFT);
 		bpUpgrade.setAlignment(bpUpgrade.getBottom(), Pos.BOTTOM_RIGHT);
-		bpUpgrade.setStyle("-fx-background-color: CadetBlue; -fx-border-radius: 5px; -fx-border-width: 5px;" + 
-				"-fx-border-color: black;");
+		bpUpgrade.setStyle("-fx-background-color: CadetBlue; -fx-border-radius: 5px; -fx-border-width: 5px;"
+				+ "-fx-border-color: black;");
 		bpUpgrade.setPrefSize(200, 100);
-		
-		//Go button that will start the round, will turn into a x2 and then a pause.
+
+		// Go button that will start the round, will turn into a x2 and then a pause.
 		Button goButton = new Button("GO");
 		goButton.setPrefSize(150, 100);
-		goButton.setStyle("-fx-background-color:Lime; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
-				"-fx-border-color: Green;");
-		
-		//Add the three big items into the borderpane
+		goButton.setStyle("-fx-background-color:Lime; -fx-border-radius: 2px; -fx-border-width: 2px;"
+				+ "-fx-border-color: Green;");
+
+		// Add the three big items into the borderpane
 		bpBottom.setLeft(fp);
 		bpBottom.setCenter(bpUpgrade);
 		bpBottom.setRight(goButton);
-		
-		//Adding to bottomPane
+
+		// Adding to bottomPane
 		bottomPane.getChildren().add(bpBottom);
-		}
-	
+	}
 
 	public TileMap getTm() {
 		return tm;
@@ -266,7 +263,5 @@ public class TowerDefenseView extends Application {
 	public static void setTowers(TowerHolder towers) {
 		TowerDefenseView.towers = towers;
 	}
-	
 
 }
-

@@ -41,7 +41,7 @@ public class Tower4 extends Tower {
 	}
 
 	public void shoot() {
-		ammo = new lightningProjectile("lightning", 8, x, y ,currEnemy);
+		ammo = new lightningProjectile("lightning", 8, x, y ,currEnemy, damage);
 	}
 
 	/**
@@ -72,10 +72,6 @@ public class Tower4 extends Tower {
 
 	}
 
-	public void TowerDamage(Enemy e) {
-
-		e.setHealth(e.getHealth() - damage);
-	}
 
 	private Enemy currEnemy = null;
 
@@ -90,7 +86,6 @@ public class Tower4 extends Tower {
 				currEnemy = e;
 
 				shoot();
-				TowerDamage(e);
 
 			}
 

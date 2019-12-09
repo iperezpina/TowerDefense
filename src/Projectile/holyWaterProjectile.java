@@ -11,8 +11,8 @@ import model.Enemy;
 public class holyWaterProjectile extends Projectile {
 	private Timeline tl;
 
-	public holyWaterProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot) {
-		super(imageName, speed, x, y, EtoShoot);
+	public holyWaterProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
+		super(imageName, speed, x, y, EtoShoot, damage);
 		update();
 
 	}
@@ -39,6 +39,9 @@ public class holyWaterProjectile extends Projectile {
 			x = x + ((EtoShoot.getX() - x) / length * speed);
 
 			y = y + ((EtoShoot.getY() - y) / length * speed);
+			
+			
+			
 
 			draw();
 			count++;
