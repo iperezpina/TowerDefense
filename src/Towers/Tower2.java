@@ -83,10 +83,9 @@ public class Tower2 extends Tower {
 			int x2 = e.getX();
 			int y2 = e.getY();
 			double distance = Math.hypot(getX() - x2, getY() - y2);
-			if (distance < range) {
+			if (distance < range && !e.isDead()) {
 				shoot();
 				TowerDamage(e);
-				// System.out.println("enemy entered range");
 
 			}
 

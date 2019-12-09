@@ -13,6 +13,7 @@ import Towers.Tower6;
 import Towers.Tower7;
 import Towers.Tower8;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -119,14 +120,16 @@ public class Player {
 				if (id.equals("tower8.png")) {
 					currTower = new Tower8(currTowerImg, x*32, y*32, 32, 32);
 				}
-				if (currTower != null) {
-					AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
-					coin.play();
+				if (currTower != null && coins >= currTower.getTowerCost()) {
+					if (tdv.getTowers().addTower2(currTower, x, y)) {
+						AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
+						coin.play();
+						decreaseCoins(currTower.getTowerCost());
+						tdv.getRightLabel().setText("Money: " + getCoins() + "\nHealth: " + getHP());
+					}
 					
 					
-					tdv.getTowers().addTower2(currTower, x, y);
-					coins -= currTower.getTowerCost();
-					System.out.println(coins);
+
 				}
 			}
 		}
