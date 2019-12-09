@@ -34,7 +34,7 @@ public class TileMap {
 		for (int i = 0; i < 20; i++) {
 			ArrayList<Tile> temp = new ArrayList<Tile>();
 			for (int j = 0; j < 15; j++) {
-				temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Grass));
+				temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Dirt));
 			}
 			this.tileGrid.add(temp);
 

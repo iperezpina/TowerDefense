@@ -1,10 +1,12 @@
 package model;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import view.TowerDefenseView;
 
 public class RoundManager {
 
@@ -14,6 +16,10 @@ public class RoundManager {
 	private boolean startedRound;
 	private int healthIncr;
 	Enemy e;
+	
+	//For second roundManager implementation
+	private List<List<Enemy>> enemyInfo;
+	private TowerDefenseView tdv;
 
 	public RoundManager(int amtToSpawn, float intervalsBetween, Enemy e) {
 		this.amtToSpawn = amtToSpawn;
@@ -28,6 +34,18 @@ public class RoundManager {
 	public void update() {
 		timer.scheduleAtFixedRate(timerTask, 0, 500);
 	}
+	
+	public RoundManager(List<List<Enemy>> enemyInfo, float intervalsBetween, TowerDefenseView tdv) {
+		this.amtToSpawn = 0;
+		this.intervalsBetween = intervalsBetween;
+		this.e = null;
+		this.es = null;
+		this.waveNumber = 0;
+		this.healthIncr = 5;
+		this.startedRound = false;
+		this.enemyInfo = enemyInfo;
+		this.tdv = tdv;
+	}
 
 	Timer timer = new Timer();
 
@@ -36,7 +54,7 @@ public class RoundManager {
 	TimerTask timerTask = new TimerTask() {
 		public void run() {
 			if (es != null) {
-				if (es.isDone() == true) {
+				if (es.isDone() == true && startedRound) {
 					startedRound = false;
 					System.out.println("Round " + waveNumber + " ended!");
 					// newWave();
@@ -49,9 +67,18 @@ public class RoundManager {
 	};
 
 	public void newWave() {
+		
 		es = new EnemySpawner(amtToSpawn += 2, intervalsBetween -= .5f, healthIncr += 5, e);
 		startedRound = true;
 		waveNumber++;
+	}
+	
+	public void newWaveList() {
+		es = new EnemySpawner(enemyInfo.get(waveNumber), intervalsBetween -= .5f, healthIncr += 1);
+		startedRound = true;
+		waveNumber++;
+		System.out.println("Round " + waveNumber + " started!");
+		tdv.getRoundLabel().setText("Round " + waveNumber);
 	}
 
 	/**
@@ -63,8 +90,10 @@ public class RoundManager {
 
 		@Override
 		public void handle(ActionEvent event) {
-			newWave();
+			newWaveList();
 		}
 	};
+
+
 
 }
