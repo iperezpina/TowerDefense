@@ -69,7 +69,14 @@ public class Enemy {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
-
+	}
+	//TODO remove below two methods
+	public void pause() {
+		tl.pause();
+	}
+	
+	public void play() {
+		tl.play();
 	}
 
 	/**
