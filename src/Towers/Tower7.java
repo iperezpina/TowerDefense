@@ -85,7 +85,7 @@ public class Tower7 extends Tower {
 			int x2 = e.getX();
 			int y2 = e.getY();
 			double distance = Math.hypot(getX() - x2, getY() - y2);
-			if (distance + 20 < range && !e.isDead()) {
+			if (distance < range && !e.isDead()) {
 
 				currEnemy = e;
 
