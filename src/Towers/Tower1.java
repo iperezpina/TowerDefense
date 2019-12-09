@@ -46,6 +46,7 @@ public class Tower1 extends Tower {
 	 * Shoots out a projectile
 	 */
 	public void shoot() {
+
 		ammo = new fireProjectile("Fireball", 5, x, y);
 	}
 	
@@ -53,7 +54,7 @@ public class Tower1 extends Tower {
 	 * Update method in charge of any movement (rotation) of the tower and drawing
 	 * of the tower
 	 */
-	public void update() {
+	public void update(){
 		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
@@ -91,9 +92,7 @@ public class Tower1 extends Tower {
 			if (distance + 20 < range && !e.isDead()) {
 				shoot();
 				TowerDamage(e);
-
 			}
-
 		}
 	}
 	
