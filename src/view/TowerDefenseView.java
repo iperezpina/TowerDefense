@@ -111,8 +111,7 @@ public class TowerDefenseView extends Application {
 		
 		
 		TimerAll.pause();
-		//TimerAll.run();
-		//play();
+		
 		
 		// Setting up title and icon for app
 		mainStage.setTitle("Dragon Force Defense");
