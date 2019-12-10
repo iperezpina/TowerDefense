@@ -101,7 +101,7 @@ public class Player {
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() / 32;
 			int y = (int) event.getY() / 32;
-			if (id.length() > 6) {
+			if (id != null && id.length() > 6) {
 				id = id.substring(0, id.length() - 4);
 			}
 

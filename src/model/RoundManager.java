@@ -74,6 +74,7 @@ public class RoundManager {
 	                    @Override
 	                    public void run() {
 	                    	tdv.getRoundLabel().setText("Round " + waveNumber + " ended!");
+	                    	tdv.drawGoButton();
 	                    }
 	                });
 						
@@ -94,7 +95,7 @@ public class RoundManager {
 	}
 	
 	public void newWaveList() {
-		es = new EnemySpawner(enemyInfo.get(waveNumber), intervalsBetween -= .5f, healthIncr += 1);
+		es = new EnemySpawner(enemyInfo.get(waveNumber), intervalsBetween -= .10f, 0);
 		startedRound = true;
 		waveNumber++;
 		System.out.println("Round " + waveNumber + " started!");
