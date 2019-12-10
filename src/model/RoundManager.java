@@ -1,8 +1,14 @@
 package model;
 
+
 import java.util.ArrayList;
+
+import java.io.IOException;
+
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 public class RoundManager {
 
@@ -22,13 +28,15 @@ public class RoundManager {
 		this.waveNumber = 0;
 		this.healthIncr = 5;
 		this.startedRound = false;
+
 		//newWave();
+
 	}
 
 	public void update() {
 		timer.scheduleAtFixedRate(timerTask, 0, 500);
 	}
-	
+
 	Timer timer = new Timer();
 
 	// A task that will occur every so often that spawns an enemy if it can, and
@@ -40,14 +48,18 @@ public class RoundManager {
 					// TODO implement add money back after round ends
 					// add money to player
 					startedRound = false;
-					
+
 					// TODO this is why new enemies come up when the last wave reaches the end
 					//newWave();
+
+					System.out.println("Round " + waveNumber + " ended!");
+					// newWave();
+
 				} else {
 					es.update();
 					addEnemiesToList();
 				}
-			}	
+			}
 		}
 
 	};
@@ -56,8 +68,8 @@ public class RoundManager {
 		es = new EnemySpawner(amtToSpawn += 2, intervalsBetween -= .5f, healthIncr += 5, e);
 		startedRound = true;
 		waveNumber++;
-		//System.out.println("Beginning wave: " + waveNumber);
 	}
+
 	
 	public void addEnemiesToList() {
 		for(Enemy e: es.getEnemys()) {
@@ -68,5 +80,25 @@ public class RoundManager {
 		return eList;
 	}
 	
+
+
+	/**
+	 * Event handler that will start a new round will turn the into a x2 button if
+	 * clicked on, then paused button if pressed again it will cycle between those
+	 * two until the round is over and return to a go button.
+	 */
+	public EventHandler<ActionEvent> startRound = new EventHandler<ActionEvent>() {
+
+		@Override
+		public void handle(ActionEvent event) {
+			newWave();
+		}
+	};
+
+	public EnemySpawner getES() {
+		return es;
+	}
+
+
 
 }

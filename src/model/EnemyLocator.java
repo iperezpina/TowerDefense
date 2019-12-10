@@ -19,5 +19,7 @@ public class EnemyLocator {
 		listofE.remove(e);
 	}
 
+	
+	
 
 }

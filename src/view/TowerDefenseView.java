@@ -1,12 +1,14 @@
 
 package view;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
 
 import controller.Player;
 import controller.TowerDefenseController;
 import javafx.application.Application;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -64,6 +66,18 @@ public class TowerDefenseView extends Application {
 	//private Button goButton;
 	
 	//Variables here relate to the gui elements
+	FlowPane fp = new FlowPane();
+	Label towerNameLabel = new Label("Tower Name Here");
+	Label killCountLabel = new Label("Enemies Destroyed: 666");
+	Button sellButton = new Button("Sell for $150");
+	
+	BorderPane bpUpgrade = new BorderPane();
+	Label upgradeNameLabel = new Label("Cool upgrade name");
+	Label upgradeDetailLabel = new Label("Description of the upgrade here, does not have to be very specific.");
+	Label upgradeCostLabel = new Label("$123");
+	
+	Button goButton = new Button("GO");
+	BorderPane bpBottom = new BorderPane();
 	
 	
 	//Other variables below
@@ -99,8 +113,7 @@ public class TowerDefenseView extends Application {
 		
 		
 		TimerAll.pause();
-		//TimerAll.run();
-		//play();
+		
 		
 		// Setting up title and icon for app
 		mainStage.setTitle("Dragon Force Defense");
@@ -169,11 +182,11 @@ public class TowerDefenseView extends Application {
 		//canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
 		tm = new TileMap(tileMap);
 		towers = new TowerHolder(tm);
-		Enemy e = new Enemy("Images/ghost.png", tm.GetTile(0, 1), 32, 32, 8, 5, tm);
+		Enemy e = new Enemy("Images/ghost.png", tm.GetTile(0, 1), 32, 32, 4, 5, tm);
 		rm = new RoundManager(5, 5f, e);
 		
 
-		//EnemySpawner es = new EnemySpawner(5, 5f, e);
+		
 		
 		tm.update();
 		towers.update();
@@ -216,14 +229,14 @@ public class TowerDefenseView extends Application {
 	 * @param bottomPane
 	 */
 	private void drawBottomPane(VBox bottomPane) {
-		BorderPane bpBottom = new BorderPane();
+		bpBottom = new BorderPane();
 		
 		
 		//Left part that has some info about the tower
-		FlowPane fp = new FlowPane();
-		Label towerNameLabel = new Label("Tower Name Here");
-		Label killCountLabel = new Label("Enemies Destroyed: 666");
-		Button sellButton = new Button("Sell for $150");
+		fp = new FlowPane();
+		towerNameLabel = new Label("Tower Name Here");
+		killCountLabel = new Label("Enemies Destroyed: 666");
+		sellButton = new Button("Sell for $150");
 		fp.getChildren().add(towerNameLabel);
 		fp.getChildren().add(killCountLabel);
 		fp.getChildren().add(sellButton);
@@ -233,11 +246,11 @@ public class TowerDefenseView extends Application {
 				"-fx-border-color: Gold;");
 		
 		//The center part that has the available upgrade
-		BorderPane bpUpgrade = new BorderPane();
-		Label upgradeNameLabel = new Label("Cool upgrade name");
-		Label upgradeDetailLabel = new Label("Description of the upgrade here, does not have to be very specific.");
+		bpUpgrade = new BorderPane();
+		upgradeNameLabel = new Label("Cool upgrade name");
+		upgradeDetailLabel = new Label("Description of the upgrade here, does not have to be very specific.");
 		upgradeDetailLabel.setPrefWidth(440);
-		Label upgradeCostLabel = new Label("$123");
+		upgradeCostLabel = new Label("$123");
 		//Add the items to the bp
 		bpUpgrade.setTop(upgradeNameLabel);
 		bpUpgrade.setCenter(upgradeDetailLabel);
@@ -253,7 +266,9 @@ public class TowerDefenseView extends Application {
 		bpRightButtons = new BorderPane();
 		
 		//Go button that will start the round, will turn into a x2 and then a pause.
+
 		drawGoButton();
+
 		
 		//Add the three big items into the borderpane
 		bpBottom.setLeft(fp);
