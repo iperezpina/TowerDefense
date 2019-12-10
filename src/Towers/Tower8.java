@@ -41,7 +41,7 @@ public class Tower8 extends Tower {
 	}
 
 	public void shoot() {
-		ammo = new lavaShotProjectile("lavaShot", 5, x, y, currEnemy);
+		ammo = new lavaShotProjectile("lavaShot", 5, x, y, currEnemy, damage);
 	}
 
 	/**
@@ -72,11 +72,6 @@ public class Tower8 extends Tower {
 
 	}
 
-	public void TowerDamage(Enemy e) {
-
-		e.setHealth(e.getHealth() - damage);
-	}
-
 	private Enemy currEnemy = null;
 
 	public void drawRange() {
@@ -90,7 +85,6 @@ public class Tower8 extends Tower {
 
 				currEnemy = e;
 				shoot();
-				TowerDamage(e);
 
 			}
 
