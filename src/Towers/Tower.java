@@ -4,6 +4,7 @@ import controller.Drawer;
 import controller.ResourceManager;
 import javafx.scene.image.Image;
 import model.Enemy;
+import model.Upgrade;
 
 /**
  * 
@@ -22,19 +23,21 @@ public class Tower {
 	private int width;
 	private int height;
 
-	protected int range = 100;
+	protected int range = 100, projSpeed = 0;
 	protected int currentTime = 0;
 	protected int lastTimeAttacked = 0;
 	protected int attackRate = 3;
 	protected int towerCost = 0, towerSpent = 0;
 	protected int upgradeCost=0;
 	protected int damage = 0;
-	protected int upgrade;
 	protected int sellCost=0;
-	//protected boolean upgradeCount= false;
 	private int enemiesDestroyed = 0;
 	protected String towerName = "";
 	protected boolean isSelected = false;
+	protected int upgradeLevel = 0;
+	
+	protected Upgrade[] towerUpgrades = new Upgrade[4];
+	
 
 	/**
 	 * The basic constructor for this class, takes in an img, x and y position,
@@ -57,6 +60,7 @@ public class Tower {
 
 	}
 	
+
 	/**
 	 * Draws the tower image
 	 */
@@ -131,8 +135,20 @@ public class Tower {
 	public int getRange() {
 		return this.range;
 	}
+	
+	public int getUpgradeLevel() {
+		return upgradeLevel;
+	}
 
-	public int getUpgrade() {
-		return this.upgrade;
+	public Upgrade[] getTowerUpgrades() {
+		return towerUpgrades;
+	}
+
+	public void setUpgradeLevel(int upgradeLevel) {
+		this.upgradeLevel = upgradeLevel;
+	}
+
+	public void setTowerUpgrades(Upgrade[] towerUpgrades) {
+		this.towerUpgrades = towerUpgrades;
 	}
 }

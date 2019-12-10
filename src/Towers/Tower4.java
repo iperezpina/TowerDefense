@@ -1,7 +1,9 @@
 package Towers;
 
 import Projectile.Projectile;
+import Projectile.lazerProjectile;
 import Projectile.lightningProjectile;
+import controller.Player;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,7 +13,9 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 import model.Enemy;
 import model.EnemyLocator;
+import model.GameState;
 import model.TimerAll;
+import model.Upgrade;
 
 public class Tower4 extends Tower {
 
@@ -27,12 +31,32 @@ public class Tower4 extends Tower {
 	public void additionalInfo() {
 		this.attackRate = 3;
 		this.towerCost = 750;
+		this.projSpeed = 8;
 		this.damage = 3;
 		this.range = 250;
 		this.towerName = "Lightning Tower";
-		this.upgrade=0;
 		this.towerSpent=0;
 		this.upgradeCost= 130;
+		CreateUpgradeInfo();
+	}
+	
+	public void CreateUpgradeInfo() {
+		// Upgrade 1
+		Upgrade up1 = new Upgrade("Better Range", "Increases this tower's range by a bit", 100);
+		towerUpgrades[0] = up1;
+
+		// Upgrade2
+		Upgrade up2 = new Upgrade("Faster Fire", "Increases the rate that fire is thrown", 200);
+		towerUpgrades[1] = up2;
+
+		// Upgrade3
+		Upgrade up3 = new Upgrade("Hotter Fire", "Hot fire from the hottest flames deal more damage", 300);
+		towerUpgrades[2] = up3;
+
+		// Upgrade4
+		Upgrade up4 = new Upgrade("Better Everything", "Increases range, attack speed, and damage", 500);
+		towerUpgrades[3] = up4;
+
 	}
 
 	public void setURL(String str) {
@@ -44,7 +68,10 @@ public class Tower4 extends Tower {
 	}
 
 	public void shoot() {
-		ammo = new lightningProjectile("lightning", 8, x, y ,currEnemy, damage);
+		if (Player.getGameState().equals(GameState.gamex2))
+			ammo = new lightningProjectile("lightning", projSpeed * 2, x, y ,currEnemy, damage);
+		else
+			ammo = new lightningProjectile("lightning", projSpeed, x, y ,currEnemy, damage);
 	}
 
 	/**

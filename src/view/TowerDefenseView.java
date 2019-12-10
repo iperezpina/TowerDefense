@@ -36,6 +36,7 @@ import model.RoundManager;
 import model.TileMap;
 import model.TimerAll;
 import model.TowerHolder;
+import model.Upgrade;
 
 /**
  * 
@@ -65,7 +66,6 @@ public class TowerDefenseView extends Application {
 	private Label roundLabel;
 	private BorderPane bpRightButtons;
 
-
 	// Variables here relate to the gui elements
 	private ArrayList<Enemy> enemiesList;
 	FlowPane fp = new FlowPane();
@@ -81,13 +81,11 @@ public class TowerDefenseView extends Application {
 
 	Button goButton = new Button("GO");
 	BorderPane bpBottom = new BorderPane();
-	
+
 	Label moneyLabel = new Label();
 	Label healthLabel = new Label();
 	Label towerLabel = new Label();
 	FlowPane playerFP = new FlowPane();
-	
-	
 
 	// Other variables below
 	// Essentially the map(s) of the level(s)
@@ -178,7 +176,8 @@ public class TowerDefenseView extends Application {
 		playerFP.getChildren().add(moneyLabel);
 		playerFP.getChildren().add(healthLabel);
 		playerFP.getChildren().add(towerLabel);
-		//rightLabel = new Label("Money: " + currPlayer.getCoins() + "\nHealth: " + currPlayer.getHP());
+		// rightLabel = new Label("Money: " + currPlayer.getCoins() + "\nHealth: " +
+		// currPlayer.getHP());
 		updatePlayerInfo(currPlayer.getCoins(), currPlayer.getHP());
 		VBox rightPane = new VBox(playerFP);
 
@@ -227,34 +226,31 @@ public class TowerDefenseView extends Application {
 
 		canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, currPlayer.placeTower);
 		// canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.debug);
-		
-		//The start tile for easyMap is (0, 1), mediumMap is (10, 7), hardMap is (0, 5)
-		//This choose which map to go on
+
+		// The start tile for easyMap is (0, 1), mediumMap is (10, 7), hardMap is (0, 5)
+		// This choose which map to go on
 		if (levelDifficulty == 0) {
 			tm = new TileMap(easyMap);
 			towers = new TowerHolder(tm);
 			fr = new FileReader(tm, tm.GetTile(0, 1));
-		}
-		else if(levelDifficulty == 1) {
-				tm = new TileMap(mediumMap);
-				towers = new TowerHolder(tm);
-				fr = new FileReader(tm, tm.GetTile(10, 7));
-		}
-		else if(levelDifficulty == 2) {
+		} else if (levelDifficulty == 1) {
+			tm = new TileMap(mediumMap);
+			towers = new TowerHolder(tm);
+			fr = new FileReader(tm, tm.GetTile(10, 7));
+		} else if (levelDifficulty == 2) {
 			tm = new TileMap(hardMap);
 			towers = new TowerHolder(tm);
 			fr = new FileReader(tm, tm.GetTile(0, 5));
-	}
-		
+		}
+
 		fr.read("src/level1.txt");
 		rm = new RoundManager(fr.getEnemies(), 7f, this);
 		tdc.setRm(rm);
-		
+
 		tm.update();
 		towers.update();
 		rm.update();
-		
-		
+
 	}
 
 	/**
@@ -286,24 +282,38 @@ public class TowerDefenseView extends Application {
 		return rightLabel;
 	}
 
-	public void setTowerSpecification(String name, int enemies, int cost, int range, int sell) {
-		towerNameLabel.setText("Tower Name: " +name);
+	public void setTowerSpecification(String name, int enemies, int cost, int range, int sell, Upgrade currentUpgrade) {
+		// Tower Info stuff (Yellow panel)
+		towerNameLabel.setText("Tower Name: " + name);
 		killCountLabel.setText("Enemies Destroyed: " + enemies);
-		upgradeCostLabel.setText("$"+ cost + " ");
+		upgradeCostLabel.setText("$" + cost + " ");
 		rangeLabel.setText("Current Range: " + range);
 		sellButton.setText("Sell for $" + sell);
+
+		// Upgrade Info stuff (Blue panel)
+		upgradeNameLabel.setText(currentUpgrade.getUpgradeName());
+		upgradeDetailLabel.setText(currentUpgrade.getUpgradeDetail());
+		if (currentUpgrade.getUpgradeCost() <= 0) {
+			upgradeCostLabel.setText("");
+		}
+		else {
+			upgradeCostLabel.setText(currentUpgrade.getUpgradeCost() + "");
+		}
+		
 	}
-	
+
 	public void setAllBlank() {
-		//Tower Info stuff (Yellow panel)
+		// Tower Info stuff (Yellow panel)
 		towerNameLabel.setText("");
 		killCountLabel.setText("");
 		rangeLabel.setText("");
 		sellButton.setText("Sell for $");
 		upgradeCostLabel.setText("");
-		
-		//Upgrade Info stuff (Blue panel)
-		
+
+		// Upgrade Info stuff (Blue panel)
+		upgradeNameLabel.setText("");
+		upgradeDetailLabel.setText("");
+		upgradeCostLabel.setText("");
 
 	}
 
@@ -323,9 +333,9 @@ public class TowerDefenseView extends Application {
 		towerNameLabel.setStyle("-fx-font: 15 arial;");
 		killCountLabel = new Label();
 		killCountLabel.setStyle("-fx-font: 15 arial;");
-		rangeLabel= new Label();
+		rangeLabel = new Label();
 		rangeLabel.setStyle("-fx-font: 15 arial;");
-		sellButton = new Button("Sell for $  " );
+		sellButton = new Button("Sell for $  ");
 		fp.setHgap(20);
 
 		fp.getChildren().add(towerNameLabel);
@@ -339,11 +349,16 @@ public class TowerDefenseView extends Application {
 
 		// The center part that has the available upgrade
 		BorderPane bpUpgrade = new BorderPane();
-		Label upgradeNameLabel = new Label("Cool upgrade name");
-		Label upgradeDetailLabel = new Label("Description of the upgrade here, does not have to be very specific.");
+		bpUpgrade.addEventHandler(MouseEvent.MOUSE_CLICKED, currPlayer.upgradeTower);
+		upgradeNameLabel.setText("");
+		upgradeDetailLabel.setText("");
 		upgradeDetailLabel.setPrefWidth(440);
+		
+		//Setting font for bpUpgrade labels to 15 arial
+		upgradeNameLabel.setStyle("-fx-font: 15 arial;");
+		upgradeDetailLabel.setStyle("-fx-font: 15 arial;");
 
-		upgradeCostLabel = new Label();
+		upgradeCostLabel.setText("");
 		upgradeCostLabel.setPrefWidth(70);
 		upgradeCostLabel.setStyle("-fx-font: 24 arial;");
 		// Add the items to the bp
@@ -399,26 +414,25 @@ public class TowerDefenseView extends Application {
 		Button goButton = new Button("GO");
 		goButton.setPrefSize(150, 50);
 
-		goButton.setStyle("-fx-background-color:springgreen; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
-				"-fx-border-color: Green;");
+		goButton.setStyle("-fx-background-color:springgreen; -fx-border-radius: 2px; -fx-border-width: 2px;"
+				+ "-fx-border-color: Green;");
 		goButton.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.go);
-		
 
 		bpRightButtons.setTop(goButton);
 		bpRightButtons.setBottom(null);
 	}
-	
-	public void drawPlayButton() {
-		Button play = new Button("Play");
-		play.setPrefSize(150, 50);
-		play.setStyle("-fx-background-color:springgreen; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
-				"-fx-border-color: Green;");
-		play.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.resume);
-		
-		bpRightButtons.setTop(play);
-		bpRightButtons.setBottom(null);
-		
-	}
+
+//	public void drawPlayButton() {
+//		Button play = new Button("Play");
+//		play.setPrefSize(150, 50);
+//		play.setStyle("-fx-background-color:springgreen; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
+//				"-fx-border-color: Green;");
+//		play.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.resume);
+//		
+//		bpRightButtons.setTop(play);
+//		bpRightButtons.setBottom(null);
+//		
+//	}
 
 	public TileMap getTm() {
 		return tm;
@@ -444,45 +458,26 @@ public class TowerDefenseView extends Application {
 		this.roundLabel = roundLabel;
 	}
 
-
 	public void startPlay() {
 		TimerAll.runTimer();
-		//rm.startES();
 	}
-	
-	public void play() {
-		
-		TimerAll.play();
-	
-		//rm.playES();
-		
-		/*for(Enemy e:enemiesList) {
-			System.out.println(e);
-			e.play();
-		}*/
 
+	public void play() {
+		TimerAll.play();
 	}
 
 	public void pause() {
-		/*for(Enemy e:enemiesList) {
-			e.pause();
-		}*/
 		TimerAll.pause();
-
-		rm.pauseES();
-		
-	
 	}
-	
+
 	public void updatePlayerInfo(int money, int health) {
 		moneyLabel.setText("Money:\t" + money);
 		healthLabel.setText("Health:\t" + health);
 		updateTowerLabel("");
 	}
-	
+
 	public void updateTowerLabel(String newText) {
 		towerLabel.setText(newText);
 	}
-	
 
 }
