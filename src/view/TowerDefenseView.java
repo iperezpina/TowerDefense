@@ -270,6 +270,14 @@ public class TowerDefenseView extends Application {
 		sellButton.setText("Sell for $" + sell);
 	}
 	
+	public void setAllBlank() {
+		towerNameLabel = new Label();
+		killCountLabel = new Label();
+		rangeLabel= new Label();
+		sellButton = new Button("Sell for $  " );
+		upgradeCostLabel = new Label();
+	}
+	
 
 	/**
 	 * Adds the tower info and play button to the bottomPane.

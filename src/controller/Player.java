@@ -101,12 +101,17 @@ public class Player {
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() / 32;
 			int y = (int) event.getY() / 32;
-			if (id.length() > 6) {
+			if (id != null && id.length() > 6 ) {
 				id = id.substring(0, id.length() - 4);
+			}
+			if(id==null) {
+				System.out.println("hello");
+				tdv.setAllBlank();
+				
 			}
 
 			
-			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg != null) {
+			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && id != null) {
 
 				if (id.equals("tower1")) {
 					currTower = new Tower1(id, x * 32, y * 32, 32, 32);
@@ -146,23 +151,45 @@ public class Player {
 						coin.play();
 						decreaseCoins(currTower.getTowerCost());
 						tdv.getTowers().addTower2(currTower, x, y);
+						id=null;
 					}
 				}
-				else {
-					Tower tower = tdv.getTowers().getTower(x, y);
-					if (tower != null) {
-						String name= tower.getTowerName();
-						int Ucost= tower.getUpgradeCost();
-						int enemy= tower.getEnemiesDestroyed();
-						int range= tower.getRange();
-						tower.setSellCost();
-						int sell= tower.getSellCost();
-						tdv.setTowerSpecification(name, enemy, Ucost, range, sell);
 
-					}
-
-				}
+//				else {
+//					Tower tower = tdv.getTowers().getTower(x, y);
+//					
+//					if (tower != null) {
+//						String name= tower.getTowerName();
+//						int Ucost= tower.getUpgradeCost();
+//						int enemy= tower.getEnemiesDestroyed();
+//						int range= tower.getRange();
+//						tower.setSellCost();
+//						int sell= tower.getSellCost();
+//						tdv.setTowerSpecification(name, enemy, Ucost, range, sell);
+//
+//					}
+//				
+//
+//				}
 			}
+			
+			else {
+				Tower tower = tdv.getTowers().getTower(x, y);
+				
+				if (tower != null) {
+					String name= tower.getTowerName();
+					int Ucost= tower.getUpgradeCost();
+					int enemy= tower.getEnemiesDestroyed();
+					int range= tower.getRange();
+					tower.setSellCost();
+					int sell= tower.getSellCost();
+					tdv.setTowerSpecification(name, enemy, Ucost, range, sell);
+
+				}
+			
+
+			}			
+			
 		}
 
 	};
