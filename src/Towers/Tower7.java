@@ -30,6 +30,7 @@ public class Tower7 extends Tower {
 		this.damage = 2;
 		this.range = 500;
 		this.towerName = "Arrow Tower";
+		this.upgrade=0;
 	}
 
 	public void setURL(String str) {

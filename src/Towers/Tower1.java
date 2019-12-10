@@ -30,6 +30,7 @@ public class Tower1 extends Tower {
 		this.damage = 2;
 		this.range = 150;
 		this.towerName = "Fire Tower";
+		this.upgrade=0;
 	}
 
 	public void setURL(String str) {
@@ -50,10 +51,11 @@ public class Tower1 extends Tower {
 	 * Update method in charge of any movement (rotation) of the tower and drawing
 	 * of the tower
 	 */
-	public void update(){
+	public void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
+
 	}
 
 	/**
@@ -66,17 +68,19 @@ public class Tower1 extends Tower {
 		public void handle(ActionEvent arg0) {
 			Draw();
 			currentTime = TimerAll.getTimeInSeconds();
+			System.out.println(currentTime);
 			if (lastTimeAttacked > currentTime) {
 				lastTimeAttacked = 0;
 			}
 			if (Math.abs(currentTime - lastTimeAttacked) >= attackRate) {
 				lastTimeAttacked = currentTime;
+				// System.out.println("attackRate: " + attackRate +" CT:" + currentTime + "
+				// lastTine:" + lastTimeAttacked);
 				drawRange();
 			}
 		}
 
 	}
-
 
 	private Enemy currEnemy = null;
 
@@ -103,5 +107,6 @@ public class Tower1 extends Tower {
 	public Enemy getcurrEnemy() {
 		return currEnemy;
 	}
+	
 
 }

@@ -66,14 +66,14 @@ public class TowerDefenseView extends Application {
 	
 	//Variables here relate to the gui elements
 	FlowPane fp = new FlowPane();
-	Label towerNameLabel = new Label("Tower Name Here");
-	Label killCountLabel = new Label("Enemies Destroyed: 666");
+	Label towerNameLabel = new Label();
+	Label killCountLabel = new Label();
 	Button sellButton = new Button("Sell for $150");
 	
 	BorderPane bpUpgrade = new BorderPane();
 	Label upgradeNameLabel = new Label("Cool upgrade name");
 	Label upgradeDetailLabel = new Label("Description of the upgrade here, does not have to be very specific.");
-	Label upgradeCostLabel = new Label("$123");
+	Label upgradeCostLabel = new Label();
 	
 	Button goButton = new Button("GO");
 	BorderPane bpBottom = new BorderPane();
@@ -218,8 +218,11 @@ public class TowerDefenseView extends Application {
 		
 		//The start tile for easyMap is (0, 1), mediumMap is (10, 7), hardMap is (0, 5)
 
-		//Enemy e = new Enemy("ghost", tm.GetTile(0, 1), 32, 32, 4, 5, tm);
+
 		fr = new FileReader(tm, tm.GetTile(0, 5));
+
+
+
 		fr.read("src/level1.txt");
 		rm = new RoundManager(fr.getEnemies(), 7f, this);
 		tdc.setRm(rm);
@@ -258,19 +261,34 @@ public class TowerDefenseView extends Application {
 		return rightLabel;
 	}
 
+	public void setTowerSpecification(String name, int enemies, int cost) {
+		towerNameLabel.setText("Tower Name: " +name);
+		killCountLabel.setText("Enemies Destroyed: " + enemies);
+		upgradeCostLabel.setText("$"+ cost + " ");
+		
+	}
+	
+
 	/**
 	 * Adds the tower info and play button to the bottomPane.
 	 * 
 	 * @param bottomPane
 	 */
 	private void drawBottomPane(VBox bottomPane) {
-		BorderPane bpBottom = new BorderPane();
 
-		// Left part that has some info about the tower
-		FlowPane fp = new FlowPane();
-		Label towerNameLabel = new Label("Tower Name Here");
-		Label killCountLabel = new Label("Enemies Destroyed: 666");
-		Button sellButton = new Button("Sell for $150");
+		bpBottom = new BorderPane();
+		
+		
+		//Left part that has some info about the tower
+		fp = new FlowPane();
+		towerNameLabel = new Label();
+		towerNameLabel.setStyle("-fx-font: 15 arial;");
+		killCountLabel = new Label();
+		killCountLabel.setStyle("-fx-font: 15 arial;");
+		sellButton = new Button("Sell for $150");
+		fp.setHgap(20);
+		
+
 		fp.getChildren().add(towerNameLabel);
 		fp.getChildren().add(killCountLabel);
 		fp.getChildren().add(sellButton);
@@ -284,8 +302,12 @@ public class TowerDefenseView extends Application {
 		Label upgradeNameLabel = new Label("Cool upgrade name");
 		Label upgradeDetailLabel = new Label("Description of the upgrade here, does not have to be very specific.");
 		upgradeDetailLabel.setPrefWidth(440);
-		Label upgradeCostLabel = new Label("$123");
-		// Add the items to the bp
+
+		upgradeCostLabel = new Label();
+		upgradeCostLabel.setPrefWidth(70);
+		upgradeCostLabel.setStyle("-fx-font: 24 arial;");
+		//Add the items to the bp
+
 		bpUpgrade.setTop(upgradeNameLabel);
 		bpUpgrade.setCenter(upgradeDetailLabel);
 		bpUpgrade.setBottom(upgradeCostLabel);

@@ -30,6 +30,7 @@ public class Tower8 extends Tower {
 		this.damage = 15;
 		this.range = 150;
 		this.towerName = "Volcano Tower";
+		this.upgrade=0;
 	}
 
 	public void setURL(String str) {

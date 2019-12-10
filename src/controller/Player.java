@@ -130,18 +130,35 @@ public class Player {
 				if (id.equals("tower8")) {
 					currTower = new Tower8(id, x * 32, y * 32, 32, 32);
 				}
+
+				
+				
+	
+
 				if (currTower != null && !tdv.getTowers().isThereATower(x, y)) {
 					if (coins >= currTower.getTowerCost()) {
-						AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
+
+						
+	
+				AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
 						coin.play();
 						decreaseCoins(currTower.getTowerCost());
 						tdv.getTowers().addTower2(currTower, x, y);
 					}
 				}
 				else {
-					Tower temp = tdv.getTowers().getTower(x, y);
-					if (temp != null) {
+					Tower tower = tdv.getTowers().getTower(x, y);
+					if (tower != null) {
+						String name= tower.getTowerName();
+						int cost= tower.getTowerCost();
+						int enemy= tower.getEnemiesDestroyed();
+						tdv.setTowerSpecification(name, enemy, cost);
 						
+						System.out.println(tower.getTowerCost());
+						System.out.println(tower.getEnemiesDestroyed());
+						System.out.println(tower.getTowerName());
+						System.out.println(tower.getRange());
+						System.out.println(tower.getUpgrade());
 					}
 
 				}
