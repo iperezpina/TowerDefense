@@ -184,7 +184,7 @@ public class TowerDefenseView extends Application {
 		Enemy e = new Enemy("ghost", tm.GetTile(0, 1), 32, 32, 4, 5, tm);
 		fr = new FileReader(tm, tm.GetTile(0, 1));
 		fr.read("src/level1.txt");
-		rm = new RoundManager(fr.getEnemies(), 5f, this);
+		rm = new RoundManager(fr.getEnemies(), 7f, this);
 		tdc.setRm(rm);
 		
 		tm.update();

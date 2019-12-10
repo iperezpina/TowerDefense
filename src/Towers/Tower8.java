@@ -19,8 +19,8 @@ public class Tower8 extends Tower {
 	private Projectile ammo;
 	private Timeline tl;
 
-	public Tower8(Image img, int x, int y, int width, int height) {
-		super(img, x, y, width, height);
+	public Tower8(String imgName, int x, int y, int width, int height) {
+		super(imgName, x, y, width, height);
 		additionalInfo();
 	}
 
@@ -41,7 +41,7 @@ public class Tower8 extends Tower {
 	}
 
 	public void shoot() {
-		ammo = new lavaShotProjectile("lavaShot", 5, x, y, currEnemy, damage);
+		ammo = new lavaShotProjectile("lavaShot", 10, x, y, currEnemy, damage);
 	}
 
 	/**
@@ -64,6 +64,9 @@ public class Tower8 extends Tower {
 		public void handle(ActionEvent arg0) {
 			Draw();
 			currentTime = TimerAll.getTimeInSeconds();
+			if (lastTimeAttacked > currentTime) {
+				lastTimeAttacked = 0;
+			}
 			if (Math.abs(currentTime - lastTimeAttacked) >= attackRate) {
 				lastTimeAttacked = currentTime;
 				drawRange();
@@ -72,23 +75,28 @@ public class Tower8 extends Tower {
 
 	}
 
+
 	private Enemy currEnemy = null;
+
+	private int lockMech = 1;
 
 	public void drawRange() {
 
 		for (Enemy e : EnemyLocator.getEnemies()) {
-			int x2 = e.getX();
-			int y2 = e.getY();
-			double distance = Math.hypot(getX() - x2, getY() - y2);
-
-			if (distance < range && !e.isDead()) {
-
-				currEnemy = e;
-				shoot();
-
+			if (e != null) {
+				int x2 = e.getX();
+				int y2 = e.getY();
+				double distance = Math.hypot(getX() - x2, getY() - y2);
+				if (distance < range && !e.isDead() & lockMech == 0) {
+					lockMech += 1;
+					currEnemy = e;
+					shoot();
+				}
 			}
-
+			
 		}
+
+		lockMech = 0;
 	}
 
 	public Enemy getcurrEnemy() {

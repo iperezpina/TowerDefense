@@ -19,8 +19,8 @@ public class Tower1 extends Tower {
 	private Projectile ammo;
 	private Timeline tl;
 
-	public Tower1(Image img, int x, int y, int width, int height) {
-		super(img, x, y, width, height);
+	public Tower1(String imgName, int x, int y, int width, int height) {
+		super(imgName, x, y, width, height);
 		additionalInfo();
 	}
 
@@ -66,8 +66,12 @@ public class Tower1 extends Tower {
 		public void handle(ActionEvent arg0) {
 			Draw();
 			currentTime = TimerAll.getTimeInSeconds();
+			if (lastTimeAttacked > currentTime) {
+				lastTimeAttacked = 0;
+			}
 			if (Math.abs(currentTime - lastTimeAttacked) >= attackRate) {
 				lastTimeAttacked = currentTime;
+				//System.out.println("attackRate: " + attackRate +" CT:" + currentTime + " lastTine:" + lastTimeAttacked);
 				drawRange();
 			}
 		}
@@ -82,13 +86,15 @@ public class Tower1 extends Tower {
 	public void drawRange() {
 
 		for (Enemy e : EnemyLocator.getEnemies()) {
-			int x2 = e.getX();
-			int y2 = e.getY();
-			double distance = Math.hypot(getX() - x2, getY() - y2);
-			if (distance < range && !e.isDead() & lockMech == 0) {
-				lockMech += 1;
-				currEnemy = e;
-				shoot();
+			if (e != null) {
+				int x2 = e.getX();
+				int y2 = e.getY();
+				double distance = Math.hypot(getX() - x2, getY() - y2);
+				if (distance < range && !e.isDead() & lockMech == 0) {
+					lockMech += 1;
+					currEnemy = e;
+					shoot();
+				}
 			}
 		}
 

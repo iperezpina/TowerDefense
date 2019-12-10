@@ -1,6 +1,7 @@
 package Towers;
 
 import controller.Drawer;
+import controller.ResourceManager;
 import javafx.scene.image.Image;
 
 /**
@@ -40,8 +41,10 @@ public class Tower {
 	 * @param width
 	 * @param height
 	 */
-	public Tower(Image img, int x, int y, int width, int height) {
-		this.img = img;
+	public Tower(String imgName, int x, int y, int width, int height) {
+		if (this.img == null) {
+			this.img = ResourceManager.getTowerImg(imgName);
+		}
 		this.x = x;
 		this.y = y;
 		this.width = width;

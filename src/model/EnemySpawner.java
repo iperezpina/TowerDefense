@@ -100,7 +100,10 @@ public class EnemySpawner {
 			intervalsBetween = .5f;
 		}
 		currentTime = TimerAll.getTimeInSeconds();
-		System.out.println(currentTime);
+		if (lastTimeSpawned > currentTime) {
+			lastTimeSpawned = 0;
+		}
+		//System.out.println(currentTime);
 		if (index < amtToSpawn) {
 			if (Math.abs(currentTime - lastTimeSpawned) >= intervalsBetween) {
 				lastTimeSpawned = currentTime;

@@ -1,16 +1,21 @@
 package Projectile;
 
+import java.io.File;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import model.Enemy;
 
 public class arrowProjectile extends Projectile {
 
 	private Timeline tl;
+	private AudioClip arrowSound = new AudioClip(new File("src/Sounds/arrow.wav").toURI().toString());
+
 
 	public arrowProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
 		super(imageName, speed, x, y, EtoShoot, damage);
@@ -31,7 +36,7 @@ public class arrowProjectile extends Projectile {
 
 		@Override
 		public void handle(ActionEvent arg0) {
-			if (count > 20) {
+			if (count > 1000) {
 				tl.stop();
 			}
 
@@ -43,6 +48,7 @@ public class arrowProjectile extends Projectile {
 			y = y + ((EtoShoot.getY() - y) / length * speed);
 			
 			if (handleCol()) {
+				arrowSound.play();
 				TowerDamage(EtoShoot);
 				tl.stop();
 			}

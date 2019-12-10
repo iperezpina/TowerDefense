@@ -22,9 +22,9 @@ public class Projectile {
 	private Timeline tl;
 	int damage;
 
-	public Projectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
+	public Projectile(String imgName, int speed, int x, int y, Enemy EtoShoot, int damage) {
 		if (this.Amunition == null) {
-			this.Amunition = ResourceManager.QuickLoad(imageName);
+			this.Amunition = ResourceManager.getProjectileImg(imgName);
 		}
 		this.x = x;
 		this.y = y;
