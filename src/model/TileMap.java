@@ -50,21 +50,23 @@ public class TileMap {
 	 */
 	public TileMap(int[][] tileMap) {
 		Random rnd = new Random();
-		int rndNum = -1;
+		int rndNumGround = -1;
+		int rndNumLava = -1;
 		this.tileGrid = new ArrayList<List<Tile>>();
 
 		for (int i = 0; i < 20; i++) {
 			ArrayList<Tile> temp = new ArrayList<Tile>();
 			for (int j = 0; j < 15; j++) {
 				int value = tileMap[j][i];
-				rndNum = rnd.nextInt(5);
+				rndNumGround = rnd.nextInt(5);
+				rndNumLava = rnd.nextInt(20);
 				switch (value) {
 				case 0:
-					if (rndNum == 0 || rndNum == 1 || rndNum == 2)
+					if (rndNumGround == 0 || rndNumGround == 1 || rndNumGround == 2)
 						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.HellGround1));
-					if (rndNum == 3)
+					if (rndNumGround == 3)
 						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.HellGround2));
-					if (rndNum == 4)
+					if (rndNumGround == 4)
 						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.HellGround3));
 					break;
 
@@ -73,7 +75,16 @@ public class TileMap {
 					break;
 
 				case 2:
-					temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Water));
+					if (rndNumLava != 0 && rndNumLava != 1) {
+						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Lava1));
+					}
+					else if (rndNumLava == 0) {
+						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Lava2));
+					}
+					else if (rndNumLava == 1) {
+						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Lava3));
+					}
+					
 					break;
 				}
 			}
