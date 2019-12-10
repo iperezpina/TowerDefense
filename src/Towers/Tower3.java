@@ -30,6 +30,7 @@ public class Tower3 extends Tower {
 		this.damage = 1;
 		this.range = 200;
 		this.towerName = "Pyramid Tower";
+		this.upgrade=0;
 	}
 
 	public void setURL(String str) {

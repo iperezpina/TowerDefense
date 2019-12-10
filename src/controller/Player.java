@@ -130,6 +130,8 @@ public class Player {
 				if (id.equals("tower8.png")) {
 					currTower = new Tower8(currTowerImg, x*32, y*32, 32, 32);
 				}
+				
+				
 				if (currTower != null && coins >= currTower.getTowerCost()) {
 					if (tdv.getTowers().addTower2(currTower, x, y)) {
 						AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());

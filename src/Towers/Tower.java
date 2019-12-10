@@ -2,6 +2,7 @@ package Towers;
 
 import controller.Drawer;
 import javafx.scene.image.Image;
+import model.Enemy;
 
 /**
  * 
@@ -26,7 +27,9 @@ public class Tower {
 	protected int attackRate = 3;
 	protected int towerCost = 0, towerSpent = 0;
 	protected int damage = 0;
-	private int towersDestroyed = 0;
+	protected int upgrade;
+	//protected boolean upgradeCount= false;
+	private int enemiesDestroyed = 0;
 	protected String towerName = "";
 	protected boolean isSelected = false;
 
@@ -48,7 +51,7 @@ public class Tower {
 		this.height = height;
 
 	}
-
+	
 	/**
 	 * Draws the tower image
 	 */
@@ -86,14 +89,29 @@ public class Tower {
 		return this.isSelected;
 	}
 
-	public int getTowerCost() {
-		return towerCost;
-	}
 
 	public void setTowerCost(int towerCost) {
 		this.towerCost = towerCost;
 	}
-	
-	
 
+	
+	public int getTowerCost() {
+		return towerCost;
+	}
+	
+	public int getEnemiesDestroyed() {
+		return this.enemiesDestroyed;
+	}
+	
+	public String getTowerName() {
+		return this.towerName;
+	}
+	
+	public int getRange() {
+		return this.range;
+	}
+
+	public int getUpgrade() {
+		return this.upgrade;
+	}
 }

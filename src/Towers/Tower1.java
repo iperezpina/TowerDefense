@@ -30,6 +30,7 @@ public class Tower1 extends Tower {
 		this.damage = 2;
 		this.range = 150;
 		this.towerName = "Fire Tower";
+		this.upgrade=0;
 	}
 
 	public void setURL(String str) {
@@ -99,5 +100,6 @@ public class Tower1 extends Tower {
 	public Enemy getcurrEnemy() {
 		return currEnemy;
 	}
+	
 
 }

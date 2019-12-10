@@ -19,22 +19,39 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
+import view.TowerDefenseView;
 
 public class TowerHolder {
 
 	private TileMap map;
 	private HashMap<String, Tower> towers2;
 	private Timeline tl;
+	private TowerDefenseView towerView;
 
-	public TowerHolder(TileMap map) {
+	public TowerHolder(TileMap map, TowerDefenseView towerView) {
 		this.map = map;
 		this.towers2 = new HashMap<String, Tower>();
+		this.towerView= towerView;
 	}
 
 	public boolean addTower2(Tower newTower, int x, int y) {
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
 			Tower tower = towers2.get(newKey);
+			
+			String name= tower.getTowerName();
+			int cost= tower.getTowerCost();
+			int enemy= tower.getEnemiesDestroyed();
+			towerView.setTowerSpecification(name, enemy, cost);
+			
+			System.out.println(tower.getTowerCost());
+			System.out.println(tower.getEnemiesDestroyed());
+			System.out.println(tower.getTowerName());
+			System.out.println(tower.getRange());
+			System.out.println(tower.getUpgrade());
+			
+			
+			
 			System.out.println("A tower already exists there!");
 			tower.setIsSelected(!(tower.isSelected()));
 			return false;
