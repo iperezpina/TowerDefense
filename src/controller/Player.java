@@ -109,12 +109,19 @@ public class Player {
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() / 32;
 			int y = (int) event.getY() / 32;
+
 			if (id != null && id.length() > 6) {
+
 				id = id.substring(0, id.length() - 4);
+			}
+			if(id==null) {
+				System.out.println("hello");
+				tdv.setAllBlank();
+				
 			}
 
 			
-			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg != null) {
+			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && id != null) {
 
 				currTower = makeTempTower(id, x, y);
 
@@ -125,25 +132,45 @@ public class Player {
 						coin.play();
 						decreaseCoins(currTower.getTowerCost());
 						tdv.getTowers().addTower2(currTower, x, y);
+						id=null;
 					}
 				}
-				else {
-					Tower tower = tdv.getTowers().getTower(x, y);
-					if (tower != null) {
-						String name= tower.getTowerName();
-						int cost= tower.getTowerCost();
-						int enemy= tower.getEnemiesDestroyed();
-						tdv.setTowerSpecification(name, enemy, cost);
-						
-						System.out.println(tower.getTowerCost());
-						System.out.println(tower.getEnemiesDestroyed());
-						System.out.println(tower.getTowerName());
-						System.out.println(tower.getRange());
-						System.out.println(tower.getUpgrade());
-					}
+
+//				else {
+//					Tower tower = tdv.getTowers().getTower(x, y);
+//					
+//					if (tower != null) {
+//						String name= tower.getTowerName();
+//						int Ucost= tower.getUpgradeCost();
+//						int enemy= tower.getEnemiesDestroyed();
+//						int range= tower.getRange();
+//						tower.setSellCost();
+//						int sell= tower.getSellCost();
+//						tdv.setTowerSpecification(name, enemy, Ucost, range, sell);
+//
+//					}
+//				
+//
+//				}
+			}
+			
+			else {
+				Tower tower = tdv.getTowers().getTower(x, y);
+				
+				if (tower != null) {
+					String name= tower.getTowerName();
+					int Ucost= tower.getUpgradeCost();
+					int enemy= tower.getEnemiesDestroyed();
+					int range= tower.getRange();
+					tower.setSellCost();
+					int sell= tower.getSellCost();
+					tdv.setTowerSpecification(name, enemy, Ucost, range, sell);
 
 				}
-			}
+			
+
+			}			
+			
 		}
 
 	};

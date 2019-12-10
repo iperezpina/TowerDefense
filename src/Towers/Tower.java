@@ -27,8 +27,10 @@ public class Tower {
 	protected int lastTimeAttacked = 0;
 	protected int attackRate = 3;
 	protected int towerCost = 0, towerSpent = 0;
+	protected int upgradeCost=0;
 	protected int damage = 0;
 	protected int upgrade;
+	protected int sellCost=0;
 	//protected boolean upgradeCount= false;
 	private int enemiesDestroyed = 0;
 	protected String towerName = "";
@@ -97,6 +99,22 @@ public class Tower {
 		this.towerCost = towerCost;
 	}
 
+	
+	public void setSellCost() {
+		this.sellCost= (int) ((this.towerCost +this.towerSpent)*.75);
+	}
+	
+	public int getSellCost() {
+		return this.sellCost;
+	}
+	
+	
+	public int getUpgradeCost() {
+		return this.upgradeCost;
+	}
+	
+	
+	
 	
 	public int getTowerCost() {
 		return towerCost;
