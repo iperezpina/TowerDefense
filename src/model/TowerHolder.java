@@ -97,5 +97,25 @@ public class TowerHolder {
 
 	}
 
+	
+	public boolean isThereATower(int x, int y) {
+		boolean isThere = false;
+		String newKey = x + "," + y;
+		if (towers2.containsKey(newKey)) {
+			return true;
+		}
+		return isThere;
+	}
+	
+	public Tower getTower(int x, int y) {
+		Tower temp = null;
+		String newKey = x + "," + y;
+		if (towers2.containsKey(newKey)) {
+			temp = towers2.get(newKey);
+			temp.setIsSelected(!(temp.isSelected()));
+		}
+
+		return temp;
+	}
 }
 
