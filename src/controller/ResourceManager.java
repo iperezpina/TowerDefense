@@ -48,6 +48,9 @@ public class ResourceManager {
 	public static Image hellGround1Img = QuickLoad("hellground1");
 	public static Image hellGround2Img = QuickLoad("hellground2");
 	public static Image hellGround3Img = QuickLoad("hellground3");
+	public static Image lava1Img = QuickLoad("lava");
+	public static Image lava23Img = QuickLoad("lava2");
+	public static Image lava3Img = QuickLoad("lava3");
 	
 	
 	public static Image QuickLoad(String ImgPath) {
