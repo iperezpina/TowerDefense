@@ -1,16 +1,21 @@
 package Projectile;
 
+import java.io.File;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import model.Enemy;
 
 public class lazerProjectile extends Projectile {
 
 	private Timeline tl;
+	private AudioClip laserSound = new AudioClip(new File("src/Sounds/laser.wav").toURI().toString());
+
 
 	public lazerProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
 		super(imageName, speed, x, y, EtoShoot, damage);
@@ -43,6 +48,7 @@ public class lazerProjectile extends Projectile {
 
 			
 			if (handleCol()) {
+				laserSound.play();
 				TowerDamage(EtoShoot);
 				tl.stop();
 			}

@@ -71,6 +71,7 @@ public class Tower1 extends Tower {
 			}
 			if (Math.abs(currentTime - lastTimeAttacked) >= attackRate) {
 				lastTimeAttacked = currentTime;
+				//System.out.println("attackRate: " + attackRate +" CT:" + currentTime + " lastTine:" + lastTimeAttacked);
 				drawRange();
 			}
 		}

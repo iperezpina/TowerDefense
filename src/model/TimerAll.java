@@ -57,6 +57,8 @@ public class TimerAll {
 	
 	private static void resetDeltaTime() {
 		deltaTime = .1f;
+		timeInMill = 0;
+		seconds = 0;
 	}
 	public static void cancel() {
 		timer.cancel();
