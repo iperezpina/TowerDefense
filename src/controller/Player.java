@@ -130,15 +130,21 @@ public class Player {
 				if (id.equals("tower8.png")) {
 					currTower = new Tower8(currTowerImg, x*32, y*32, 32, 32);
 				}
-				if (currTower != null && coins >= currTower.getTowerCost()) {
-					if (tdv.getTowers().addTower2(currTower, x, y)) {
+				
+				
+				if (currTower != null && !tdv.getTowers().isThereATower(x, y)) {
+					if (coins >= currTower.getTowerCost()) {
 						AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
 						coin.play();
 						decreaseCoins(currTower.getTowerCost());
+						tdv.getTowers().addTower2(currTower, x, y);
 					}
-					
-					
-
+				}
+				else {
+					Tower temp = tdv.getTowers().getTower(x, y);
+					if (temp != null) {
+						
+					}
 				}
 			}
 		}
