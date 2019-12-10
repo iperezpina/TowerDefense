@@ -77,9 +77,16 @@ public class TowerDefenseView extends Application {
 
 	Button goButton = new Button("GO");
 	BorderPane bpBottom = new BorderPane();
+	
+	Label moneyLabel = new Label();
+	Label healthLabel = new Label();
+	Label towerLabel = new Label();
+	FlowPane playerFP = new FlowPane();
+	
+	
 
 	// Other variables below
-	// Essentially the map of the level
+	// Essentially the map(s) of the level(s)
 	private int[][] easyMap = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
@@ -143,7 +150,7 @@ public class TowerDefenseView extends Application {
 		TimerAll.pause();
 
 		// Setting up title and icon for app
-		mainStage.setTitle("Higway outta HELL");
+		mainStage.setTitle("Highway outta HELL");
 		mainStage.getIcons().add(new Image("Images/logo.png"));
 
 		// Creating a borderpane
@@ -159,8 +166,17 @@ public class TowerDefenseView extends Application {
 
 		// Rightpane will have the info about the player and where the available towers
 		// will be located
-		rightLabel = new Label("Money: " + currPlayer.getCoins() + "\nHealth: " + currPlayer.getHP());
-		VBox rightPane = new VBox(rightLabel);
+		playerFP.setOrientation(Orientation.VERTICAL);
+		playerFP.setPrefHeight(70);
+		moneyLabel.setStyle("-fx-text-fill:gold; -fx-font: 14px Tahoma;");
+		healthLabel.setStyle("-fx-text-fill:springgreen; -fx-font: 14px Tahoma;");
+		towerLabel.setStyle("-fx-text-fill:crimson");
+		playerFP.getChildren().add(moneyLabel);
+		playerFP.getChildren().add(healthLabel);
+		playerFP.getChildren().add(towerLabel);
+		//rightLabel = new Label("Money: " + currPlayer.getCoins() + "\nHealth: " + currPlayer.getHP());
+		updatePlayerInfo(currPlayer.getCoins(), currPlayer.getHP());
+		VBox rightPane = new VBox(playerFP);
 		// VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() +
 		// "\nCoins: " + currPlayer.getCoins()));
 
@@ -401,5 +417,16 @@ public class TowerDefenseView extends Application {
 	public void pause() {
 		TimerAll.pause();
 	}
+	
+	public void updatePlayerInfo(int money, int health) {
+		moneyLabel.setText("Money:\t" + money);
+		healthLabel.setText("Health:\t" + health);
+		updateTowerLabel("");
+	}
+	
+	public void updateTowerLabel(String newText) {
+		towerLabel.setText(newText);
+	}
+	
 
 }
