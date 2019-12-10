@@ -13,12 +13,15 @@ import Towers.Tower5;
 import Towers.Tower6;
 import Towers.Tower7;
 import Towers.Tower8;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.RoundManager;
+import model.TimerAll;
 import view.TowerDefenseView;
 
 /**
@@ -53,12 +56,46 @@ public class TowerDefenseController {
 		
 	};
 	
-	public EventHandler<MouseEvent> pause = new EventHandler<MouseEvent>() {
+	public EventHandler<ActionEvent> pause = new EventHandler<ActionEvent>() {
 
+		private boolean isPaused = false;
 		@Override
-		public void handle(MouseEvent event) {
-			//tdv.pause();
-			tdv.drawGoButton();
+		public void handle(ActionEvent event) {
+			isPaused = !isPaused;
+			if (isPaused) {
+				tdv.pause();
+				//tdv.drawGoButton();
+				Button temp = (Button) event.getSource();
+				temp.setText("PLAY");
+			}
+			if (!isPaused) {
+				tdv.play();
+				Button temp = (Button) event.getSource();
+				temp.setText("PAUSE");
+			}
+			
+		}
+		
+	};
+	
+	public EventHandler<ActionEvent> timeTwo = new EventHandler<ActionEvent>() {
+
+		private boolean isOn = false;
+		@Override
+		public void handle(ActionEvent event) {
+			isOn = !isOn;
+			if (isOn) {
+				TimerAll.timesTwo();
+				//tdv.drawGoButton();
+				Button temp = (Button) event.getSource();
+				temp.setText("x1");
+			}
+			if (!isOn) {
+				TimerAll.play();
+				Button temp = (Button) event.getSource();
+				temp.setText("x2");
+			}
+			
 		}
 		
 	};
