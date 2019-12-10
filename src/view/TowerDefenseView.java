@@ -295,11 +295,15 @@ public class TowerDefenseView extends Application {
 	}
 	
 	public void setAllBlank() {
-		towerNameLabel = new Label();
-		killCountLabel = new Label();
-		rangeLabel= new Label();
-		sellButton = new Button("Sell for $  " );
-		upgradeCostLabel = new Label();
+		//Tower Info stuff (Yellow panel)
+		towerNameLabel.setText("");
+		killCountLabel.setText("");
+		rangeLabel.setText("");
+		sellButton.setText("Sell for $");
+		upgradeCostLabel.setText("");
+		
+		//Upgrade Info stuff (Blue panel)
+		
 
 	}
 

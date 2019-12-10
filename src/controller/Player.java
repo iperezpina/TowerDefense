@@ -11,6 +11,7 @@ import Towers.Tower5;
 import Towers.Tower6;
 import Towers.Tower7;
 import Towers.Tower8;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -30,6 +31,7 @@ public class Player {
 	private Tower currTower;
 	private String currURL;
 	private String id;
+	private int selectedX, selectedY;
 
 	public Player() {
 		health = 100;
@@ -80,7 +82,7 @@ public class Player {
 	}
 
 	public static void updatePlayerGUI() {
-		//tdv.getRightLabel().setText("Money: " + coins + "\nHealth: " + health);
+		// tdv.getRightLabel().setText("Money: " + coins + "\nHealth: " + health);
 		tdv.updatePlayerInfo(coins, health);
 	}
 
@@ -96,10 +98,10 @@ public class Player {
 			if (id != null && id.length() > 6) {
 				id = id.substring(0, id.length() - 4);
 			}
-			Tower temp = makeTempTower(id, 0,0);
+			Tower temp = makeTempTower(id, 0, 0);
 			String result = temp.getTowerName() + " costs $" + temp.getTowerCost();
 			tdv.updateTowerLabel(result);
-			
+
 		}
 	};
 
@@ -110,29 +112,28 @@ public class Player {
 			int x = (int) event.getX() / 32;
 			int y = (int) event.getY() / 32;
 
+			//Checks if we can shorten the id to remove the ".png"
 			if (id != null && id.length() > 6) {
-
 				id = id.substring(0, id.length() - 4);
 			}
-			if(id==null) {
-				System.out.println("hello");
+			//If id is null we will clear the tower selected pane
+			if (id == null) {
 				tdv.setAllBlank();
-				
+            	System.out.println("Setting to blanks");
 			}
-
-			
+			//If the tile we click on can have towers placed on it and the id isn't null we will create a temp Tower, 
+			//then check if we have enough money to place the tower.  Then update our cash accordingly.
 			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && id != null) {
 
 				currTower = makeTempTower(id, x, y);
 
 				if (currTower != null && !tdv.getTowers().isThereATower(x, y)) {
 					if (coins >= currTower.getTowerCost()) {
-
-				AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
+						AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
 						coin.play();
 						decreaseCoins(currTower.getTowerCost());
 						tdv.getTowers().addTower2(currTower, x, y);
-						id=null;
+						id = null;
 					}
 				}
 
@@ -153,31 +154,38 @@ public class Player {
 //
 //				}
 			}
-			
-			else {
-				Tower tower = tdv.getTowers().getTower(x, y);
+			if (tdv.getTowers().isThereATower(x, y)){
+				//Shows the tower info
+				Platform.runLater( new Runnable() {
+                    @Override
+                    public void run() {
+                    	Tower tower = tdv.getTowers().getTower(x, y);
+
+        				if (tower != null) {
+        					tower.setIsSelected(!tower.isSelected());
+        					String name = tower.getTowerName();
+        					int Ucost = tower.getUpgradeCost();
+        					int enemy = tower.getEnemiesDestroyed();
+        					int range = tower.getRange();
+        					tower.setSellCost();
+        					int sell = tower.getSellCost();
+        					tdv.setTowerSpecification(name, enemy, Ucost, range, sell);
+
+        				}
+                    }
+                });
 				
-				if (tower != null) {
-					String name= tower.getTowerName();
-					int Ucost= tower.getUpgradeCost();
-					int enemy= tower.getEnemiesDestroyed();
-					int range= tower.getRange();
-					tower.setSellCost();
-					int sell= tower.getSellCost();
-					tdv.setTowerSpecification(name, enemy, Ucost, range, sell);
+				
 
-				}
-			
+			}
 
-			}			
-			
 		}
 
 	};
-	
+
 	public Tower makeTempTower(String towerId, int x, int y) {
 		Tower currTower = null;
-		
+
 		if (towerId.equals("tower1")) {
 			currTower = new Tower1(towerId, x * 32, y * 32, 32, 32);
 		}
