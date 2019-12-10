@@ -167,6 +167,9 @@ public class Enemy {
 	public void DrawHealth() {
 		int newWidth = (width / maxHealth);
 		int healthWidth = newWidth * health;
+		if (healthWidth < 0) {
+			healthWidth = 0;
+		}
 		Drawer.DrawImage(ResourceManager.QuickLoad("redbar"), x, y + 16, newWidth * maxHealth, 32);
 		Drawer.DrawImage(ResourceManager.QuickLoad("greenbar"), x, y + 16, healthWidth, 32);
 		
