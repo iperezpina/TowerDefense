@@ -34,6 +34,8 @@ public class Enemy {
 	private boolean isExited = false, isDead = false, isPaused = false;
 	private String imgPath;
 	private int cashBack;
+	
+	private boolean isSlowed = false;
 
 	/**
 	 * The constructor method of the enemy class, takes in an img, a tile where the
@@ -69,6 +71,20 @@ public class Enemy {
 		int temp = 0;
 		temp += (health / 4) + speed;
 		return temp;
+	}
+	
+	//Halves an enemy speed permanently, only works once
+	public void slowEnemy() {
+		if (!isSlowed) {
+			if (speed / 2 <= 0) {
+				speed = 1;
+			}
+			else {
+				speed /= 2;
+			}
+			isSlowed = true;
+		}
+		
 	}
 
 	/**
