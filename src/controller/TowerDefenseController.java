@@ -2,8 +2,6 @@
 package controller;
 
 
-
-
 import Towers.Tower;
 import Towers.Tower1;
 import Towers.Tower2;
@@ -45,13 +43,27 @@ public class TowerDefenseController {
 	private RoundManager rm;
 	
 	
+	public EventHandler<MouseEvent> go = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent event) {
+			rm.newWaveList();
+			tdv.startPlay();
+			tdv.drawExtraButtons();
+			//rm.newWaveList();
+			//tdv.play();
+		}
+		
+		
+	};
+	
 	public EventHandler<MouseEvent> resume = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent event) {
-			tdv.play();
+			tdv.play(); 
 			tdv.drawExtraButtons();
-			rm.newWaveList();
+			//rm.newWaveList();
 		}
 		
 	};
@@ -64,7 +76,7 @@ public class TowerDefenseController {
 			isPaused = !isPaused;
 			if (isPaused) {
 				tdv.pause();
-				//tdv.drawGoButton();
+				//tdv.drawPlayButton();
 				Button temp = (Button) event.getSource();
 				temp.setText("PLAY");
 			}
@@ -96,9 +108,8 @@ public class TowerDefenseController {
 				temp.setText("x2");
 			}
 			
-		}
 		
-	};
+	}};
 	
 	
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {

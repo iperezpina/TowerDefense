@@ -2,6 +2,7 @@
 package view;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import controller.Player;
 import controller.TowerDefenseController;
@@ -64,7 +65,9 @@ public class TowerDefenseView extends Application {
 	private Label roundLabel;
 	private BorderPane bpRightButtons;
 
+
 	// Variables here relate to the gui elements
+	private ArrayList<Enemy> enemiesList;
 	FlowPane fp = new FlowPane();
 	Label towerNameLabel = new Label();
 	Label killCountLabel = new Label();
@@ -140,10 +143,10 @@ public class TowerDefenseView extends Application {
 		currPlayer.setTdv(this);
 		tdc.setTdv(this);
 
-		TimerAll.pause();
+		TimerAll.play();
 
 		// Setting up title and icon for app
-		mainStage.setTitle("Higway outta HELL");
+		mainStage.setTitle("Highway outta HELL");
 		mainStage.getIcons().add(new Image("Images/logo.png"));
 
 		// Creating a borderpane
@@ -194,7 +197,6 @@ public class TowerDefenseView extends Application {
 		 */
 
 		// Loops the music for forever
-
 		mediaPlayer.setAutoPlay(true);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 	}
@@ -236,6 +238,8 @@ public class TowerDefenseView extends Application {
 		tm.update();
 		towers.update();
 		rm.update();
+		
+		
 	}
 
 	/**
@@ -361,12 +365,26 @@ public class TowerDefenseView extends Application {
 	public void drawGoButton() {
 		Button goButton = new Button("GO");
 		goButton.setPrefSize(150, 50);
-		goButton.setStyle("-fx-background-color:springgreen; -fx-border-radius: 2px; -fx-border-width: 2px;"
-				+ "-fx-border-color: Green;");
-		goButton.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.resume);
+
+		goButton.setStyle("-fx-background-color:springgreen; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
+				"-fx-border-color: Green;");
+		goButton.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.go);
+		
 
 		bpRightButtons.setTop(goButton);
 		bpRightButtons.setBottom(null);
+	}
+	
+	public void drawPlayButton() {
+		Button play = new Button("Play");
+		play.setPrefSize(150, 50);
+		play.setStyle("-fx-background-color:springgreen; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
+				"-fx-border-color: Green;");
+		play.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.resume);
+		
+		bpRightButtons.setTop(play);
+		bpRightButtons.setBottom(null);
+		
 	}
 
 	public TileMap getTm() {
@@ -393,13 +411,34 @@ public class TowerDefenseView extends Application {
 		this.roundLabel = roundLabel;
 	}
 
+
+	public void startPlay() {
+		TimerAll.runTimer();
+		//rm.startES();
+	}
+	
 	public void play() {
-		// TimerAll.play();
-		TimerAll.run();
+		
+		TimerAll.play();
+	
+		//rm.playES();
+		
+		/*for(Enemy e:enemiesList) {
+			System.out.println(e);
+			e.play();
+		}*/
+
 	}
 
 	public void pause() {
+		/*for(Enemy e:enemiesList) {
+			e.pause();
+		}*/
 		TimerAll.pause();
+
+		rm.pauseES();
+		
+	
 	}
 
 }
