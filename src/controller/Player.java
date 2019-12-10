@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 
-
 import Towers.Tower;
 import Towers.Tower1;
 import Towers.Tower2;
@@ -30,31 +29,30 @@ public class Player {
 	private Tower currTower;
 	private String currURL;
 	private String id;
-	
-	public Player(){
+
+	public Player() {
 		health = 100;
 		coins = 1000;
 	}
-	
-	
+
 	public int getHP() {
 		return health;
 	}
-	
+
 	public int getCoins() {
 		return coins;
 	}
-	
+
 	public TowerDefenseView getTdv() {
 		return tdv;
 	}
-	
+
 	public static void takeDmg() {
 		health -= 1;
 		updatePlayerGUI();
 		gameOver();
 	}
-	
+
 	private static void gameOver() {
 		if (health <= 0) {
 			System.out.println("GAME OVER!");
@@ -65,86 +63,108 @@ public class Player {
 	public void setTdv(TowerDefenseView tdv) {
 		this.tdv = tdv;
 	}
-	
+
 	public void decreaseCoins(int shift) {
 		coins -= shift;
 		updatePlayerGUI();
 	}
-	
+
 	public void increaseCoins(int shift) {
 		coins += shift;
 	}
-	
+
 	public static void addCash(int cash) {
 		coins += cash;
 		updatePlayerGUI();
 	}
-	
+
 	public static void updatePlayerGUI() {
 		tdv.getRightLabel().setText("Money: " + coins + "\nHealth: " + health);
 	}
-	
-	
+
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
 
-		@SuppressWarnings( "deprecation" )
+		@SuppressWarnings("deprecation")
 		@Override
 		public void handle(MouseEvent event) {
 			currTowerImgView = (ImageView) event.getSource();
 			currTowerImg = (Image) currTowerImgView.getImage();
 			currURL = currTowerImg.impl_getUrl();
-			id = currURL.substring(currURL.length()-10);
+			id = currURL.substring(currURL.length() - 10);
 			System.out.println("Tower chosen: " + id);
 		}
 	};
-	
+
 	public EventHandler<MouseEvent> placeTower = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() / 32;
 			int y = (int) event.getY() / 32;
-			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg != null ) {
+			id = id.substring(0, id.length() - 4);
+			System.out.println(id);
+			
+			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg != null) {
 
-				if (id.equals("tower1.png")) {
-					currTower = new Tower1(currTowerImg, x*32, y*32, 32, 32);
+				if (id.equals("tower1")) {
+					currTower = new Tower1(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower2.png")) {
-					currTower = new Tower2(currTowerImg, x*32, y*32, 32, 32);
+				if (id.equals("tower2")) {
+					currTower = new Tower2(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower3.png")) {
-					currTower = new Tower3(currTowerImg, x*32, y*32, 32, 32);
+				if (id.equals("tower3")) {
+					currTower = new Tower3(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower4.png")) {
-					currTower = new Tower4(currTowerImg, x*32, y*32, 32, 32);
+				if (id.equals("tower4")) {
+					currTower = new Tower4(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower5.png")) {
-					currTower = new Tower5(currTowerImg, x*32, y*32, 32, 32);
+				if (id.equals("tower5")) {
+					currTower = new Tower5(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower6.png")) {
-					currTower = new Tower6(currTowerImg, x*32, y*32, 32, 32);
+				if (id.equals("tower6")) {
+					currTower = new Tower6(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower7.png")) {
-					currTower = new Tower7(currTowerImg, x*32, y*32, 32, 32);
+				if (id.equals("tower7")) {
+					currTower = new Tower7(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower8.png")) {
-					currTower = new Tower8(currTowerImg, x*32, y*32, 32, 32);
+				if (id.equals("tower8")) {
+					currTower = new Tower8(id, x * 32, y * 32, 32, 32);
 				}
+
 				
 				
-				if (currTower != null && coins >= currTower.getTowerCost()) {
-					if (tdv.getTowers().addTower2(currTower, x, y)) {
-						AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
+	
+
+				if (currTower != null && !tdv.getTowers().isThereATower(x, y)) {
+					if (coins >= currTower.getTowerCost()) {
+
+						
+	
+				AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
 						coin.play();
 						decreaseCoins(currTower.getTowerCost());
+						tdv.getTowers().addTower2(currTower, x, y);
 					}
-					
-					
+				}
+				else {
+					Tower tower = tdv.getTowers().getTower(x, y);
+					if (tower != null) {
+						String name= tower.getTowerName();
+						int cost= tower.getTowerCost();
+						int enemy= tower.getEnemiesDestroyed();
+						tdv.setTowerSpecification(name, enemy, cost);
+						
+						System.out.println(tower.getTowerCost());
+						System.out.println(tower.getEnemiesDestroyed());
+						System.out.println(tower.getTowerName());
+						System.out.println(tower.getRange());
+						System.out.println(tower.getUpgrade());
+					}
 
 				}
 			}
 		}
-		
+
 	};
-	
+
 }

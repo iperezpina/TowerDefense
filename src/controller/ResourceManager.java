@@ -17,29 +17,29 @@ public class ResourceManager {
 	
 	//Extra Images
 	public static Image fireballImg = QuickLoad("Fireball");
-	public static Image optionsimg = QuickLoad("Options");
-	public static Image startScreenimg = QuickLoad("startscreen");
+	public static Image optionsImg = QuickLoad("Options");
+	public static Image startScreenImg = QuickLoad("startscreen");
 	
 	//All the towers
-	public static Image Tower1img = QuickLoad("tower1");
-	public static Image Tower2img = QuickLoad("tower2");
-	public static Image Tower3img = QuickLoad("tower3");
-	public static Image Tower4img = QuickLoad("tower4");
-	public static Image Tower5img = QuickLoad("tower5");
-	public static Image Tower6img = QuickLoad("tower6");
-	public static Image Tower7img = QuickLoad("tower7");
-	public static Image Tower8img = QuickLoad("tower8");
+	public static Image Tower1Img = QuickLoad("tower1");
+	public static Image Tower2Img = QuickLoad("tower2");
+	public static Image Tower3Img = QuickLoad("tower3");
+	public static Image Tower4Img = QuickLoad("tower4");
+	public static Image Tower5Img = QuickLoad("tower5");
+	public static Image Tower6Img = QuickLoad("tower6");
+	public static Image Tower7Img = QuickLoad("tower7");
+	public static Image Tower8Img = QuickLoad("tower8");
 	
 	//All the projectiles
-	public static Image bloodProjimg = QuickLoad("blood");
-	public static Image arrowProjimg = QuickLoad("arrow");
-	public static Image boneProjimg = QuickLoad("bone");
-	public static Image rockProjimg = QuickLoad("rock");
-	public static Image lazerProjimg = QuickLoad("lazer");
-	public static Image lightningProjimg = QuickLoad("lightning");
-	public static Image fireProjimg = QuickLoad("Fireball");
-	public static Image lavaProjimg = QuickLoad("lava");
-	public static Image holyWaterProjimg = QuickLoad("holyWater");
+	public static Image bloodProjImg = QuickLoad("blood");
+	public static Image arrowProjImg = QuickLoad("arrow");
+	public static Image boneProjImg = QuickLoad("bone");
+	public static Image rockProjImg = QuickLoad("rock");
+	public static Image lazerProjImg = QuickLoad("lazer");
+	public static Image lightningProjImg = QuickLoad("lightning");
+	public static Image fireProjImg = QuickLoad("Fireball");
+	public static Image lavaProjImg = QuickLoad("lava");
+	public static Image holyWaterProjImg = QuickLoad("holyWater");
 	
 	//All the tiles
 	public static Image grass32Img = QuickLoad("grass32");
@@ -50,9 +50,108 @@ public class ResourceManager {
 	public static Image hellGround3Img = QuickLoad("hellground3");
 	
 	
-	public static Image QuickLoad(String imgPath) {
-		Image img = new Image("Images/" + imgPath + ".png");
-		return img;
+	public static Image QuickLoad(String ImgPath) {
+		Image Img = new Image("Images/" + ImgPath + ".png");
+		return Img;
+	}
+	
+	public static Image getEnemyImg(String ImgName) {
+		Image temp = null;
+		switch(ImgName) {
+		case "ghost":
+			temp = ghostImg;
+			break;
+		case "redghost":
+			temp = redGhostImg;
+			break;
+		case "blueghost":
+			temp = blueGhostImg;
+			break;
+		case "yellowghost":
+			temp = yellowGhostImg;
+			break;
+		case "greenghost":
+			temp = greenGhostImg;
+			break;
+		case "purpleghost":
+			temp = purpleGhostImg;
+			break;
+		case "metalghost":
+			temp = metalGhostImg;
+			break;
+		case "goldghost":
+			temp = goldGhostImg;
+			break;
+		case "ghoully":
+			temp = bossImg;
+			break;
+		}
+		return temp;
+	}
+
+	public static Image getProjectileImg(String ImgName) {
+		Image temp = null;
+		switch(ImgName) {
+		case "blood":
+			temp = bloodProjImg;
+			break;
+		case "arrow":
+			temp = arrowProjImg;
+			break;
+		case "bone":
+			temp = boneProjImg;
+			break;
+		case "rock":
+			temp = rockProjImg;
+			break;
+		case "lazer":
+			temp = lazerProjImg;
+			break;
+		case "lightning":
+			temp = lightningProjImg;
+			break;
+		case "Fireball":
+			temp = fireProjImg;
+			break;
+		case "lava":
+			temp = lavaProjImg;
+			break;
+		case "holyWater":
+			temp = holyWaterProjImg;
+			break;
+		}
+		return temp;
+	}
+
+	public static Image getTowerImg(String ImgName) {
+		Image temp = null;
+		switch(ImgName) {
+		case "tower1":
+			temp = Tower1Img;
+			break;
+		case "tower2":
+			temp = Tower2Img;
+			break;
+		case "tower3":
+			temp = Tower3Img;
+			break;
+		case "tower4":
+			temp = Tower4Img;
+			break;
+		case "tower5":
+			temp = Tower5Img;
+			break;
+		case "tower6":
+			temp = Tower6Img;
+			break;
+		case "tower7":
+			temp = Tower7Img;
+			break;
+		case "tower8":
+			temp = Tower8Img;
+			break;
+		}
+		return temp;
 	}
 	
 }

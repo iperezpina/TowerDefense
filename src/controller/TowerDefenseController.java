@@ -18,6 +18,7 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import model.RoundManager;
 import view.TowerDefenseView;
 
 /**
@@ -38,6 +39,7 @@ public class TowerDefenseController {
 	private String currURL;
 	private String id;
 	private Player player;
+	private RoundManager rm;
 	
 	
 	public EventHandler<MouseEvent> resume = new EventHandler<MouseEvent>() {
@@ -46,6 +48,7 @@ public class TowerDefenseController {
 		public void handle(MouseEvent event) {
 			tdv.play();
 			tdv.drawExtraButtons();
+			rm.newWaveList();
 		}
 		
 	};
@@ -54,7 +57,7 @@ public class TowerDefenseController {
 
 		@Override
 		public void handle(MouseEvent event) {
-			tdv.pause();
+			//tdv.pause();
 			tdv.drawGoButton();
 		}
 		
@@ -87,6 +90,14 @@ public class TowerDefenseController {
 
 	public void setTdv(TowerDefenseView tdv) {
 		this.tdv = tdv;
+	}
+
+	public RoundManager getRm() {
+		return rm;
+	}
+
+	public void setRm(RoundManager rm) {
+		this.rm = rm;
 	}
 
 }

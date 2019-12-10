@@ -1,19 +1,24 @@
 package Projectile;
 
+import java.io.File;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import model.Enemy;
 
 public class lightningProjectile extends Projectile {
 
 	private Timeline tl;
+	private AudioClip lightingSound = new AudioClip(new File("src/Sounds/electric.wav").toURI().toString());
 
-	public lightningProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot) {
-		super(imageName, speed, x, y, EtoShoot);
+
+	public lightningProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
+		super(imageName, speed, x, y, EtoShoot, damage);
 		update();
 
 	}
@@ -40,6 +45,14 @@ public class lightningProjectile extends Projectile {
 			x = x + ((EtoShoot.getX() - x) / length * speed);
 
 			y = y + ((EtoShoot.getY() - y) / length * speed);
+			
+			
+			if (handleCol()) {
+				lightingSound.play();
+				TowerDamage(EtoShoot);
+				tl.stop();
+			}
+			
 
 			draw();
 			count++;

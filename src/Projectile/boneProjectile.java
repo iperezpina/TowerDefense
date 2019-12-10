@@ -1,20 +1,25 @@
 package Projectile;
 
+import java.io.File;
+
 import controller.Drawer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import model.Enemy;
 
 public class boneProjectile extends Projectile {
 
 	private Timeline tl;
+	private AudioClip boneSound = new AudioClip(new File("src/Sounds/klonk.wav").toURI().toString());
 
-	public boneProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot) {
-		super(imageName, speed, x, y, EtoShoot);
+
+	public boneProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
+		super(imageName, speed, x, y, EtoShoot, damage);
 		update();
 
 	}
@@ -41,6 +46,13 @@ public class boneProjectile extends Projectile {
 			x = x + ((EtoShoot.getX() - x) / length * speed);
 
 			y = y + ((EtoShoot.getY() - y) / length * speed);
+			
+			if (handleCol()) {
+				boneSound.play();
+				TowerDamage(EtoShoot);
+				tl.stop();
+			}
+			
 
 			draw();
 			count++;

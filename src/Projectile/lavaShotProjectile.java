@@ -1,19 +1,24 @@
 package Projectile;
 
+import java.io.File;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import model.Enemy;
 
 public class lavaShotProjectile extends Projectile {
 
 	private Timeline tl;
+	private AudioClip lavaSound = new AudioClip(new File("src/Sounds/lavasiz.wav").toURI().toString());
 
-	public lavaShotProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot) {
-		super(imageName, speed, x, y, EtoShoot);
+	
+	public lavaShotProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
+		super(imageName, speed, x, y, EtoShoot, damage);
 		update();
 
 	}
@@ -41,6 +46,12 @@ public class lavaShotProjectile extends Projectile {
 
 			y = y + ((EtoShoot.getY() - y) / length * speed);
 
+			if (handleCol()) {
+				lavaSound.play();
+				TowerDamage(EtoShoot);
+				tl.stop();
+			}
+			
 			draw();
 			count++;
 		}

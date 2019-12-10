@@ -49,7 +49,7 @@ public class Enemy {
 	 */
 	public Enemy(String imgPath, Tile start, int width, int height, float speed, int health, TileMap tm) {
 		if (img == null) {
-			img = new Image(imgPath);
+			img = ResourceManager.getEnemyImg(imgPath);
 		}
 		this.imgPath = imgPath;
 		this.startLocation = start;
@@ -272,6 +272,13 @@ public class Enemy {
 
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
+	}
+	
+	public String toString() {
+		String result = "";
+		result += imgPath + " spd: " + speed + " health: " + maxHealth;
+		return result;
+		
 	}
 }
 

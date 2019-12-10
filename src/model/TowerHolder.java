@@ -26,12 +26,12 @@ public class TowerHolder {
 	private TileMap map;
 	private HashMap<String, Tower> towers2;
 	private Timeline tl;
-	private TowerDefenseView towerView;
+	
 
-	public TowerHolder(TileMap map, TowerDefenseView towerView) {
+	public TowerHolder(TileMap map) {
 		this.map = map;
 		this.towers2 = new HashMap<String, Tower>();
-		this.towerView= towerView;
+		
 	}
 
 	public boolean addTower2(Tower newTower, int x, int y) {
@@ -39,16 +39,7 @@ public class TowerHolder {
 		if (towers2.containsKey(newKey)) {
 			Tower tower = towers2.get(newKey);
 			
-			String name= tower.getTowerName();
-			int cost= tower.getTowerCost();
-			int enemy= tower.getEnemiesDestroyed();
-			towerView.setTowerSpecification(name, enemy, cost);
-			
-			System.out.println(tower.getTowerCost());
-			System.out.println(tower.getEnemiesDestroyed());
-			System.out.println(tower.getTowerName());
-			System.out.println(tower.getRange());
-			System.out.println(tower.getUpgrade());
+
 			
 			
 			
@@ -114,5 +105,25 @@ public class TowerHolder {
 
 	}
 
+	
+	public boolean isThereATower(int x, int y) {
+		boolean isThere = false;
+		String newKey = x + "," + y;
+		if (towers2.containsKey(newKey)) {
+			return true;
+		}
+		return isThere;
+	}
+	
+	public Tower getTower(int x, int y) {
+		Tower temp = null;
+		String newKey = x + "," + y;
+		if (towers2.containsKey(newKey)) {
+			temp = towers2.get(newKey);
+			temp.setIsSelected(!(temp.isSelected()));
+		}
+
+		return temp;
+	}
 }
 
