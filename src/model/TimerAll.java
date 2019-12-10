@@ -10,6 +10,9 @@ public class TimerAll {
 	
 	static Timer timer;
 	private static boolean check = false;
+	private static boolean updating = false;
+	
+	
 	
 	public static void run() {
 		resetDeltaTime();
@@ -20,7 +23,12 @@ public class TimerAll {
 				seconds = (int) timeInMill;
 	    }
 		};
-		timer.scheduleAtFixedRate(tt, 0, 100);
+	
+		
+		if (!updating) {
+			updating = true;
+			timer.scheduleAtFixedRate(tt, 0, 100);
+		}
 		
 	}
 	
