@@ -116,8 +116,26 @@ public class Enemy {
 			if(!isPaused) {
 				
 				moveTo();
-				x += (int) md.dx * speed;
-				y += (int) md.dy * speed;
+				//If the game should be paused set movement to zero essentially
+				if (Player.getGameState().equals(GameState.gamepaused)){
+					x += (int) md.dx * speed * 0;
+					y += (int) md.dy * speed * 0;
+				}
+				//If the game should be going at x2 speed double enemy speed
+				if (Player.getGameState().equals(GameState.gamex2)) {
+					float tempSpeed = speed * 2;
+					if (tempSpeed > 32) {
+						tempSpeed = 32;
+					}
+					x += (int) md.dx * tempSpeed;
+					y += (int) md.dy * tempSpeed;
+				}
+				//If the game is playing normally run at regular enemy speed 
+				if (Player.getGameState().equals(GameState.gameplay)) {
+					x += (int) md.dx * speed;
+					y += (int) md.dy * speed;
+				}
+				
 			}
 		}
 

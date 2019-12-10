@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import model.GameState;
 import model.RoundManager;
 import model.TimerAll;
 import view.TowerDefenseView;
@@ -50,6 +51,7 @@ public class TowerDefenseController {
 			rm.newWaveList();
 			tdv.startPlay();
 			tdv.drawExtraButtons();
+			Player.setGameState(GameState.gameplay);
 			//rm.newWaveList();
 			//tdv.play();
 		}
@@ -79,11 +81,13 @@ public class TowerDefenseController {
 				//tdv.drawPlayButton();
 				Button temp = (Button) event.getSource();
 				temp.setText("PLAY");
+				Player.setGameState(GameState.gamepaused);
 			}
 			if (!isPaused) {
 				tdv.play();
 				Button temp = (Button) event.getSource();
 				temp.setText("PAUSE");
+				Player.setGameState(GameState.gameplay);
 			}
 			
 		}
@@ -101,11 +105,13 @@ public class TowerDefenseController {
 				//tdv.drawGoButton();
 				Button temp = (Button) event.getSource();
 				temp.setText("x1");
+				Player.setGameState(GameState.gamex2);
 			}
 			if (!isOn) {
 				TimerAll.play();
 				Button temp = (Button) event.getSource();
 				temp.setText("x2");
+				Player.setGameState(GameState.gameplay);
 			}
 			
 		
