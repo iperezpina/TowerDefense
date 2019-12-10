@@ -27,7 +27,7 @@ public class Tower8 extends Tower {
 	public void additionalInfo() {
 		this.attackRate = 10;
 		this.towerCost = 1000;
-		this.damage = 15;
+		this.damage = 25;
 		this.range = 150;
 		this.towerName = "Volcano Tower";
 		this.upgrade=0;

@@ -101,8 +101,10 @@ public class Player {
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() / 32;
 			int y = (int) event.getY() / 32;
-			id = id.substring(0, id.length() - 4);
-			System.out.println(id);
+			if (id.length() > 6) {
+				id = id.substring(0, id.length() - 4);
+			}
+
 			
 			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg != null) {
 

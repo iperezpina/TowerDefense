@@ -33,12 +33,12 @@ public class ResourceManager {
 	//All the projectiles
 	public static Image bloodProjImg = QuickLoad("blood");
 	public static Image arrowProjImg = QuickLoad("arrow");
-	public static Image boneProjImg = QuickLoad("bone");
+	public static Image boneProjImg = QuickLoad("Bone");
 	public static Image rockProjImg = QuickLoad("rock");
 	public static Image lazerProjImg = QuickLoad("lazer");
 	public static Image lightningProjImg = QuickLoad("lightning");
 	public static Image fireProjImg = QuickLoad("Fireball");
-	public static Image lavaProjImg = QuickLoad("lava");
+	public static Image lavaProjImg = QuickLoad("lavaShot");
 	public static Image holyWaterProjImg = QuickLoad("holyWater");
 	
 	//All the tiles
@@ -101,7 +101,7 @@ public class ResourceManager {
 		case "arrow":
 			temp = arrowProjImg;
 			break;
-		case "bone":
+		case "Bone":
 			temp = boneProjImg;
 			break;
 		case "rock":
@@ -116,7 +116,7 @@ public class ResourceManager {
 		case "Fireball":
 			temp = fireProjImg;
 			break;
-		case "lava":
+		case "lavaShot":
 			temp = lavaProjImg;
 			break;
 		case "holyWater":
