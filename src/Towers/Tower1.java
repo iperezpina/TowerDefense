@@ -59,23 +59,43 @@ public class Tower1 extends Tower {
 	}
 
 	public void upgrade1() {
-		System.out.println("you upgraded 1");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[0].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			range += 50;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void upgrade2() {
-		System.out.println("you upgraded 2");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[1].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			attackRate = 3;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void upgrade3() {
-		System.out.println("you upgraded 3");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[2].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			damage += 3;
+			upgradeLevel += 1;
+		}
 	}
 
 	public void upgrade4() {
-		System.out.println("you upgraded 4");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[3].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			range += 50;
+			attackRate = 2;
+			damage += 3;
+			upgradeLevel += 1;
+		}
 	}
 
 	public void setURL(String str) {

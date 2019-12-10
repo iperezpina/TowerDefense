@@ -42,21 +42,46 @@ public class Tower5 extends Tower {
 	
 	public void CreateUpgradeInfo() {
 		// Upgrade 1
-		Upgrade up1 = new Upgrade("Better Range", "Increases this tower's range by a bit", 100);
+		Upgrade up1 = new Upgrade("More Damage, More Pain", "Rocks do more damage", 100);
 		towerUpgrades[0] = up1;
 
 		// Upgrade2
-		Upgrade up2 = new Upgrade("Faster Fire", "Increases the rate that fire is thrown", 200);
+		Upgrade up2 = new Upgrade("More Range, More Pain", "Increases the range of the rock tower", 200);
 		towerUpgrades[1] = up2;
 
 		// Upgrade3
-		Upgrade up3 = new Upgrade("Hotter Fire", "Hot fire from the hottest flames deal more damage", 300);
+		Upgrade up3 = new Upgrade("Rock Faster, More Pain", "Rocks go faster", 300);
 		towerUpgrades[2] = up3;
 
 		// Upgrade4
-		Upgrade up4 = new Upgrade("Better Everything", "Increases range, attack speed, and damage", 500);
+		Upgrade up4 = new Upgrade("Rock Fire Now!", "Swaps rock projectile with lavaShot projectile", 500);
 		towerUpgrades[3] = up4;
 
+	}
+	
+	public void upgrade1() {
+		int upgradeCost = towerUpgrades[0].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			damage += 3;
+			upgradeLevel += 1;
+
+		}
+	}
+
+	public void upgrade2() {
+		System.out.println("you upgraded 2");
+		upgradeLevel += 1;
+	}
+
+	public void upgrade3() {
+		System.out.println("you upgraded 3");
+		upgradeLevel += 1;
+	}
+
+	public void upgrade4() {
+		System.out.println("you upgraded 4");
+		upgradeLevel += 1;
 	}
 
 	public void setURL(String str) {

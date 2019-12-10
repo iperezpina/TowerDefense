@@ -20,8 +20,9 @@ import model.Upgrade;
 public class Tower2 extends Tower {
 
 	private String url;
-	private Projectile ammo;
+	private Projectile ammo, ammo2;
 	private Timeline tl;
+	private boolean doubleShoot = false;
 
 	public Tower2(String imgName, int x, int y, int width, int height) {
 		super(imgName, x, y, width, height);
@@ -42,21 +43,61 @@ public class Tower2 extends Tower {
 	
 	public void CreateUpgradeInfo() {
 		// Upgrade 1
-		Upgrade up1 = new Upgrade("Better Range", "Increases this tower's range by a bit", 100);
+		Upgrade up1 = new Upgrade("Better Bones", "Bones pack more of a punch", 175);
 		towerUpgrades[0] = up1;
 
 		// Upgrade2
-		Upgrade up2 = new Upgrade("Faster Fire", "Increases the rate that fire is thrown", 200);
+		Upgrade up2 = new Upgrade("Faster Bones", "Speed of bones are much faster", 215);
 		towerUpgrades[1] = up2;
 
 		// Upgrade3
-		Upgrade up3 = new Upgrade("Hotter Fire", "Hot fire from the hottest flames deal more damage", 300);
+		Upgrade up3 = new Upgrade("Bone Zone", "Range of tower increases", 300);
 		towerUpgrades[2] = up3;
 
 		// Upgrade4
-		Upgrade up4 = new Upgrade("Better Everything", "Increases range, attack speed, and damage", 500);
+		Upgrade up4 = new Upgrade("Spooky Scary Skeletons", "Spawns two bones with each shot", 500);
 		towerUpgrades[3] = up4;
 
+	}
+	
+	public void upgrade1() {
+		int upgradeCost = towerUpgrades[0].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			damage += 3;
+			upgradeLevel += 1;
+
+		}
+	}
+
+	public void upgrade2() {
+		int upgradeCost = towerUpgrades[1].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			projSpeed *= 1.5;
+			upgradeLevel += 1;
+
+		}
+	}
+
+	public void upgrade3() {
+		int upgradeCost = towerUpgrades[2].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			range *= 2;
+			upgradeLevel += 1;
+
+		}
+	}
+
+	public void upgrade4() {
+		int upgradeCost = towerUpgrades[3].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			doubleShoot = true;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void setURL(String str) {
@@ -68,10 +109,23 @@ public class Tower2 extends Tower {
 	}
 
 	public void shoot() {
-		if (Player.getGameState().equals(GameState.gamex2))
-			ammo = new boneProjectile("Bone", projSpeed * 2, x, y, currEnemy, damage);
-		else
-			ammo = new boneProjectile("Bone", projSpeed, x, y, currEnemy, damage);
+		if (doubleShoot) {
+			if (Player.getGameState().equals(GameState.gamex2)) {
+				ammo = new boneProjectile("Bone", projSpeed * 2, x, y, currEnemy, damage);
+				ammo2 = new boneProjectile("Bone", projSpeed * 2, x+32, y, currEnemy, damage);	
+			}
+			else {
+				ammo = new boneProjectile("Bone", projSpeed, x, y, currEnemy, damage);
+				ammo2 = new boneProjectile("Bone", projSpeed, x + 32, y, currEnemy, damage);
+			}
+		}
+		else {
+			if (Player.getGameState().equals(GameState.gamex2))
+				ammo = new boneProjectile("Bone", projSpeed * 2, x, y, currEnemy, damage);
+			else
+				ammo = new boneProjectile("Bone", projSpeed, x, y, currEnemy, damage);
+		}
+		
 		
 	}
 

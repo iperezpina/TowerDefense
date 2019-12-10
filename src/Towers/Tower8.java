@@ -42,21 +42,41 @@ public class Tower8 extends Tower {
 	
 	public void CreateUpgradeInfo() {
 		// Upgrade 1
-		Upgrade up1 = new Upgrade("Better Range", "Increases this tower's range by a bit", 100);
+		Upgrade up1 = new Upgrade("Faster Eruption Time", "Increases Volcano's attack speed", 100);
 		towerUpgrades[0] = up1;
 
 		// Upgrade2
-		Upgrade up2 = new Upgrade("Faster Fire", "Increases the rate that fire is thrown", 200);
+		Upgrade up2 = new Upgrade("Deadly Magma", "The magma projectiles deal x2 more damage", 200);
 		towerUpgrades[1] = up2;
 
 		// Upgrade3
-		Upgrade up3 = new Upgrade("Hotter Fire", "Hot fire from the hottest flames deal more damage", 300);
+		Upgrade up3 = new Upgrade("Increased range", "Increases range of the Volcano", 300);
 		towerUpgrades[2] = up3;
 
 		// Upgrade4
-		Upgrade up4 = new Upgrade("Better Everything", "Increases range, attack speed, and damage", 500);
+		Upgrade up4 = new Upgrade("Firey Aura", "Ghost near the tower will take damage", 500);
 		towerUpgrades[3] = up4;
 
+	}
+	
+	public void upgrade1() {
+		System.out.println("you upgraded 1");
+		upgradeLevel += 1;
+	}
+
+	public void upgrade2() {
+		System.out.println("you upgraded 2");
+		upgradeLevel += 1;
+	}
+
+	public void upgrade3() {
+		System.out.println("you upgraded 3");
+		upgradeLevel += 1;
+	}
+
+	public void upgrade4() {
+		System.out.println("you upgraded 4");
+		upgradeLevel += 1;
 	}
 
 	public void setURL(String str) {

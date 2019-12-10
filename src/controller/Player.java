@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import model.GameState;
 import model.TimerAll;
+import model.TowerHolder;
 import model.Upgrade;
 import view.TowerDefenseView;
 
@@ -30,12 +31,12 @@ public class Player {
 	private static TowerDefenseView tdv;
 	private ImageView currTowerImgView;
 	private Image currTowerImg;
-	private Tower currTower;
+	private static Tower currTower;
 	private String currURL;
-	private String id;
-	private int selectedX, selectedY;
+	private static String id;
 	private static GameState gameState = GameState.gameready;
-	private boolean towerSelected = false;
+	private static boolean towerSelected = false;
+	private static int selectX, selectY;
 
 	public Player() {
 		health = 100;
@@ -71,7 +72,7 @@ public class Player {
 		this.tdv = tdv;
 	}
 
-	public void decreaseCoins(int shift) {
+	public static void decreaseCoins(int shift) {
 		coins -= shift;
 		updatePlayerGUI();
 	}
@@ -120,7 +121,7 @@ public class Player {
 		}
 	};
 
-	public EventHandler<MouseEvent> placeTower = new EventHandler<MouseEvent>() {
+	public static EventHandler<MouseEvent> placeTower = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent event) {
@@ -135,6 +136,8 @@ public class Player {
 			if (id == null) {
 				tdv.setAllBlank();
 				towerSelected = false;
+//				selectX = -1;
+//				selectY = -1;
 				// System.out.println("Setting to blanks");
 			}
 			// If the tile we click on can have towers placed on it and the id isn't null we
@@ -145,41 +148,27 @@ public class Player {
 
 				currTower = makeTempTower(id, x, y);
 
-				if (currTower != null && !tdv.getTowers().isThereATower(x, y)) {
+				if (currTower != null && !TowerHolder.isThereATower(x, y)) {
 					if (coins >= currTower.getTowerCost()) {
 						AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
 						coin.play();
 						decreaseCoins(currTower.getTowerCost());
-						tdv.getTowers().addTower2(currTower, x, y);
+						TowerHolder.addTower2(currTower, x, y);
 						id = null;
 					}
 				}
-
-//				else {
-//					Tower tower = tdv.getTowers().getTower(x, y);
-//					
-//					if (tower != null) {
-//						String name= tower.getTowerName();
-//						int Ucost= tower.getUpgradeCost();
-//						int enemy= tower.getEnemiesDestroyed();
-//						int range= tower.getRange();
-//						tower.setSellCost();
-//						int sell= tower.getSellCost();
-//						tdv.setTowerSpecification(name, enemy, Ucost, range, sell);
-//
-//					}
-//				
-//
-//				}
 			}
-			if (tdv.getTowers().isThereATower(x, y)) {
+			if (TowerHolder.isThereATower(x, y)) {
 				// Shows the tower info
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						Tower tower = tdv.getTowers().getTower(x, y);
+						Tower tower = TowerHolder.getTower(x, y);
 
 						if (tower != null) {
+							selectX = x;
+							selectY = y;
+							System.out.println("selectX: " + selectX + " selectY: " + selectY);
 							tower.setIsSelected(!tower.isSelected());
 							String name = tower.getTowerName();
 							int Ucost = tower.getUpgradeCost();
@@ -188,7 +177,13 @@ public class Player {
 							tower.setSellCost();
 							int sell = tower.getSellCost();
 							int upgradeLevel = tower.getUpgradeLevel();
-							Upgrade currentUpgrade = tower.getTowerUpgrades()[upgradeLevel];
+							Upgrade currentUpgrade = null;
+							if (upgradeLevel >= 4) {
+								currentUpgrade = new Upgrade("", "No more available upgrades", -1);
+							} else {
+								currentUpgrade = tower.getTowerUpgrades()[upgradeLevel];
+							}
+
 							tdv.setTowerSpecification(name, enemy, Ucost, range, sell, currentUpgrade);
 							towerSelected = true;
 
@@ -202,7 +197,7 @@ public class Player {
 
 	};
 
-	public Tower makeTempTower(String towerId, int x, int y) {
+	public static Tower makeTempTower(String towerId, int x, int y) {
 		Tower currTower = null;
 
 		if (towerId.equals("tower1")) {
@@ -232,56 +227,49 @@ public class Player {
 		return currTower;
 	}
 
-	public EventHandler<MouseEvent> upgradeTower = new EventHandler<MouseEvent>() {
+	public static EventHandler<MouseEvent> upgradeTower = new EventHandler<MouseEvent>() {
 
-		int x = 0, y = 0;
 		@SuppressWarnings("deprecation")
 		@Override
 		public void handle(MouseEvent event) {
+			System.out.println("My: selectX: " + selectX + " selectY: " + selectX);
 			if (towerSelected) {
-				
-				//Check if there is a tower from the selectX and selectY variables
-				if (tdv.getTowers().isThereATower(x, y)) {
-					
-					// Shows the tower info
+
+				System.out.println(TowerHolder.isThereATower(selectX, selectY));
+				// Check if there is a tower from the selectX and selectY variables
+				if (TowerHolder.isThereATower(selectX, selectY)) {
+					System.out.println("there is!");
+
+					//Will attempt to update a tower if possible
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							Tower tower = tdv.getTowers().getTower(x, y);
+							Tower tower = TowerHolder.getTower(selectX, selectY);
 							if (tower != null) {
 								if (tower instanceof Tower1) {
-									Tower1 temp1 = (Tower1) tower;
-									if (temp1.getUpgradeLevel() == 0) {
-										temp1.upgrade1();
-									}
-									else if (temp1.getUpgradeLevel() == 1) {
-										temp1.upgrade2();
-									}
-									else if (temp1.getUpgradeLevel() == 2) {
-										temp1.upgrade3();
-									}
-									else if (temp1.getUpgradeLevel() == 3) {
-										temp1.upgrade4();
-									}
-									int upgradeLevel = temp1.getUpgradeLevel();
-									Upgrade currentUpgrade = new Upgrade("", "", -1);
-									if (upgradeLevel >= 4) {
-										currentUpgrade = new Upgrade("", "No more available upgrades", -1);
-									}
-									else {
-										currentUpgrade = temp1.getTowerUpgrades()[upgradeLevel];
-									}
-									String name = temp1.getTowerName();
-									int Ucost = temp1.getUpgradeCost();
-									int enemy = temp1.getEnemiesDestroyed();
-									int range = temp1.getRange();
-									temp1.setSellCost();
-									int sell = temp1.getSellCost();
-									tdv.setTowerSpecification(name, enemy, Ucost, range, sell, currentUpgrade);
-									towerSelected = true;
+									checkUpgradeTower1(tower);
 								}
-							
-								
+								if (tower instanceof Tower2) {
+									checkUpgradeTower2(tower);
+								}
+								if (tower instanceof Tower3) {
+									checkUpgradeTower3(tower);
+								}
+								if (tower instanceof Tower4) {
+									checkUpgradeTower4(tower);
+								}
+								if (tower instanceof Tower5) {
+									checkUpgradeTower5(tower);
+								}
+								if (tower instanceof Tower6) {
+									checkUpgradeTower6(tower);
+								}
+								if (tower instanceof Tower7) {
+									checkUpgradeTower7(tower);
+								}
+								if (tower instanceof Tower8) {
+									checkUpgradeTower8(tower);
+								}
 
 							}
 						}
@@ -289,8 +277,244 @@ public class Player {
 
 				}
 			}
-			System.out.println("Upgrading tower!");
 
 		}
 	};
+
+	// Deals with calculations for upgrading a tower that is from the Tower1 class
+	public static void checkUpgradeTower1(Tower tower) {
+		Tower1 temp1 = (Tower1) tower;
+		if (temp1.getUpgradeLevel() == 0) {
+			temp1.upgrade1();
+		} else if (temp1.getUpgradeLevel() == 1) {
+			temp1.upgrade2();
+		} else if (temp1.getUpgradeLevel() == 2) {
+			temp1.upgrade3();
+		} else if (temp1.getUpgradeLevel() == 3) {
+			temp1.upgrade4();
+		}
+		int upgradeLevel = temp1.getUpgradeLevel();
+		Upgrade currentUpgrade = new Upgrade("", "", -1);
+		if (upgradeLevel >= 4) {
+			currentUpgrade = new Upgrade("", "No more available upgrades", -1);
+		} else {
+			currentUpgrade = temp1.getTowerUpgrades()[upgradeLevel];
+		}
+		String name = temp1.getTowerName();
+		int Ucost = temp1.getUpgradeCost();
+		int enemy = temp1.getEnemiesDestroyed();
+		int range = temp1.getRange();
+		temp1.setSellCost();
+		int sell = temp1.getSellCost();
+		tdv.setTowerSpecification(name, enemy, Ucost, range, sell, currentUpgrade);
+		towerSelected = true;
+	}
+
+	// Deals with calculations for upgrading a tower that is from the Tower2 class
+	public static void checkUpgradeTower2(Tower tower) {
+		Tower2 temp2 = (Tower2) tower;
+		if (temp2.getUpgradeLevel() == 0) {
+			temp2.upgrade1();
+		} else if (temp2.getUpgradeLevel() == 1) {
+			temp2.upgrade2();
+		} else if (temp2.getUpgradeLevel() == 2) {
+			temp2.upgrade3();
+		} else if (temp2.getUpgradeLevel() == 3) {
+			temp2.upgrade4();
+		}
+		int upgradeLevel = temp2.getUpgradeLevel();
+		Upgrade currentUpgrade = new Upgrade("", "", -1);
+		if (upgradeLevel >= 4) {
+			currentUpgrade = new Upgrade("", "No more available upgrades", -1);
+		} else {
+			currentUpgrade = temp2.getTowerUpgrades()[upgradeLevel];
+		}
+		String name = temp2.getTowerName();
+		int Ucost = temp2.getUpgradeCost();
+		int enemy = temp2.getEnemiesDestroyed();
+		int range = temp2.getRange();
+		temp2.setSellCost();
+		int sell = temp2.getSellCost();
+		tdv.setTowerSpecification(name, enemy, Ucost, range, sell, currentUpgrade);
+		towerSelected = true;
+	}
+
+	// Deals with calculations for upgrading a tower that is from the Tower3 class
+	public static void checkUpgradeTower3(Tower tower) {
+		Tower3 temp3 = (Tower3) tower;
+		if (temp3.getUpgradeLevel() == 0) {
+			temp3.upgrade1();
+		} else if (temp3.getUpgradeLevel() == 1) {
+			temp3.upgrade2();
+		} else if (temp3.getUpgradeLevel() == 2) {
+			temp3.upgrade3();
+		} else if (temp3.getUpgradeLevel() == 3) {
+			temp3.upgrade4();
+		}
+		int upgradeLevel = temp3.getUpgradeLevel();
+		Upgrade currentUpgrade = new Upgrade("", "", -1);
+		if (upgradeLevel >= 4) {
+			currentUpgrade = new Upgrade("", "No more available upgrades", -1);
+		} else {
+			currentUpgrade = temp3.getTowerUpgrades()[upgradeLevel];
+		}
+		String name = temp3.getTowerName();
+		int Ucost = temp3.getUpgradeCost();
+		int enemy = temp3.getEnemiesDestroyed();
+		int range = temp3.getRange();
+		temp3.setSellCost();
+		int sell = temp3.getSellCost();
+		tdv.setTowerSpecification(name, enemy, Ucost, range, sell, currentUpgrade);
+		towerSelected = true;
+	}
+
+	// Deals with calculations for upgrading a tower that is from the Tower4 class
+	public static void checkUpgradeTower4(Tower tower) {
+		Tower4 temp4 = (Tower4) tower;
+		if (temp4.getUpgradeLevel() == 0) {
+			temp4.upgrade1();
+		} else if (temp4.getUpgradeLevel() == 1) {
+			temp4.upgrade2();
+		} else if (temp4.getUpgradeLevel() == 2) {
+			temp4.upgrade3();
+		} else if (temp4.getUpgradeLevel() == 3) {
+			temp4.upgrade4();
+		}
+		int upgradeLevel = temp4.getUpgradeLevel();
+		Upgrade currentUpgrade = new Upgrade("", "", -1);
+		if (upgradeLevel >= 4) {
+			currentUpgrade = new Upgrade("", "No more available upgrades", -1);
+		} else {
+			currentUpgrade = temp4.getTowerUpgrades()[upgradeLevel];
+		}
+		String name = temp4.getTowerName();
+		int Ucost = temp4.getUpgradeCost();
+		int enemy = temp4.getEnemiesDestroyed();
+		int range = temp4.getRange();
+		temp4.setSellCost();
+		int sell = temp4.getSellCost();
+		tdv.setTowerSpecification(name, enemy, Ucost, range, sell, currentUpgrade);
+		towerSelected = true;
+	}
+
+	// Deals with calculations for upgrading a tower that is from the Tower5 class
+	public static void checkUpgradeTower5(Tower tower) {
+		Tower5 temp5 = (Tower5) tower;
+		if (temp5.getUpgradeLevel() == 0) {
+			temp5.upgrade1();
+		} else if (temp5.getUpgradeLevel() == 1) {
+			temp5.upgrade2();
+		} else if (temp5.getUpgradeLevel() == 2) {
+			temp5.upgrade3();
+		} else if (temp5.getUpgradeLevel() == 3) {
+			temp5.upgrade4();
+		}
+		int upgradeLevel = temp5.getUpgradeLevel();
+		Upgrade currentUpgrade = new Upgrade("", "", -1);
+		if (upgradeLevel >= 4) {
+			currentUpgrade = new Upgrade("", "No more available upgrades", -1);
+		} else {
+			currentUpgrade = temp5.getTowerUpgrades()[upgradeLevel];
+		}
+		String name = temp5.getTowerName();
+		int Ucost = temp5.getUpgradeCost();
+		int enemy = temp5.getEnemiesDestroyed();
+		int range = temp5.getRange();
+		temp5.setSellCost();
+		int sell = temp5.getSellCost();
+		tdv.setTowerSpecification(name, enemy, Ucost, range, sell, currentUpgrade);
+		towerSelected = true;
+	}
+
+	// Deals with calculations for upgrading a tower that is from the Tower6 class
+	public static void checkUpgradeTower6(Tower tower) {
+		Tower6 temp6 = (Tower6) tower;
+		if (temp6.getUpgradeLevel() == 0) {
+			temp6.upgrade1();
+		} else if (temp6.getUpgradeLevel() == 1) {
+			temp6.upgrade2();
+		} else if (temp6.getUpgradeLevel() == 2) {
+			temp6.upgrade3();
+		} else if (temp6.getUpgradeLevel() == 3) {
+			temp6.upgrade4();
+		}
+		int upgradeLevel = temp6.getUpgradeLevel();
+		Upgrade currentUpgrade = new Upgrade("", "", -1);
+		if (upgradeLevel >= 4) {
+			currentUpgrade = new Upgrade("", "No more available upgrades", -1);
+		} else {
+			currentUpgrade = temp6.getTowerUpgrades()[upgradeLevel];
+		}
+		String name = temp6.getTowerName();
+		int Ucost = temp6.getUpgradeCost();
+		int enemy = temp6.getEnemiesDestroyed();
+		int range = temp6.getRange();
+		temp6.setSellCost();
+		int sell = temp6.getSellCost();
+		tdv.setTowerSpecification(name, enemy, Ucost, range, sell, currentUpgrade);
+		towerSelected = true;
+	}
+
+	// Deals with calculations for upgrading a tower that is from the Tower7 class
+	public static void checkUpgradeTower7(Tower tower) {
+		Tower7 temp7 = (Tower7) tower;
+		if (temp7.getUpgradeLevel() == 0) {
+			temp7.upgrade1();
+		} else if (temp7.getUpgradeLevel() == 1) {
+			temp7.upgrade2();
+		} else if (temp7.getUpgradeLevel() == 2) {
+			temp7.upgrade3();
+		} else if (temp7.getUpgradeLevel() == 3) {
+			temp7.upgrade4();
+		}
+		int upgradeLevel = temp7.getUpgradeLevel();
+		Upgrade currentUpgrade = new Upgrade("", "", -1);
+		if (upgradeLevel >= 4) {
+			currentUpgrade = new Upgrade("", "No more available upgrades", -1);
+		} else {
+			currentUpgrade = temp7.getTowerUpgrades()[upgradeLevel];
+		}
+		String name = temp7.getTowerName();
+		int Ucost = temp7.getUpgradeCost();
+		int enemy = temp7.getEnemiesDestroyed();
+		int range = temp7.getRange();
+		temp7.setSellCost();
+		int sell = temp7.getSellCost();
+		tdv.setTowerSpecification(name, enemy, Ucost, range, sell, currentUpgrade);
+		towerSelected = true;
+	}
+
+	// Deals with calculations for upgrading a tower that is from the Tower8 class
+	public static void checkUpgradeTower8(Tower tower) {
+		Tower8 temp8 = (Tower8) tower;
+		if (temp8.getUpgradeLevel() == 0) {
+			temp8.upgrade1();
+		} else if (temp8.getUpgradeLevel() == 1) {
+			temp8.upgrade2();
+		} else if (temp8.getUpgradeLevel() == 2) {
+			temp8.upgrade3();
+		} else if (temp8.getUpgradeLevel() == 3) {
+			temp8.upgrade4();
+		}
+		int upgradeLevel = temp8.getUpgradeLevel();
+		Upgrade currentUpgrade = new Upgrade("", "", -1);
+		if (upgradeLevel >= 4) {
+			currentUpgrade = new Upgrade("", "No more available upgrades", -1);
+		} else {
+			currentUpgrade = temp8.getTowerUpgrades()[upgradeLevel];
+		}
+		String name = temp8.getTowerName();
+		int Ucost = temp8.getUpgradeCost();
+		int enemy = temp8.getEnemiesDestroyed();
+		int range = temp8.getRange();
+		temp8.setSellCost();
+		int sell = temp8.getSellCost();
+		tdv.setTowerSpecification(name, enemy, Ucost, range, sell, currentUpgrade);
+		towerSelected = true;
+	}
+
+	public static int getCurrentCash() {
+		return coins;
+	}
+	
 }
