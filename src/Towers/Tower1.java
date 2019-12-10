@@ -67,7 +67,6 @@ public class Tower1 extends Tower {
 		public void handle(ActionEvent arg0) {
 			Draw();
 			currentTime = TimerAll.getTimeInSeconds();
-			System.out.println(currentTime);
 			if (lastTimeAttacked > currentTime) {
 				lastTimeAttacked = 0;
 			}

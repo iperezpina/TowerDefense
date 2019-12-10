@@ -36,7 +36,7 @@ public class lightningProjectile extends Projectile {
 
 		@Override
 		public void handle(ActionEvent arg0) {
-			if (count > 20) {
+			if (count > 13) {
 				tl.stop();
 			}
 			// System.out.println(EtoShoot);

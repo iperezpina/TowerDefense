@@ -69,7 +69,9 @@ public class Projectile {
 	}
 
 	public void draw() {
-
+		
+		
+		
 		Drawer.DrawImageDouble(Amunition, x, y, Amunition.getWidth(), Amunition.getHeight());
 
 	}
