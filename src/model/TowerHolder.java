@@ -24,7 +24,7 @@ import view.TowerDefenseView;
 public class TowerHolder {
 
 	private TileMap map;
-	private HashMap<String, Tower> towers2;
+	private static HashMap<String, Tower> towers2;
 	private Timeline tl;
 	
 
@@ -34,7 +34,7 @@ public class TowerHolder {
 		
 	}
 
-	public boolean addTower2(Tower newTower, int x, int y) {
+	public static boolean addTower2(Tower newTower, int x, int y) {
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
 			return false;
@@ -97,7 +97,7 @@ public class TowerHolder {
 	}
 
 	
-	public boolean isThereATower(int x, int y) {
+	public static boolean isThereATower(int x, int y) {
 		boolean isThere = false;
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
@@ -106,7 +106,7 @@ public class TowerHolder {
 		return isThere;
 	}
 	
-	public Tower getTower(int x, int y) {
+	public static Tower getTower(int x, int y) {
 		Tower temp = null;
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {

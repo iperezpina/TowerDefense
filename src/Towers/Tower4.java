@@ -29,7 +29,7 @@ public class Tower4 extends Tower {
 	}
 
 	public void additionalInfo() {
-		this.attackRate = 3;
+		this.attackRate = 4;
 		this.towerCost = 750;
 		this.projSpeed = 8;
 		this.damage = 3;
@@ -42,21 +42,63 @@ public class Tower4 extends Tower {
 	
 	public void CreateUpgradeInfo() {
 		// Upgrade 1
-		Upgrade up1 = new Upgrade("Better Range", "Increases this tower's range by a bit", 100);
+		Upgrade up1 = new Upgrade("Improved Impulse", "This tower attacks a little faster", 100);
 		towerUpgrades[0] = up1;
 
 		// Upgrade2
-		Upgrade up2 = new Upgrade("Faster Fire", "Increases the rate that fire is thrown", 200);
+		Upgrade up2 = new Upgrade("Even Faster Impulse", "Attacks even faster", 200);
 		towerUpgrades[1] = up2;
 
 		// Upgrade3
-		Upgrade up3 = new Upgrade("Hotter Fire", "Hot fire from the hottest flames deal more damage", 300);
+		Upgrade up3 = new Upgrade("Longer Arcs", "Increases the range of the tower to shock more ghosts", 300);
 		towerUpgrades[2] = up3;
 
 		// Upgrade4
-		Upgrade up4 = new Upgrade("Better Everything", "Increases range, attack speed, and damage", 500);
+		Upgrade up4 = new Upgrade("Electrocution", "Triples the damage of each projectile", 500);
 		towerUpgrades[3] = up4;
 
+	}
+	
+	public void upgrade1() {
+		int upgradeCost = towerUpgrades[0].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			attackRate -= 1;
+			projSpeed += 2;
+			upgradeLevel += 1;
+
+		}
+	}
+
+	public void upgrade2() {
+		int upgradeCost = towerUpgrades[1].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			attackRate -= 1;
+			projSpeed += 2;
+			upgradeLevel += 1;
+
+		}
+	}
+
+	public void upgrade3() {
+		int upgradeCost = towerUpgrades[2].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			range += 100;
+			upgradeLevel += 1;
+
+		}
+	}
+
+	public void upgrade4() {
+		int upgradeCost = towerUpgrades[3].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			damage *= 3;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void setURL(String str) {

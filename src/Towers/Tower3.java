@@ -33,7 +33,7 @@ public class Tower3 extends Tower {
 		this.towerCost = 400;
 		this.projSpeed = 10;
 		this.damage = 1;
-		this.range = 200;
+		this.range = 100;
 		this.towerName = "Pyramid Tower";
 		this.towerSpent=0;
 		this.upgradeCost= 120;
@@ -42,21 +42,61 @@ public class Tower3 extends Tower {
 	
 	public void CreateUpgradeInfo() {
 		// Upgrade 1
-		Upgrade up1 = new Upgrade("Better Range", "Increases this tower's range by a bit", 100);
+		Upgrade up1 = new Upgrade("Damage Up", "Damage of lazers increased by 1", 150);
 		towerUpgrades[0] = up1;
 
 		// Upgrade2
-		Upgrade up2 = new Upgrade("Faster Fire", "Increases the rate that fire is thrown", 200);
+		Upgrade up2 = new Upgrade("SuperSonic Lasers", "Lazers go twice as fast", 200);
 		towerUpgrades[1] = up2;
 
 		// Upgrade3
-		Upgrade up3 = new Upgrade("Hotter Fire", "Hot fire from the hottest flames deal more damage", 300);
+		Upgrade up3 = new Upgrade("Eye of Anubis", "The Almight Eye sees all, allowing it to hit more ghosts", 300);
 		towerUpgrades[2] = up3;
 
 		// Upgrade4
-		Upgrade up4 = new Upgrade("Better Everything", "Increases range, attack speed, and damage", 500);
+		Upgrade up4 = new Upgrade("Deadly Lazers", "Lazers do 4x regular damage", 800);
 		towerUpgrades[3] = up4;
 
+	}
+	
+	public void upgrade1() {
+		int upgradeCost = towerUpgrades[0].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			damage += 1;
+			upgradeLevel += 1;
+
+		}
+	}
+
+	public void upgrade2() {
+		int upgradeCost = towerUpgrades[1].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			projSpeed *= 2;
+			upgradeLevel += 1;
+
+		}
+	}
+
+	public void upgrade3() {
+		int upgradeCost = towerUpgrades[2].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			range += 150;
+			upgradeLevel += 1;
+
+		}
+	}
+
+	public void upgrade4() {
+		int upgradeCost = towerUpgrades[3].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			damage = 4;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void setURL(String str) {
