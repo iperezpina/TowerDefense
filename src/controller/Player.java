@@ -101,31 +101,34 @@ public class Player {
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() / 32;
 			int y = (int) event.getY() / 32;
+			id = id.substring(0, id.length() - 4);
+			System.out.println(id);
+			
 			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg != null) {
 
-				if (id.equals("tower1.png")) {
-					currTower = new Tower1(currTowerImg, x * 32, y * 32, 32, 32);
+				if (id.equals("tower1")) {
+					currTower = new Tower1(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower2.png")) {
-					currTower = new Tower2(currTowerImg, x * 32, y * 32, 32, 32);
+				if (id.equals("tower2")) {
+					currTower = new Tower2(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower3.png")) {
-					currTower = new Tower3(currTowerImg, x * 32, y * 32, 32, 32);
+				if (id.equals("tower3")) {
+					currTower = new Tower3(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower4.png")) {
-					currTower = new Tower4(currTowerImg, x * 32, y * 32, 32, 32);
+				if (id.equals("tower4")) {
+					currTower = new Tower4(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower5.png")) {
-					currTower = new Tower5(currTowerImg, x * 32, y * 32, 32, 32);
+				if (id.equals("tower5")) {
+					currTower = new Tower5(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower6.png")) {
-					currTower = new Tower6(currTowerImg, x * 32, y * 32, 32, 32);
+				if (id.equals("tower6")) {
+					currTower = new Tower6(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower7.png")) {
-					currTower = new Tower7(currTowerImg, x * 32, y * 32, 32, 32);
+				if (id.equals("tower7")) {
+					currTower = new Tower7(id, x * 32, y * 32, 32, 32);
 				}
-				if (id.equals("tower8.png")) {
-					currTower = new Tower8(currTowerImg, x * 32, y * 32, 32, 32);
+				if (id.equals("tower8")) {
+					currTower = new Tower8(id, x * 32, y * 32, 32, 32);
 				}
 				if (currTower != null && !tdv.getTowers().isThereATower(x, y)) {
 					if (coins >= currTower.getTowerCost()) {

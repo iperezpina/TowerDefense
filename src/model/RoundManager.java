@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import controller.Player;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import view.TowerDefenseView;
@@ -55,11 +58,26 @@ public class RoundManager {
 		public void run() {
 			if (es != null) {
 				if (es.isDone() == true && startedRound) {
-					// TODO implement add money back after round ends
-					// add money to player
 					startedRound = false;
 					System.out.println("Round " + waveNumber + " ended!");
-					// newWave();
+					
+					//Add the cash at end of round
+					Platform.runLater( new Runnable() {
+	                    @Override
+	                    public void run() {
+	                        Player.addCash(100);
+	                    }
+	                });
+					
+					//Alerts the user that the round ended
+					Platform.runLater( new Runnable() {
+	                    @Override
+	                    public void run() {
+	                    	tdv.getRoundLabel().setText("Round " + waveNumber + " ended!");
+	                    }
+	                });
+						
+
 				} else {
 					es.update();
 				}

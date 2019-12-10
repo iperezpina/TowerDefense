@@ -1,10 +1,10 @@
 *1
-ghost_1_3_5
+ghost_4_3_5
 *2
-ghost_1_5_5
+ghost_4_5_5
 *3
-redghost_2_3_7
-ghost_1_5_5
+redghost_4_8_7
+ghost_4_5_5
 *4
 redghost_2_6_10
 *5

@@ -49,7 +49,7 @@ public class Enemy {
 	 */
 	public Enemy(String imgPath, Tile start, int width, int height, float speed, int health, TileMap tm) {
 		if (img == null) {
-			img = ResourceManager.QuickLoad(imgPath);
+			img = ResourceManager.getEnemyImg(imgPath);
 		}
 		this.imgPath = imgPath;
 		this.startLocation = start;

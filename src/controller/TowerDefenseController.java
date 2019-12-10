@@ -57,7 +57,7 @@ public class TowerDefenseController {
 
 		@Override
 		public void handle(MouseEvent event) {
-			tdv.pause();
+			//tdv.pause();
 			tdv.drawGoButton();
 		}
 		
