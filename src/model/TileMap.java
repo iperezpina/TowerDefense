@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -32,7 +34,7 @@ public class TileMap {
 		for (int i = 0; i < 20; i++) {
 			ArrayList<Tile> temp = new ArrayList<Tile>();
 			for (int j = 0; j < 15; j++) {
-				temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Grass));
+				temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Dirt));
 			}
 			this.tileGrid.add(temp);
 
@@ -47,15 +49,23 @@ public class TileMap {
 	 * @param tileMap
 	 */
 	public TileMap(int[][] tileMap) {
+		Random rnd = new Random();
+		int rndNum = -1;
 		this.tileGrid = new ArrayList<List<Tile>>();
 
 		for (int i = 0; i < 20; i++) {
 			ArrayList<Tile> temp = new ArrayList<Tile>();
 			for (int j = 0; j < 15; j++) {
 				int value = tileMap[j][i];
+				rndNum = rnd.nextInt(5);
 				switch (value) {
 				case 0:
-					temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Grass));
+					if (rndNum == 0 || rndNum == 1 || rndNum == 2)
+						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.HellGround1));
+					if (rndNum == 3)
+						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.HellGround2));
+					if (rndNum == 4)
+						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.HellGround3));
 					break;
 
 				case 1:

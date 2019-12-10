@@ -49,7 +49,7 @@ public class Enemy {
 	 */
 	public Enemy(String imgPath, Tile start, int width, int height, float speed, int health, TileMap tm) {
 		if (img == null) {
-			img = new Image(imgPath);
+			img = ResourceManager.QuickLoad(imgPath);
 		}
 		this.imgPath = imgPath;
 		this.startLocation = start;
@@ -78,7 +78,14 @@ public class Enemy {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
-
+	}
+	//TODO remove below two methods
+	public void pause() {
+		tl.pause();
+	}
+	
+	public void play() {
+		tl.play();
 	}
 
 	/**
@@ -265,6 +272,13 @@ public class Enemy {
 
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
+	}
+	
+	public String toString() {
+		String result = "";
+		result += imgPath + " spd: " + speed + " health: " + maxHealth;
+		return result;
+		
 	}
 }
 

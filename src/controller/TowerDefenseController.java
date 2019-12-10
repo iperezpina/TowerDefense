@@ -14,9 +14,11 @@ import Towers.Tower6;
 import Towers.Tower7;
 import Towers.Tower8;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import model.RoundManager;
 import view.TowerDefenseView;
 
 /**
@@ -37,6 +39,29 @@ public class TowerDefenseController {
 	private String currURL;
 	private String id;
 	private Player player;
+	private RoundManager rm;
+	
+	
+	public EventHandler<MouseEvent> resume = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent event) {
+			tdv.play();
+			tdv.drawExtraButtons();
+			rm.newWaveList();
+		}
+		
+	};
+	
+	public EventHandler<MouseEvent> pause = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent event) {
+			tdv.pause();
+			tdv.drawGoButton();
+		}
+		
+	};
 	
 	
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
@@ -55,55 +80,9 @@ public class TowerDefenseController {
 	};
 
 
-//	public EventHandler<MouseEvent> placeTower = new EventHandler<MouseEvent>() {
-//
-//		@Override
-//		public void handle(MouseEvent event) {
-//			int x = (int) event.getX() / 32;
-//			int y = (int) event.getY() / 32;
-//			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && currTowerImg != null ) {
-//
-//				if (id.equals("tower1.png")) {
-//					currTower = new Tower1(currTowerImg, x*32, y*32, 32, 32);
-//				}
-//				if (id.equals("tower2.png")) {
-//					currTower = new Tower2(currTowerImg, x*32, y*32, 32, 32);
-//				}
-//				if (id.equals("tower3.png")) {
-//					currTower = new Tower3(currTowerImg, x*32, y*32, 32, 32);
-//				}
-//				if (id.equals("tower4.png")) {
-//					currTower = new Tower4(currTowerImg, x*32, y*32, 32, 32);
-//				}
-//				if (id.equals("tower5.png")) {
-//					currTower = new Tower5(currTowerImg, x*32, y*32, 32, 32);
-//				}
-//				if (id.equals("tower6.png")) {
-//					currTower = new Tower6(currTowerImg, x*32, y*32, 32, 32);
-//				}
-//				if (id.equals("tower7.png")) {
-//					currTower = new Tower7(currTowerImg, x*32, y*32, 32, 32);
-//				}
-//				if (id.equals("tower8.png")) {
-//					currTower = new Tower8(currTowerImg, x*32, y*32, 32, 32);
-//				}
-//				if (currTower != null) {
-//					tdv.getTowers().addTower2(currTower, x, y);
-//				}
-//			}
-//		}
-//		
-//	};
 	
-	public EventHandler<MouseEvent> hurtEnemy = new EventHandler<MouseEvent>() {
-		// to debug health issues only
-
-		@Override
-		public void handle(MouseEvent event) {
-			
-		}
-		
-	};
+	
+	
 
 	public TowerDefenseView getTdv() {
 		return tdv;
@@ -111,6 +90,14 @@ public class TowerDefenseController {
 
 	public void setTdv(TowerDefenseView tdv) {
 		this.tdv = tdv;
+	}
+
+	public RoundManager getRm() {
+		return rm;
+	}
+
+	public void setRm(RoundManager rm) {
+		this.rm = rm;
 	}
 
 }
