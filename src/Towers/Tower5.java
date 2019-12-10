@@ -1,6 +1,7 @@
 package Towers;
 
 import Projectile.Projectile;
+import Projectile.lavaShotProjectile;
 import Projectile.lightningProjectile;
 import Projectile.rockProjectile;
 import controller.Player;
@@ -22,6 +23,7 @@ public class Tower5 extends Tower {
 	private String url;
 	private Projectile ammo;
 	private Timeline tl;
+	private boolean shootLava = false;
 
 	public Tower5(String imgName, int x, int y, int width, int height) {
 		super(imgName, x, y, width, height);
@@ -42,19 +44,19 @@ public class Tower5 extends Tower {
 	
 	public void CreateUpgradeInfo() {
 		// Upgrade 1
-		Upgrade up1 = new Upgrade("More Damage, More Pain", "Rocks do more damage", 100);
+		Upgrade up1 = new Upgrade("More Damage, More Pain", "Rocks do more damage", 1);
 		towerUpgrades[0] = up1;
 
 		// Upgrade2
-		Upgrade up2 = new Upgrade("More Range, More Pain", "Increases the range of the rock tower", 200);
+		Upgrade up2 = new Upgrade("More Range, More Pain", "Increases the range of the rock tower", 1);
 		towerUpgrades[1] = up2;
 
 		// Upgrade3
-		Upgrade up3 = new Upgrade("Rock Faster, More Pain", "Rocks go faster", 300);
+		Upgrade up3 = new Upgrade("Rock Faster, More Pain", "Rocks go faster", 1);
 		towerUpgrades[2] = up3;
 
 		// Upgrade4
-		Upgrade up4 = new Upgrade("Rock Fire Now!", "Swaps rock projectile with lavaShot projectile", 500);
+		Upgrade up4 = new Upgrade("Rock Fire Now!", "Swaps rock projectile with lavaShot projectile", 1);
 		towerUpgrades[3] = up4;
 
 	}
@@ -70,18 +72,36 @@ public class Tower5 extends Tower {
 	}
 
 	public void upgrade2() {
-		System.out.println("you upgraded 2");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[1].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			range += 100;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void upgrade3() {
-		System.out.println("you upgraded 3");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[2].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			projSpeed = 8;
+			attackRate -= 3;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void upgrade4() {
-		System.out.println("you upgraded 4");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[3].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			shootLava = true;
+			projSpeed += 5;
+			damage += 10;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void setURL(String str) {
@@ -93,10 +113,19 @@ public class Tower5 extends Tower {
 	}
 
 	public void shoot() {
-		if (Player.getGameState().equals(GameState.gamex2))
-			ammo = new rockProjectile("rock", projSpeed * 2, x, y,  currEnemy, damage);
-		else
-			ammo = new rockProjectile("rock", projSpeed, x, y,  currEnemy, damage);
+		if (shootLava) {
+			if (Player.getGameState().equals(GameState.gamex2))
+				ammo = new lavaShotProjectile("lavaShot", projSpeed * 2, x, y,  currEnemy, damage);
+			else
+				ammo = new lavaShotProjectile("lavaShot", projSpeed * 2, x, y,  currEnemy, damage);
+		}
+		else {
+			if (Player.getGameState().equals(GameState.gamex2))
+				ammo = new rockProjectile("rock", projSpeed * 2, x, y,  currEnemy, damage);
+			else
+				ammo = new rockProjectile("rock", projSpeed, x, y,  currEnemy, damage);
+		}
+		
 	}
 
 	/**

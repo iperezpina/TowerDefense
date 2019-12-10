@@ -34,7 +34,11 @@ public class Enemy {
 	private boolean isExited = false, isDead = false, isPaused = false;
 	private String imgPath;
 	private int cashBack;
-
+	
+	
+	private boolean isSlowed = false;
+	private int poisonCounter = 10;
+	
 	/**
 	 * The constructor method of the enemy class, takes in an img, a tile where the
 	 * enemy spawns from, a width and height, speed of the enemy (must be a 1, 2, 4,
@@ -70,6 +74,29 @@ public class Enemy {
 		temp += (health / 4) + speed;
 		return temp;
 	}
+	
+	//Halves an enemy speed permanently, only works once
+	public void slowEnemy() {
+		if (!isSlowed) {
+			if (speed / 2 <= 0) {
+				speed = 1;
+			}
+			else {
+				speed /= 2;
+			}
+			isSlowed = true;
+		}
+		
+	}
+	
+	public void poisonEnemy() {
+		poisonCounter = 0;
+	}
+	
+	private void poisonTick() {
+		health--;
+		poisonCounter++;
+	}
 
 	/**
 	 * Creates an animation of the enemy that moves it along the path
@@ -101,6 +128,7 @@ public class Enemy {
 	 */
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
+		int counter  = 1;
 		@Override
 		public void handle(ActionEvent arg0) {
 			if (health <= 0) {
@@ -137,6 +165,10 @@ public class Enemy {
 				}
 				
 			}
+			if (poisonCounter < 5 && counter % 4 == 0) {
+				poisonTick();
+			}
+			counter++;
 		}
 
 	}

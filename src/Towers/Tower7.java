@@ -20,8 +20,9 @@ import model.Upgrade;
 public class Tower7 extends Tower {
 
 	private String url;
-	private Projectile ammo;
+	private Projectile ammo, ammo2, ammo3;
 	private Timeline tl;
+	private boolean canShootTwo = false, canShootThree = false;
 
 	public Tower7(String imgName, int x, int y, int width, int height) {
 		super(imgName, x, y, width, height);
@@ -35,11 +36,11 @@ public class Tower7 extends Tower {
 		this.damage = 2;
 		this.range = 500;
 		this.towerName = "Arrow Tower";
-		this.towerSpent=0;
-		this.upgradeCost= 160;
+		this.towerSpent = 0;
+		this.upgradeCost = 160;
 		CreateUpgradeInfo();
 	}
-	
+
 	public void CreateUpgradeInfo() {
 		// Upgrade 1
 		Upgrade up1 = new Upgrade("Aerodynamic Arrows", "Arrows fly faster towards ghosts.", 100);
@@ -60,25 +61,45 @@ public class Tower7 extends Tower {
 	}
 
 	public void upgrade1() {
-		System.out.println("you upgraded 1");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[0].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			projSpeed += 5;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void upgrade2() {
-		System.out.println("you upgraded 2");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[1].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			damage += 3;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void upgrade3() {
-		System.out.println("you upgraded 3");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[2].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			canShootTwo = true;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void upgrade4() {
-		System.out.println("you upgraded 4");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[3].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			canShootThree = true;
+			upgradeLevel += 1;
+
+		}
 	}
-	
+
 	public void setURL(String str) {
 		url = str;
 	}
@@ -88,10 +109,37 @@ public class Tower7 extends Tower {
 	}
 
 	public void shoot() {
-		if (Player.getGameState().equals(GameState.gamex2))
-			ammo = new arrowProjectile("arrow", projSpeed * 2, x, y, currEnemy, damage);
-		else
-			ammo = new arrowProjectile("arrow", projSpeed, x, y, currEnemy, damage);
+		// Shoots three arrows at a time
+		if (canShootThree) {
+			if (Player.getGameState().equals(GameState.gamex2)) {
+				ammo = new arrowProjectile("arrow", projSpeed * 2, x, y, currEnemy, damage);
+				ammo2 = new arrowProjectile("arrow", projSpeed * 2, x + 32, y, currEnemy, damage);
+				ammo3 = new arrowProjectile("arrow", projSpeed * 2, x + 16, y - 16, currEnemy, damage);
+			} else {
+				ammo = new arrowProjectile("arrow", projSpeed, x, y, currEnemy, damage);
+				ammo2 = new arrowProjectile("arrow", projSpeed, x + 32, y, currEnemy, damage);
+				ammo3 = new arrowProjectile("arrow", projSpeed, x + 16, y + 16, currEnemy, damage);
+			}
+		}
+		// Shoots two arrows at a time
+		else if (canShootTwo) {
+			if (Player.getGameState().equals(GameState.gamex2)) {
+				ammo = new arrowProjectile("arrow", projSpeed * 2, x, y, currEnemy, damage);
+				ammo2 = new arrowProjectile("arrow", projSpeed * 2, x + 32, y, currEnemy, damage);
+			} else {
+				ammo = new arrowProjectile("arrow", projSpeed, x, y, currEnemy, damage);
+				ammo2 = new arrowProjectile("arrow", projSpeed, x + 32, y, currEnemy, damage);
+			}
+		}
+		// Shoots one arrow at a time
+		else {
+			if (Player.getGameState().equals(GameState.gamex2)) {
+				ammo = new arrowProjectile("arrow", projSpeed * 2, x, y, currEnemy, damage);
+			} else {
+				ammo = new arrowProjectile("arrow", projSpeed, x, y, currEnemy, damage);
+			}
+		}
+
 	}
 
 	/**
@@ -125,7 +173,6 @@ public class Tower7 extends Tower {
 
 	}
 
-
 	private Enemy currEnemy = null;
 
 	private int lockMech = 1;
@@ -143,7 +190,7 @@ public class Tower7 extends Tower {
 					shoot();
 				}
 			}
-			
+
 		}
 
 		lockMech = 0;

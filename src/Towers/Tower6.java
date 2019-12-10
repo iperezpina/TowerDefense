@@ -22,6 +22,7 @@ public class Tower6 extends Tower {
 	private String url;
 	private Projectile ammo;
 	private Timeline tl;
+	private boolean canSlow = false, canPoison = false;
 
 	public Tower6(String imgName, int x, int y, int width, int height) {
 		super(imgName, x, y, width, height);
@@ -50,33 +51,55 @@ public class Tower6 extends Tower {
 		towerUpgrades[1] = up2;
 
 		// Upgrade3
-		Upgrade up3 = new Upgrade("Blood Geyser", "Spews out more blood faster but deals less damage", 300);
+		Upgrade up3 = new Upgrade("Blood Geyser", "Spews out more blood faster but deals less damage", 3);
 		towerUpgrades[2] = up3;
 
 		// Upgrade4
-		Upgrade up4 = new Upgrade("Corrupted Blood", "Ghosts take poison damage for 5 seconds", 500);
+		Upgrade up4 = new Upgrade("Corrupted Blood", "Ghosts take poison damage for 5 seconds", 5);
 		towerUpgrades[3] = up4;
 
 	}
 	
 	public void upgrade1() {
-		System.out.println("you upgraded 1");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[0].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			canSlow = true;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void upgrade2() {
-		System.out.println("you upgraded 2");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[1].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			canPoison = true;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void upgrade3() {
-		System.out.println("you upgraded 3");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[2].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			damage = 1;
+			attackRate = 2;
+			projSpeed = 8;
+			upgradeLevel += 1;
+
+		}
 	}
 
 	public void upgrade4() {
-		System.out.println("you upgraded 4");
-		upgradeLevel += 1;
+		int upgradeCost = towerUpgrades[3].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			canPoison = true;
+			upgradeLevel += 1;
+
+		}
 	}
 	
 	public void setURL(String str) {
@@ -88,10 +111,12 @@ public class Tower6 extends Tower {
 	}
 
 	public void shoot() {
+		//TODO: Add canSlow into constructor for bloodProjectile and apply a slow method in enemy class
+		//TODO: Add canPoison into constructor for bloodProjectile and apply a tick damage effect every second for a given duration (5)
 		if (Player.getGameState().equals(GameState.gamex2))
-			ammo = new bloodProjectile("blood", projSpeed * 2, x, y, currEnemy, damage);
+			ammo = new bloodProjectile("blood", projSpeed * 2, x, y, currEnemy, damage, canSlow, canPoison);
 		else
-			ammo = new bloodProjectile("blood", projSpeed, x, y, currEnemy, damage);
+			ammo = new bloodProjectile("blood", projSpeed, x, y, currEnemy, damage, canSlow, canPoison);
 	}
 
 	/**
