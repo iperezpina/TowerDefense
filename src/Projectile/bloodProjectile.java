@@ -15,11 +15,12 @@ public class bloodProjectile extends Projectile {
 
 	private Timeline tl;
 	private AudioClip bloodSound = new AudioClip(new File("src/Sounds/splat.wav").toURI().toString());
-	private boolean canSlow;
+	private boolean canSlow, canPoison;
 
-	public bloodProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage, boolean canSlow) {
+	public bloodProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage, boolean canSlow, boolean canPoison) {
 		super(imageName, speed, x, y, EtoShoot, damage);
 		this.canSlow = canSlow;
+		this.canPoison = canPoison;
 		update();
 
 	}
@@ -52,7 +53,10 @@ public class bloodProjectile extends Projectile {
 				TowerDamage(EtoShoot);
 				if(canSlow) {
 					EtoShoot.slowEnemy();	
-					System.out.println("slowed...");
+					
+				}
+				if(canPoison) {
+					EtoShoot.poisonEnemy();
 				}
 				
 				tl.stop();

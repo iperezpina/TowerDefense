@@ -51,11 +51,11 @@ public class Tower6 extends Tower {
 		towerUpgrades[1] = up2;
 
 		// Upgrade3
-		Upgrade up3 = new Upgrade("Blood Geyser", "Spews out more blood faster but deals less damage", 300);
+		Upgrade up3 = new Upgrade("Blood Geyser", "Spews out more blood faster but deals less damage", 3);
 		towerUpgrades[2] = up3;
 
 		// Upgrade4
-		Upgrade up4 = new Upgrade("Corrupted Blood", "Ghosts take poison damage for 5 seconds", 500);
+		Upgrade up4 = new Upgrade("Corrupted Blood", "Ghosts take poison damage for 5 seconds", 5);
 		towerUpgrades[3] = up4;
 
 	}
@@ -114,9 +114,9 @@ public class Tower6 extends Tower {
 		//TODO: Add canSlow into constructor for bloodProjectile and apply a slow method in enemy class
 		//TODO: Add canPoison into constructor for bloodProjectile and apply a tick damage effect every second for a given duration (5)
 		if (Player.getGameState().equals(GameState.gamex2))
-			ammo = new bloodProjectile("blood", projSpeed * 2, x, y, currEnemy, damage, canSlow);
+			ammo = new bloodProjectile("blood", projSpeed * 2, x, y, currEnemy, damage, canSlow, canPoison);
 		else
-			ammo = new bloodProjectile("blood", projSpeed, x, y, currEnemy, damage, canSlow);
+			ammo = new bloodProjectile("blood", projSpeed, x, y, currEnemy, damage, canSlow, canPoison);
 	}
 
 	/**
