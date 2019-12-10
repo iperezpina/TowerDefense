@@ -12,6 +12,7 @@ import Towers.Tower6;
 import Towers.Tower7;
 import Towers.Tower8;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -79,7 +80,8 @@ public class Player {
 	}
 
 	public static void updatePlayerGUI() {
-		tdv.getRightLabel().setText("Money: " + coins + "\nHealth: " + health);
+		//tdv.getRightLabel().setText("Money: " + coins + "\nHealth: " + health);
+		tdv.updatePlayerInfo(coins, health);
 	}
 
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
@@ -91,7 +93,13 @@ public class Player {
 			currTowerImg = (Image) currTowerImgView.getImage();
 			currURL = currTowerImg.impl_getUrl();
 			id = currURL.substring(currURL.length() - 10);
-			System.out.println("Tower chosen: " + id);
+			if (id != null && id.length() > 6) {
+				id = id.substring(0, id.length() - 4);
+			}
+			Tower temp = makeTempTower(id, 0,0);
+			String result = temp.getTowerName() + " costs $" + temp.getTowerCost();
+			tdv.updateTowerLabel(result);
+			
 		}
 	};
 
@@ -115,40 +123,11 @@ public class Player {
 			
 			if (tdv.getTm().GetTile(x, y).getType().isCanPlace() && id != null) {
 
-				if (id.equals("tower1")) {
-					currTower = new Tower1(id, x * 32, y * 32, 32, 32);
-				}
-				if (id.equals("tower2")) {
-					currTower = new Tower2(id, x * 32, y * 32, 32, 32);
-				}
-				if (id.equals("tower3")) {
-					currTower = new Tower3(id, x * 32, y * 32, 32, 32);
-				}
-				if (id.equals("tower4")) {
-					currTower = new Tower4(id, x * 32, y * 32, 32, 32);
-				}
-				if (id.equals("tower5")) {
-					currTower = new Tower5(id, x * 32, y * 32, 32, 32);
-				}
-				if (id.equals("tower6")) {
-					currTower = new Tower6(id, x * 32, y * 32, 32, 32);
-				}
-				if (id.equals("tower7")) {
-					currTower = new Tower7(id, x * 32, y * 32, 32, 32);
-				}
-				if (id.equals("tower8")) {
-					currTower = new Tower8(id, x * 32, y * 32, 32, 32);
-				}
-
-				
-				
-	
+				currTower = makeTempTower(id, x, y);
 
 				if (currTower != null && !tdv.getTowers().isThereATower(x, y)) {
 					if (coins >= currTower.getTowerCost()) {
 
-						
-	
 				AudioClip coin = new AudioClip(new File("src/Sounds/coin.wav").toURI().toString());
 						coin.play();
 						decreaseCoins(currTower.getTowerCost());
@@ -195,5 +174,35 @@ public class Player {
 		}
 
 	};
+	
+	public Tower makeTempTower(String towerId, int x, int y) {
+		Tower currTower = null;
+		
+		if (towerId.equals("tower1")) {
+			currTower = new Tower1(towerId, x * 32, y * 32, 32, 32);
+		}
+		if (towerId.equals("tower2")) {
+			currTower = new Tower2(towerId, x * 32, y * 32, 32, 32);
+		}
+		if (towerId.equals("tower3")) {
+			currTower = new Tower3(towerId, x * 32, y * 32, 32, 32);
+		}
+		if (towerId.equals("tower4")) {
+			currTower = new Tower4(towerId, x * 32, y * 32, 32, 32);
+		}
+		if (towerId.equals("tower5")) {
+			currTower = new Tower5(towerId, x * 32, y * 32, 32, 32);
+		}
+		if (towerId.equals("tower6")) {
+			currTower = new Tower6(towerId, x * 32, y * 32, 32, 32);
+		}
+		if (towerId.equals("tower7")) {
+			currTower = new Tower7(towerId, x * 32, y * 32, 32, 32);
+		}
+		if (towerId.equals("tower8")) {
+			currTower = new Tower8(towerId, x * 32, y * 32, 32, 32);
+		}
+		return currTower;
+	}
 
 }

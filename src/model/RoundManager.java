@@ -68,7 +68,6 @@ public class RoundManager {
 			if (es != null) {
 				if (es.isDone() == true && startedRound) {
 					startedRound = false;
-					System.out.println("Round " + waveNumber + " ended!");
 
 					//Add the cash at end of round
 					Platform.runLater( new Runnable() {
@@ -117,7 +116,7 @@ public class RoundManager {
 
 		startedRound = true;
 		waveNumber++;
-		System.out.println("Round " + waveNumber + " started!");
+		//System.out.println("Round " + waveNumber + " started!");
 		tdv.getRoundLabel().setText("Round " + waveNumber);
 	}
 
