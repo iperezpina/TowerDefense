@@ -150,15 +150,13 @@ public class Player {
 					Tower tower = tdv.getTowers().getTower(x, y);
 					if (tower != null) {
 						String name= tower.getTowerName();
-						int cost= tower.getTowerCost();
+						int Ucost= tower.getUpgradeCost();
 						int enemy= tower.getEnemiesDestroyed();
-						tdv.setTowerSpecification(name, enemy, cost);
-						
-						System.out.println(tower.getTowerCost());
-						System.out.println(tower.getEnemiesDestroyed());
-						System.out.println(tower.getTowerName());
-						System.out.println(tower.getRange());
-						System.out.println(tower.getUpgrade());
+						int range= tower.getRange();
+						tower.setSellCost();
+						int sell= tower.getSellCost();
+						tdv.setTowerSpecification(name, enemy, Ucost, range, sell);
+
 					}
 
 				}

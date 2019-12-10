@@ -68,6 +68,7 @@ public class TowerDefenseView extends Application {
 	FlowPane fp = new FlowPane();
 	Label towerNameLabel = new Label();
 	Label killCountLabel = new Label();
+	Label rangeLabel = new Label();
 	Button sellButton = new Button("Sell for $150");
 	
 	BorderPane bpUpgrade = new BorderPane();
@@ -222,11 +223,12 @@ public class TowerDefenseView extends Application {
 		return rightLabel;
 	}
 
-	public void setTowerSpecification(String name, int enemies, int cost) {
+	public void setTowerSpecification(String name, int enemies, int cost, int range, int sell) {
 		towerNameLabel.setText("Tower Name: " +name);
 		killCountLabel.setText("Enemies Destroyed: " + enemies);
 		upgradeCostLabel.setText("$"+ cost + " ");
-		
+		rangeLabel.setText("Current Range: " + range);
+		sellButton.setText("Sell for $" + sell);
 	}
 	
 
@@ -242,16 +244,20 @@ public class TowerDefenseView extends Application {
 		
 		//Left part that has some info about the tower
 		fp = new FlowPane();
+		fp.setVgap(5);
 		towerNameLabel = new Label();
 		towerNameLabel.setStyle("-fx-font: 15 arial;");
 		killCountLabel = new Label();
 		killCountLabel.setStyle("-fx-font: 15 arial;");
-		sellButton = new Button("Sell for $150");
+		rangeLabel= new Label();
+		rangeLabel.setStyle("-fx-font: 15 arial;");
+		sellButton = new Button("Sell for $  " );
 		fp.setHgap(20);
 		
 
 		fp.getChildren().add(towerNameLabel);
 		fp.getChildren().add(killCountLabel);
+		fp.getChildren().add(rangeLabel);
 		fp.getChildren().add(sellButton);
 		fp.setOrientation(Orientation.VERTICAL);
 		fp.setPrefWidth(200);

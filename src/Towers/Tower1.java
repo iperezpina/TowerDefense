@@ -31,6 +31,8 @@ public class Tower1 extends Tower {
 		this.range = 150;
 		this.towerName = "Fire Tower";
 		this.upgrade=0;
+		this.towerSpent=0;
+		this.upgradeCost= 100;
 	}
 
 	public void setURL(String str) {
