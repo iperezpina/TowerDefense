@@ -40,13 +40,27 @@ public class TowerDefenseController {
 	private RoundManager rm;
 	
 	
+	public EventHandler<MouseEvent> go = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent event) {
+			rm.newWaveList();
+			tdv.startPlay();
+			tdv.drawExtraButtons();
+			//rm.newWaveList();
+			//tdv.play();
+		}
+		
+		
+	};
+	
 	public EventHandler<MouseEvent> resume = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent event) {
-			tdv.play();
+			tdv.play(); 
 			tdv.drawExtraButtons();
-			rm.newWaveList();
+			//rm.newWaveList();
 		}
 		
 	};
@@ -56,7 +70,7 @@ public class TowerDefenseController {
 		@Override
 		public void handle(MouseEvent event) {
 			tdv.pause();
-			tdv.drawGoButton();
+			tdv.drawPlayButton();
 		}
 		
 	};

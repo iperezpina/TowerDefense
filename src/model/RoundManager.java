@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import view.TowerDefenseView;
@@ -19,11 +21,12 @@ public class RoundManager {
 	private boolean startedRound;
 	private int healthIncr;
 	Enemy e;
-	private ArrayList<Enemy> eList = new ArrayList<Enemy>();
+	private ArrayList<List<Enemy>> eList = new ArrayList<List<Enemy>>();
 	
 	//For second roundManager implementation
 	private List<List<Enemy>> enemyInfo;
 	private TowerDefenseView tdv;
+	private Timeline animation;
 
 	public RoundManager(int amtToSpawn, float intervalsBetween, Enemy e) {
 		this.amtToSpawn = amtToSpawn;
@@ -63,12 +66,13 @@ public class RoundManager {
 					// add money to player
 					startedRound = false;
 					System.out.println("Round " + waveNumber + " ended!");
+					//newWaveList();
 					// TODO this is why new enemies come up when the last wave reaches the end
 					//newWave();
 					
 				} else {
 					es.update();
-					addEnemiesToList();
+					//addEnemiesToList();
 				}
 			}
 		}
@@ -84,6 +88,7 @@ public class RoundManager {
 	
 	public void newWaveList() {
 		es = new EnemySpawner(enemyInfo.get(waveNumber), intervalsBetween -= .5f, healthIncr += 1);
+		eList.add(enemyInfo.get(waveNumber));
 		startedRound = true;
 		waveNumber++;
 		System.out.println("Round " + waveNumber + " started!");
@@ -107,6 +112,52 @@ public class RoundManager {
 		return es;
 	}
 	
+	public void pauseES() {
+		System.out.println(this.es.getTLArr());
+		
+		/*for(Timeline t: this.es.getTLArr()) {
+			setAnimation(t);
+			animation.pause();
+		}*/
+		for(Enemy e: this.es.getEnemys()) {
+			if(e != null) {
+				
+				e.setisPaused();
+				System.out.println("enemy is not null");
+			}
+		}
+		System.out.println(this.es.getTLArr());
+		
+	}
+	
+	public void playES() {
+		for (List<Enemy> le: eList) {
+			for(Enemy e: le) {
+				System.out.println(e);
+				if(e != null) {
+					System.out.println(e);
+					//e.play();
+				}
+			}
+		}
+	}
+	
+	/*public void startES() {
+		for (List<Enemy> le: eList) {
+			for(Enemy e: le) {
+				System.out.println(e);
+				if(e != null) {
+					System.out.println(e);
+					
+					//Timeline t = e.getTL();
+					//System.out.println(t);
+					//t.play();
+					//e.playFromStart();
+				}
+			}
+		}
+	}
+	
 	public void addEnemiesToList() {
 		for(Enemy e: es.getEnemys()) {
 			eList.add(e);
@@ -114,7 +165,13 @@ public class RoundManager {
 	}
 	public ArrayList<Enemy> getEList(){
 		return eList;
-	}
+	}*/
+	
+	// TODO get timeline from each enemy to this animation
+	public void setAnimation(Timeline animation) {
+		  this.animation = animation;
+		}
+	
 	
 
 

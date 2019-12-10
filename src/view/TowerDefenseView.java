@@ -112,7 +112,7 @@ public class TowerDefenseView extends Application {
 		currPlayer.setTdv(this);
 		tdc.setTdv(this);
 
-		TimerAll.pause();
+		TimerAll.play();
 
 		// Setting up title and icon for app
 		mainStage.setTitle("Dragon Force Defense");
@@ -310,10 +310,22 @@ public class TowerDefenseView extends Application {
 		goButton.setPrefSize(150, 50);
 		goButton.setStyle("-fx-background-color:springgreen; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
 				"-fx-border-color: Green;");
-		goButton.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.resume);
+		goButton.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.go);
 		
 		bpRightButtons.setTop(goButton);
 		bpRightButtons.setBottom(null);
+	}
+	
+	public void drawPlayButton() {
+		Button play = new Button("Play");
+		play.setPrefSize(150, 50);
+		play.setStyle("-fx-background-color:springgreen; -fx-border-radius: 2px; -fx-border-width: 2px;" + 
+				"-fx-border-color: Green;");
+		play.addEventHandler(MouseEvent.MOUSE_CLICKED, tdc.resume);
+		
+		bpRightButtons.setTop(play);
+		bpRightButtons.setBottom(null);
+		
 	}
 
 	public TileMap getTm() {
@@ -340,22 +352,29 @@ public class TowerDefenseView extends Application {
 		this.roundLabel = roundLabel;
 	}
 	
+	public void startPlay() {
+		TimerAll.runTimer();
+		//rm.startES();
+	}
+	
 	public void play() {
-		//TimerAll.play();
-		TimerAll.run();
 		
-		for(Enemy e:enemiesList) {
+		TimerAll.play();
+		//rm.playES();
+		
+		/*for(Enemy e:enemiesList) {
 			System.out.println(e);
 			e.play();
-		}
+		}*/
 	}
 	public void pause() {
 		/*for(Enemy e:enemiesList) {
 			e.pause();
 		}*/
 		TimerAll.pause();
+		rm.pauseES();
 		
-		//TimerAll.run();
+		
 	}
 
 

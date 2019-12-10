@@ -10,18 +10,26 @@ public class TimerAll {
 	
 	static Timer timer;
 	private static boolean check = false;
+	private static boolean updating = false;
+	private static boolean isPaused = false;
 	
-	public static void run() {
+	public static void runTimer() {
 		resetDeltaTime();
 		timer = new Timer();
 		TimerTask tt = new TimerTask() {
 			public void run() {
-				timeInMill += deltaTime;
-				seconds = (int) timeInMill;
-	    }
+				if(!isPaused) {
+					timeInMill += deltaTime;
+					seconds = (int) timeInMill;
+				}
+			
+			}
 		};
-		timer.scheduleAtFixedRate(tt, 0, 100);
 		
+		if(!updating) {
+			updating = true;
+			timer.scheduleAtFixedRate(tt, 0, 100);
+		}
 	}
 	
 	public boolean getCheck() {
@@ -44,6 +52,7 @@ public class TimerAll {
 	
 	public static void pause() {
 		deltaTime = 0f;
+		isPaused = true;
 		
 	}
 	

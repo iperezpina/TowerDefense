@@ -31,7 +31,7 @@ public class Enemy {
 	private TileMap tm;
 	private Timeline tl;
 	private MoveDir md;
-	private boolean isExited = false, isDead = false;
+	private boolean isExited = false, isDead = false, isPaused = false;
 	private String imgPath;
 	private int cashBack;
 
@@ -77,11 +77,17 @@ public class Enemy {
 	public void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
+		
+		// TODO this causes ghosts to run always
 		tl.play();
 	}
 	//TODO remove below two methods
 	public void pause() {
 		tl.pause();
+	}
+	
+	public void playFromStart() {
+		tl.playFromStart();
 	}
 	
 	public void play() {
@@ -107,9 +113,12 @@ public class Enemy {
 				tl.stop();
 			}
 			Draw();
-			moveTo();
-			x += (int) md.dx * speed;
-			y += (int) md.dy * speed;
+			if(!isPaused) {
+				
+				moveTo();
+				x += (int) md.dx * speed;
+				y += (int) md.dy * speed;
+			}
 		}
 
 	}
@@ -124,7 +133,7 @@ public class Enemy {
 		getPosY();
 		boolean canGoX = x % 32 == 0;
 		boolean canGoY = y % 32 == 0;
-
+		
 		// Goes up
 		if (tm.GetTile(posX, posY - 1).getType() == startLocation.getType() && !md.state.equals("down") && canGoX
 				&& canGoY) {
@@ -279,6 +288,14 @@ public class Enemy {
 		result += imgPath + " spd: " + speed + " health: " + maxHealth;
 		return result;
 		
+	}
+	
+	public Timeline getTL() {
+		return tl;
+	}
+	
+	public void setisPaused() {
+		this.isPaused = true;
 	}
 }
 
