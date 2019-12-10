@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,6 +25,7 @@ public class EnemySpawner {
 	private int lastTimeSpawned = 0;
 	private int currentTime = 0;
 	private int healthIncr = 0;
+	private List<Enemy> enemyList;
 
 	/**
 	 * A constructor for this class that takes in how many to spawn for this
@@ -41,6 +43,17 @@ public class EnemySpawner {
 		this.index = 0;
 		this.isDone = false;
 		this.healthIncr = healthIncr;
+	}
+
+	public EnemySpawner(List<Enemy> enemyList, float intervalsBetween, int healthIncr) {
+		this.amtToSpawn = enemyList.size();
+		this.intervalsBetween = intervalsBetween;
+		this.enemyToSpawn = null;
+		this.enemies = new Enemy[amtToSpawn];
+		this.index = 0;
+		this.isDone = false;
+		this.healthIncr = healthIncr;
+		this.enemyList = enemyList;
 	}
 
 	// A timer that will be used to spawn an enemy every so often
@@ -82,12 +95,16 @@ public class EnemySpawner {
 	 */
 	public void update() {
 		int counter = 0;
+		if (intervalsBetween <= 0) 
+		{
+			intervalsBetween = .5f;
+		}
 		currentTime = TimerAll.getTimeInSeconds();
 		System.out.println(currentTime);
 		if (index < amtToSpawn) {
 			if (Math.abs(currentTime - lastTimeSpawned) >= intervalsBetween) {
 				lastTimeSpawned = currentTime;
-				spawnEnemy();
+				spawnEnemyList();
 			}
 		}
 		for (Enemy e : enemies) {
@@ -108,12 +125,27 @@ public class EnemySpawner {
 	public void spawnEnemy() {
 		if (index < amtToSpawn) {
 			enemies[index] = new Enemy(enemyToSpawn.getImgPath(), enemyToSpawn.getStartLocation(),
-					enemyToSpawn.getWidth(), enemyToSpawn.getHeight(), enemyToSpawn.getSpeed(), enemyToSpawn.getHealth() + healthIncr, enemyToSpawn.getTm());
+					enemyToSpawn.getWidth(), enemyToSpawn.getHeight(), enemyToSpawn.getSpeed(),
+					enemyToSpawn.getHealth() + healthIncr, enemyToSpawn.getTm());
 			EnemyLocator.addEnemy(enemies[index]);
 			enemies[index].update();
 			index++;
 		}
+	}
 
+	/**
+	 * Spawns an enemy if the number of spawned enemies has not gone over the limit.
+	 * NOTE: This uses the up-to-date file reader code
+	 */
+	public void spawnEnemyList() {
+		if (index < amtToSpawn) {
+			Enemy temp = enemyList.get(index);
+			enemies[index] = new Enemy(temp.getImgPath(), temp.getStartLocation(), temp.getWidth(), temp.getHeight(),
+					temp.getSpeed(), temp.getHealth() + healthIncr, temp.getTm());
+			EnemyLocator.addEnemy(enemies[index]);
+			enemies[index].update();
+			index++;
+		}
 	}
 	
 	
@@ -137,10 +169,10 @@ public class EnemySpawner {
 		return result;
 
 	}
-	
+
 	public Enemy[] getEnemys() {
 		return enemies;
-		
+
 	}
 
 	public boolean isDone() {

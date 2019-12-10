@@ -12,8 +12,8 @@ public class rockProjectile extends Projectile {
 
 	private Timeline tl;
 
-	public rockProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot) {
-		super(imageName, speed, x, y, EtoShoot);
+	public rockProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
+		super(imageName, speed, x, y, EtoShoot, damage);
 		update();
 
 	}
@@ -40,6 +40,12 @@ public class rockProjectile extends Projectile {
 			x = x + ((EtoShoot.getX() - x) / length * speed);
 
 			y = y + ((EtoShoot.getY() - y) / length * speed);
+			
+			if (handleCol()) {
+				TowerDamage(EtoShoot);
+				tl.stop();
+			}
+			
 
 			draw();
 			count++;
