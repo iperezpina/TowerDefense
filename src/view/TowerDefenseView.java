@@ -177,8 +177,6 @@ public class TowerDefenseView extends Application {
 		//rightLabel = new Label("Money: " + currPlayer.getCoins() + "\nHealth: " + currPlayer.getHP());
 		updatePlayerInfo(currPlayer.getCoins(), currPlayer.getHP());
 		VBox rightPane = new VBox(playerFP);
-		// VBox rightPane = new VBox(new Label("Health: " + currPlayer.getHP() +
-		// "\nCoins: " + currPlayer.getCoins()));
 
 		rightPane.resize(160, 480);
 		rightPane.setPrefWidth(160);
