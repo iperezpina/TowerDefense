@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,6 +12,7 @@ public class RoundManager {
 	private boolean startedRound;
 	private int healthIncr;
 	Enemy e;
+	private ArrayList<Enemy> eList = new ArrayList<Enemy>();
 
 	public RoundManager(int amtToSpawn, float intervalsBetween, Enemy e) {
 		this.amtToSpawn = amtToSpawn;
@@ -20,7 +22,7 @@ public class RoundManager {
 		this.waveNumber = 0;
 		this.healthIncr = 5;
 		this.startedRound = false;
-		newWave();
+		//newWave();
 	}
 
 	public void update() {
@@ -38,9 +40,12 @@ public class RoundManager {
 					// TODO implement add money back after round ends
 					// add money to player
 					startedRound = false;
-					newWave();
+					
+					// TODO this is why new enemies come up when the last wave reaches the end
+					//newWave();
 				} else {
 					es.update();
+					addEnemiesToList();
 				}
 			}	
 		}
@@ -53,11 +58,14 @@ public class RoundManager {
 		waveNumber++;
 		//System.out.println("Beginning wave: " + waveNumber);
 	}
-	public EnemySpawner getES() {
-		return es;
+	
+	public void addEnemiesToList() {
+		for(Enemy e: es.getEnemys()) {
+			eList.add(e);
+		}
 	}
-	public void pause() {
-		
+	public ArrayList<Enemy> getEList(){
+		return eList;
 	}
 	
 

@@ -2,6 +2,7 @@
 package view;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import controller.Player;
 import controller.TowerDefenseController;
@@ -59,6 +60,7 @@ public class TowerDefenseView extends Application {
 	private static Player currPlayer = new Player();
 	private Label rightLabel;
 	private BorderPane bpRightButtons;
+	private ArrayList<Enemy> enemiesList;
 	//private Button goButton;
 	
 	//Variables here relate to the gui elements
@@ -143,9 +145,9 @@ public class TowerDefenseView extends Application {
 		mainStage.show();
 		
 		// TODO below doesnt work
-		/*mainStage.setOnCloseRequest(closeEvent -> {
+		mainStage.setOnCloseRequest(closeEvent -> {
 		       TimerAll.cancel();  
-		});*/
+		});
 		
 		
 		
@@ -176,6 +178,8 @@ public class TowerDefenseView extends Application {
 		tm.update();
 		towers.update();
 		rm.update();
+		
+		
 	}
 	
 	/**
@@ -310,9 +314,18 @@ public class TowerDefenseView extends Application {
 	public void play() {
 		//TimerAll.play();
 		TimerAll.run();
+		
+		for(Enemy e:enemiesList) {
+			System.out.println(e);
+			e.play();
+		}
 	}
 	public void pause() {
+		/*for(Enemy e:enemiesList) {
+			e.pause();
+		}*/
 		TimerAll.pause();
+		
 		//TimerAll.run();
 	}
 	
