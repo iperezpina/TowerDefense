@@ -1,19 +1,27 @@
 package Projectile;
 
+import java.io.File;
+
+import Towers.Tower;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import model.Enemy;
 
 public class rockProjectile extends Projectile {
 
 	private Timeline tl;
+	private AudioClip rockSound = new AudioClip(new File("src/Sounds/klonk.wav").toURI().toString());
+	private Tower tower;
 
-	public rockProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
+	public rockProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage, Tower tower) {
 		super(imageName, speed, x, y, EtoShoot, damage);
+		this.tower = tower;
+		rockSound.setVolume(.5f);
 		update();
 
 	}
@@ -42,6 +50,10 @@ public class rockProjectile extends Projectile {
 			y = y + ((EtoShoot.getY() - y) / length * speed);
 			
 			if (handleCol()) {
+				rockSound.play();
+				if (EtoShoot.getHealth() - damage <= 0) {
+					
+				}
 				TowerDamage(EtoShoot);
 				tl.stop();
 			}

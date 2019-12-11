@@ -111,19 +111,19 @@ public class Tower2 extends Tower {
 	public void shoot() {
 		if (doubleShoot) {
 			if (Player.getGameState().equals(GameState.gamex2)) {
-				ammo = new boneProjectile("Bone", projSpeed * 2, x, y, currEnemy, damage);
-				ammo2 = new boneProjectile("Bone", projSpeed * 2, x+32, y, currEnemy, damage);	
+				ammo = new boneProjectile("Bone", projSpeed * 2, x, y, currEnemy, damage, this);
+				ammo2 = new boneProjectile("Bone", projSpeed * 2, x+32, y, currEnemy, damage, this);	
 			}
 			else {
-				ammo = new boneProjectile("Bone", projSpeed, x, y, currEnemy, damage);
-				ammo2 = new boneProjectile("Bone", projSpeed, x + 32, y, currEnemy, damage);
+				ammo = new boneProjectile("Bone", projSpeed, x, y, currEnemy, damage, this);
+				ammo2 = new boneProjectile("Bone", projSpeed, x + 32, y, currEnemy, damage, this);
 			}
 		}
 		else {
 			if (Player.getGameState().equals(GameState.gamex2))
-				ammo = new boneProjectile("Bone", projSpeed * 2, x, y, currEnemy, damage);
+				ammo = new boneProjectile("Bone", projSpeed * 2, x, y, currEnemy, damage, this);
 			else
-				ammo = new boneProjectile("Bone", projSpeed, x, y, currEnemy, damage);
+				ammo = new boneProjectile("Bone", projSpeed, x, y, currEnemy, damage, this);
 		}
 		
 		

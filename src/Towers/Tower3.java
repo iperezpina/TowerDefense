@@ -109,9 +109,9 @@ public class Tower3 extends Tower {
 
 	public void shoot() {
 		if (Player.getGameState().equals(GameState.gamex2))
-			ammo = new lazerProjectile("lazer", projSpeed * 2, x, y, currEnemy, damage);
+			ammo = new lazerProjectile("lazer", projSpeed * 2, x, y, currEnemy, damage, this);
 		else
-			ammo = new lazerProjectile("lazer", projSpeed, x, y, currEnemy, damage);
+			ammo = new lazerProjectile("lazer", projSpeed, x, y, currEnemy, damage, this);
 		
 	}
 	

@@ -2,6 +2,7 @@ package Projectile;
 
 import java.io.File;
 
+import Towers.Tower;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -14,9 +15,12 @@ import model.Enemy;
 public class fireProjectile extends Projectile {
 	private Timeline tl;
 	private AudioClip fireSound = new AudioClip(new File("src/Sounds/fireball2.wav").toURI().toString());
+	private Tower tower;
 
-	public fireProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
+	public fireProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage, Tower tower) {
 		super(imageName, speed, x, y, EtoShoot, damage);
+		this.tower = tower;
+		fireSound.setVolume(.5f);
 		update();
 
 	}
@@ -47,6 +51,9 @@ public class fireProjectile extends Projectile {
 
 			if (handleCol()) {
 				fireSound.play();
+				if (EtoShoot.getHealth() - damage <= 0) {
+					tower.setKillCount();
+				}
 				TowerDamage(EtoShoot);
 				tl.stop();
 			}

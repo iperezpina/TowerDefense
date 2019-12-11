@@ -112,31 +112,31 @@ public class Tower7 extends Tower {
 		// Shoots three arrows at a time
 		if (canShootThree) {
 			if (Player.getGameState().equals(GameState.gamex2)) {
-				ammo = new arrowProjectile("arrow", projSpeed * 2, x, y, currEnemy, damage);
-				ammo2 = new arrowProjectile("arrow", projSpeed * 2, x + 32, y, currEnemy, damage);
-				ammo3 = new arrowProjectile("arrow", projSpeed * 2, x + 16, y - 16, currEnemy, damage);
+				ammo = new arrowProjectile("arrow", projSpeed * 2, x, y, currEnemy, damage, this);
+				ammo2 = new arrowProjectile("arrow", projSpeed * 2, x + 32, y, currEnemy, damage, this);
+				ammo3 = new arrowProjectile("arrow", projSpeed * 2, x + 16, y - 16, currEnemy, damage, this);
 			} else {
-				ammo = new arrowProjectile("arrow", projSpeed, x, y, currEnemy, damage);
-				ammo2 = new arrowProjectile("arrow", projSpeed, x + 32, y, currEnemy, damage);
-				ammo3 = new arrowProjectile("arrow", projSpeed, x + 16, y + 16, currEnemy, damage);
+				ammo = new arrowProjectile("arrow", projSpeed, x, y, currEnemy, damage, this);
+				ammo2 = new arrowProjectile("arrow", projSpeed, x + 32, y, currEnemy, damage, this);
+				ammo3 = new arrowProjectile("arrow", projSpeed, x + 16, y + 16, currEnemy, damage, this);
 			}
 		}
 		// Shoots two arrows at a time
 		else if (canShootTwo) {
 			if (Player.getGameState().equals(GameState.gamex2)) {
-				ammo = new arrowProjectile("arrow", projSpeed * 2, x, y, currEnemy, damage);
-				ammo2 = new arrowProjectile("arrow", projSpeed * 2, x + 32, y, currEnemy, damage);
+				ammo = new arrowProjectile("arrow", projSpeed * 2, x, y, currEnemy, damage, this);
+				ammo2 = new arrowProjectile("arrow", projSpeed * 2, x + 32, y, currEnemy, damage, this);
 			} else {
-				ammo = new arrowProjectile("arrow", projSpeed, x, y, currEnemy, damage);
-				ammo2 = new arrowProjectile("arrow", projSpeed, x + 32, y, currEnemy, damage);
+				ammo = new arrowProjectile("arrow", projSpeed, x, y, currEnemy, damage, this);
+				ammo2 = new arrowProjectile("arrow", projSpeed, x + 32, y, currEnemy, damage, this);
 			}
 		}
 		// Shoots one arrow at a time
 		else {
 			if (Player.getGameState().equals(GameState.gamex2)) {
-				ammo = new arrowProjectile("arrow", projSpeed * 2, x, y, currEnemy, damage);
+				ammo = new arrowProjectile("arrow", projSpeed * 2, x, y, currEnemy, damage, this);
 			} else {
-				ammo = new arrowProjectile("arrow", projSpeed, x, y, currEnemy, damage);
+				ammo = new arrowProjectile("arrow", projSpeed, x, y, currEnemy, damage, this);
 			}
 		}
 

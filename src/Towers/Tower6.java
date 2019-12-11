@@ -114,9 +114,9 @@ public class Tower6 extends Tower {
 		//TODO: Add canSlow into constructor for bloodProjectile and apply a slow method in enemy class
 		//TODO: Add canPoison into constructor for bloodProjectile and apply a tick damage effect every second for a given duration (5)
 		if (Player.getGameState().equals(GameState.gamex2))
-			ammo = new bloodProjectile("blood", projSpeed * 2, x, y, currEnemy, damage, canSlow, canPoison);
+			ammo = new bloodProjectile("blood", projSpeed * 2, x, y, currEnemy, damage, canSlow, canPoison, this);
 		else
-			ammo = new bloodProjectile("blood", projSpeed, x, y, currEnemy, damage, canSlow, canPoison);
+			ammo = new bloodProjectile("blood", projSpeed, x, y, currEnemy, damage, canSlow, canPoison, this);
 	}
 
 	/**

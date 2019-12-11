@@ -108,9 +108,9 @@ public class Tower1 extends Tower {
 
 	public void shoot() {
 		if (Player.getGameState().equals(GameState.gamex2))
-			ammo = new fireProjectile("Fireball", projSpeed * 2, x, y, currEnemy, damage);
+			ammo = new fireProjectile("Fireball", projSpeed * 2, x, y, currEnemy, damage, this);
 		else
-			ammo = new fireProjectile("Fireball", projSpeed, x, y, currEnemy, damage);
+			ammo = new fireProjectile("Fireball", projSpeed, x, y, currEnemy, damage, this);
 
 	}
 

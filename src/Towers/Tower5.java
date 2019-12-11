@@ -115,15 +115,15 @@ public class Tower5 extends Tower {
 	public void shoot() {
 		if (shootLava) {
 			if (Player.getGameState().equals(GameState.gamex2))
-				ammo = new lavaShotProjectile("lavaShot", projSpeed * 2, x, y,  currEnemy, damage);
+				ammo = new lavaShotProjectile("lavaShot", projSpeed * 2, x, y,  currEnemy, damage, this);
 			else
-				ammo = new lavaShotProjectile("lavaShot", projSpeed * 2, x, y,  currEnemy, damage);
+				ammo = new lavaShotProjectile("lavaShot", projSpeed * 2, x, y,  currEnemy, damage, this);
 		}
 		else {
 			if (Player.getGameState().equals(GameState.gamex2))
-				ammo = new rockProjectile("rock", projSpeed * 2, x, y,  currEnemy, damage);
+				ammo = new rockProjectile("rock", projSpeed * 2, x, y,  currEnemy, damage, this);
 			else
-				ammo = new rockProjectile("rock", projSpeed, x, y,  currEnemy, damage);
+				ammo = new rockProjectile("rock", projSpeed, x, y,  currEnemy, damage, this);
 		}
 		
 	}
