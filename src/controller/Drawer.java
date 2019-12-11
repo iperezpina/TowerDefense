@@ -15,6 +15,7 @@ public class Drawer {
 	public static void DrawImage(Image img, int x, int y, double d, double e) {
 		TowerDefenseView.canvas.getGraphicsContext2D().drawImage(img, x, y, d, e);
 	}
+	
 
 	public static void DrawImage2(Image img, int x, int y) {
 		TowerDefenseView.canvas.getGraphicsContext2D().drawImage(img, x, y);

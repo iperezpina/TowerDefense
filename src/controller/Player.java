@@ -63,8 +63,10 @@ public class Player {
 
 	private static void gameOver() {
 		if (health <= 0) {
-			System.out.println("GAME OVER!");
 			TimerAll.pause();
+			Platform.exit();
+			
+			
 		}
 	}
 
@@ -136,9 +138,6 @@ public class Player {
 			if (id == null) {
 				tdv.setAllBlank();
 				towerSelected = false;
-//				selectX = -1;
-//				selectY = -1;
-				// System.out.println("Setting to blanks");
 			}
 			// If the tile we click on can have towers placed on it and the id isn't null we
 			// will create a temp Tower,
@@ -168,7 +167,6 @@ public class Player {
 						if (tower != null) {
 							selectX = x;
 							selectY = y;
-							System.out.println("selectX: " + selectX + " selectY: " + selectY);
 							tower.setIsSelected(!tower.isSelected());
 							String name = tower.getTowerName();
 							int Ucost = tower.getUpgradeCost();
@@ -232,13 +230,11 @@ public class Player {
 		@SuppressWarnings("deprecation")
 		@Override
 		public void handle(MouseEvent event) {
-			System.out.println("My: selectX: " + selectX + " selectY: " + selectX);
 			if (towerSelected) {
 
 				System.out.println(TowerHolder.isThereATower(selectX, selectY));
 				// Check if there is a tower from the selectX and selectY variables
 				if (TowerHolder.isThereATower(selectX, selectY)) {
-					System.out.println("there is!");
 
 					//Will attempt to update a tower if possible
 					Platform.runLater(new Runnable() {

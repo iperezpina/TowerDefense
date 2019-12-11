@@ -165,10 +165,13 @@ public class Enemy {
 				}
 				
 			}
-			if (poisonCounter < 5 && counter % 4 == 0) {
-				poisonTick();
+			if (!Player.getGameState().equals(GameState.gamepaused)) {
+				if (poisonCounter < 5 && counter % 4 == 0) {
+					poisonTick();
+				}
+				counter++;
 			}
-			counter++;
+			
 		}
 
 	}
@@ -224,13 +227,13 @@ public class Enemy {
 	}
 	
 	public void DrawHealth() {
-		int newWidth = (width / maxHealth);
-		int healthWidth = newWidth * health;
-		if (healthWidth < 0) {
-			healthWidth = 0;
+		double newWidth = (double)health / (double)maxHealth;
+		System.out.println(newWidth);
+		if (newWidth < 0) {
+			newWidth = 0;
 		}
-		Drawer.DrawImage(ResourceManager.QuickLoad("redbar"), x, y + 16, newWidth * maxHealth, 32);
-		Drawer.DrawImage(ResourceManager.QuickLoad("greenbar"), x, y + 16, healthWidth, 32);
+		Drawer.DrawImage(ResourceManager.QuickLoad("redbar"), x, y + 16, 32, 32.0);
+		Drawer.DrawImage(ResourceManager.QuickLoad("greenbar"), x, y + 16, (double)newWidth * 32.0, 32.0);
 		
 	}
 

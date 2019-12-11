@@ -101,7 +101,7 @@ public class RoundManager {
 
 	public void newWaveList() {
 
-		es = new EnemySpawner(enemyInfo.get(waveNumber), intervalsBetween -= .10f, 0);
+		es = new EnemySpawner(enemyInfo.get(waveNumber), intervalsBetween -= .10f, healthIncr++);
 		eList.add(enemyInfo.get(waveNumber));
 		startedRound = true;
 		waveNumber++;
