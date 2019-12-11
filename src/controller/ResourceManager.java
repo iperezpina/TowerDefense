@@ -17,7 +17,6 @@ public class ResourceManager {
 	
 	//Extra Images
 	public static Image fireballImg = QuickLoad("Fireball");
-	public static Image optionsImg = QuickLoad("Options");
 	public static Image startScreenImg = QuickLoad("hellbgd");
 	//public static Image startScreenImg = QuickLoad("startscreen");
 	
