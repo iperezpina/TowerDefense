@@ -2,6 +2,7 @@ package Projectile;
 
 import java.io.File;
 
+import Towers.Tower;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,11 +17,13 @@ public class bloodProjectile extends Projectile {
 	private Timeline tl;
 	private AudioClip bloodSound = new AudioClip(new File("src/Sounds/splat.wav").toURI().toString());
 	private boolean canSlow, canPoison;
+	private Tower tower;
 
-	public bloodProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage, boolean canSlow, boolean canPoison) {
+	public bloodProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage, boolean canSlow, boolean canPoison, Tower tower) {
 		super(imageName, speed, x, y, EtoShoot, damage);
 		this.canSlow = canSlow;
 		this.canPoison = canPoison;
+		this.tower = tower;;
 		update();
 
 	}
@@ -51,6 +54,9 @@ public class bloodProjectile extends Projectile {
 
 			if (handleCol()) {
 				bloodSound.play();
+				if (EtoShoot.getHealth() - damage <= 0) {
+					tower.setKillCount();
+				}
 				TowerDamage(EtoShoot);
 				if(canSlow) {
 					EtoShoot.slowEnemy();	

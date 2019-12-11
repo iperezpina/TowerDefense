@@ -105,7 +105,7 @@ public class Tower {
 
 	
 	public void setSellCost() {
-		this.sellCost= (int) ((this.towerCost +this.towerSpent)*.75);
+		this.sellCost= (int) ((this.towerCost + this.towerSpent)*.75);
 	}
 	
 	public int getSellCost() {
@@ -150,5 +150,9 @@ public class Tower {
 
 	public void setTowerUpgrades(Upgrade[] towerUpgrades) {
 		this.towerUpgrades = towerUpgrades;
+	}
+	
+	public void setKillCount() {
+		this.enemiesDestroyed++;
 	}
 }

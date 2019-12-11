@@ -2,6 +2,7 @@ package Projectile;
 
 import java.io.File;
 
+import Towers.Tower;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,10 +16,12 @@ public class lavaShotProjectile extends Projectile {
 
 	private Timeline tl;
 	private AudioClip lavaSound = new AudioClip(new File("src/Sounds/lavasiz.wav").toURI().toString());
+	private Tower tower;
 
 	
-	public lavaShotProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage) {
+	public lavaShotProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage, Tower tower) {
 		super(imageName, speed, x, y, EtoShoot, damage);
+		this.tower = tower;
 		update();
 
 	}
@@ -48,6 +51,9 @@ public class lavaShotProjectile extends Projectile {
 
 			if (handleCol()) {
 				lavaSound.play();
+				if (EtoShoot.getHealth() - damage <= 0) {
+					tower.setKillCount();
+				}
 				TowerDamage(EtoShoot);
 				tl.stop();
 			}

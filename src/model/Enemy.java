@@ -228,7 +228,6 @@ public class Enemy {
 	
 	public void DrawHealth() {
 		double newWidth = (double)health / (double)maxHealth;
-		System.out.println(newWidth);
 		if (newWidth < 0) {
 			newWidth = 0;
 		}

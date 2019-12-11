@@ -111,9 +111,9 @@ public class Tower4 extends Tower {
 
 	public void shoot() {
 		if (Player.getGameState().equals(GameState.gamex2))
-			ammo = new lightningProjectile("lightning", projSpeed * 2, x, y ,currEnemy, damage);
+			ammo = new lightningProjectile("lightning", projSpeed * 2, x, y ,currEnemy, damage, this);
 		else
-			ammo = new lightningProjectile("lightning", projSpeed, x, y ,currEnemy, damage);
+			ammo = new lightningProjectile("lightning", projSpeed, x, y ,currEnemy, damage, this);
 	}
 
 	/**
