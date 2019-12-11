@@ -177,7 +177,7 @@ public class Enemy {
 	}
 
 	/**
-	 * Checks what direction the enemy needs to move in depending on the tilemap. It
+	 * Checks what direction the enemy needs to move in depending on the tilemap. It 
 	 * will move along the tiles that are the same tile as its start tile. Goes up,
 	 * down, left, or right.
 	 */
