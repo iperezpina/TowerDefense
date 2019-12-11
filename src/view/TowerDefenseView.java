@@ -5,8 +5,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 import controller.Player;
+import controller.ResourceManager;
 import controller.TowerDefenseController;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -27,6 +30,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -63,13 +67,17 @@ public class TowerDefenseView extends Application {
 	private Background bgd2 = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
 	private Background bgd3 = new Background(new BackgroundFill(Color.LIGHTSTEELBLUE, CornerRadii.EMPTY, Insets.EMPTY));
 	private Media media = new Media(new File("src/Sounds/whoosh.wav").toURI().toString());
-	private MediaPlayer mediaPlayer = new MediaPlayer(media);
+	private Media intro = new Media(new File("src/Sounds/introsong.wav").toURI().toString());
+	private MediaPlayer mediaPlayer = new MediaPlayer(intro);
+	private MediaPlayer mediaPlayer2 = new MediaPlayer(media);
 	private static Player currPlayer = new Player();
 	private Label rightLabel;
 	private Label roundLabel;
 	private BorderPane bpRightButtons;
+	private boolean createStart = false;
 
 	// Variables here relate to the gui elements
+	private Stage mainStage;
 	private ArrayList<Enemy> enemiesList;
 	FlowPane fp = new FlowPane();
 	Label towerNameLabel = new Label();
@@ -89,6 +97,8 @@ public class TowerDefenseView extends Application {
 	Label healthLabel = new Label();
 	Label towerLabel = new Label();
 	FlowPane playerFP = new FlowPane();
+	
+	StackPane sp;
 
 	// Other variables below
 	// Essentially the map(s) of the level(s)
@@ -147,16 +157,129 @@ public class TowerDefenseView extends Application {
 	/**
 	 * The basic setup of the application
 	 */
-	public void start(Stage mainStage) throws Exception {
+	public void start(Stage tempStage) throws Exception {
+		mainStage = tempStage;
+		Button newGame = new Button("New Game");
+		sp = new StackPane();
+		newGame.setOnAction((event) -> {
+				newGame.setVisible(false);
+				sp.getChildren().remove(0);
+				createLevelSelect(sp);
+		});
+		sp.getChildren().add(new ImageView(ResourceManager.startScreenImg));
+		sp.getChildren().add(newGame);
+		sp.getChildren().get(1).toFront();
+
+		
+		// Setting up title and icon for app
+		mainStage.setTitle("Highway outta HELL");
+		mainStage.getIcons().add(new Image("Images/logo.png"));
+		Scene tempScene = new Scene(sp, 800, 600);
+		mainStage.setScene(tempScene);
+		mainStage.show();
+		mediaPlayer.setAutoPlay(true);
+		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+
+	}
+
+	/**
+	 * In charge of creating the three buttons that will choose the difficulty
+	 * @param sp, the stackpane that the buttons will be added on.
+	 */
+	private void createLevelSelect(StackPane sp) {
+		BorderPane bpSelected = new BorderPane();
+		
+		Button easyButton = new Button("EASY");
+		easyButton.setPrefSize(70, 40);
+		easyButton.setOnAction(buttonHandler);
+		
+		Button mediumButton = new Button("MEDIUM");
+		mediumButton.setPrefSize(70, 40);
+		mediumButton.setOnAction(buttonHandler);
+		
+		Button hardButton = new Button("HARD");
+		hardButton.setPrefSize(70, 40);
+		hardButton.setOnAction(buttonHandler);
+		
+		
+		sp.getChildren().add(easyButton);
+		sp.getChildren().add(mediumButton);
+		sp.getChildren().add(hardButton);
+		
+		//Puts the image in the back of the stackpane
+		sp.getChildren().get(0).toBack();
+		
+		
+		//Adds the three buttons that when pressed create a start game button, and sets a certain difficulty
+		//EASY
+		sp.getChildren().get(1).setTranslateX(-100);
+		sp.getChildren().get(1).setLayoutX(0);
+		sp.getChildren().get(1).setLayoutY(0);
+		
+		//MEDIUM
+		sp.getChildren().get(2).setLayoutX(0);
+		sp.getChildren().get(2).setLayoutY(0);
+		
+		//HARD
+		sp.getChildren().get(3).setTranslateX(100);
+		sp.getChildren().get(3).setLayoutX(0);
+		sp.getChildren().get(3).setLayoutY(0);
+		
+	}
+	
+	/**
+	 * Event handler for the three difficulty buttons, spawns a startGame button and sets difficulty
+	 */
+	private EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+
+		@Override
+		public void handle(ActionEvent event) {
+			Button temp = (Button)event.getSource();
+			if (temp.getText().equals("EASY")) {
+				levelDifficulty = 0;
+				spawnStartGameButton();
+			}
+			else if (temp.getText().equals("MEDIUM")) {
+				levelDifficulty = 1;
+				spawnStartGameButton();
+			}
+			else if (temp.getText().equals("HARD")) {
+				levelDifficulty = 2;
+				spawnStartGameButton();
+			}
+		}
+		
+	};
+	
+	/**
+	 * The function for startGame event, loads the basic game.
+	 */
+	protected void spawnStartGameButton() {
+		if (!createStart) {
+			createStart = true;
+			if (sp != null) {
+				Button startGame = new Button("START GAME");
+				startGame.setOnAction((event) ->{
+					startGame();
+				});
+				startGame.setPrefSize(100, 40);
+				sp.getChildren().add(startGame);
+				sp.getChildren().get(4).setTranslateY(200);
+				
+			}
+			
+		}
+	}
+	
+	
+	public void startGame() {
+		mediaPlayer.stop();
+		
 		// Add the view to the controller class
 		currPlayer.setTdv(this);
 		tdc.setTdv(this);
 
 		TimerAll.play();
-
-		// Setting up title and icon for app
-		mainStage.setTitle("Highway outta HELL");
-		mainStage.getIcons().add(new Image("Images/logo.png"));
 
 		// Creating a borderpane
 		BorderPane bp = new BorderPane();
@@ -208,15 +331,11 @@ public class TowerDefenseView extends Application {
 		mainStage.setScene(scene);
 		mainStage.show();
 
-		// TODO below doesnt work
-		/*
-		 * mainStage.setOnCloseRequest(closeEvent -> { TimerAll.cancel(); });
-		 */
-
 		// Loops the music for forever
-		mediaPlayer.setAutoPlay(true);
-		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		mediaPlayer2.setAutoPlay(true);
+		mediaPlayer2.setCycleCount(MediaPlayer.INDEFINITE);
 	}
+
 
 	/**
 	 * Used to test the basic gameplay stuff, so far spawning enemies and rendering

@@ -133,9 +133,6 @@ public class Tower {
 		return this.upgradeCost;
 	}
 	
-	
-	
-	
 	public int getTowerCost() {
 		return towerCost;
 	}

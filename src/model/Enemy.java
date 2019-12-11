@@ -14,8 +14,8 @@ import javafx.util.Duration;
 
 /**
  * 
- * @author Alberto Villareal, Laura Bolanos, Ivan [Last Name], and Marissa
- *         [Last Name]
+ * @author Alberto Villareal, Laura Bolanos, Ivan [Last Name], and Marissa [Last
+ *         Name]
  * 
  *         Summary: [Summary goes here]
  *
@@ -34,11 +34,10 @@ public class Enemy {
 	private boolean isExited = false, isDead = false, isPaused = false;
 	private String imgPath;
 	private int cashBack;
-	
-	
+
 	private boolean isSlowed = false;
 	private int poisonCounter = 10;
-	
+
 	/**
 	 * The constructor method of the enemy class, takes in an img, a tile where the
 	 * enemy spawns from, a width and height, speed of the enemy (must be a 1, 2, 4,
@@ -68,31 +67,30 @@ public class Enemy {
 		this.maxHealth = this.health;
 		this.cashBack = calculateCashBack();
 	}
-	
+
 	private int calculateCashBack() {
 		int temp = 0;
 		temp += (health / 4) + speed;
 		return temp;
 	}
-	
-	//Halves an enemy speed permanently, only works once
+
+	// Halves an enemy speed permanently, only works once
 	public void slowEnemy() {
 		if (!isSlowed) {
 			if (speed / 2 <= 0) {
 				speed = 1;
-			}
-			else {
+			} else {
 				speed /= 2;
 			}
 			isSlowed = true;
 		}
-		
+
 	}
-	
+
 	public void poisonEnemy() {
 		poisonCounter = 0;
 	}
-	
+
 	private void poisonTick() {
 		health--;
 		poisonCounter++;
@@ -104,19 +102,20 @@ public class Enemy {
 	public void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
-		
+
 		// TODO this causes ghosts to run always
 		tl.play();
 	}
-	//TODO remove below two methods
+
+	// TODO remove below two methods
 	public void pause() {
 		tl.pause();
 	}
-	
+
 	public void playFromStart() {
 		tl.playFromStart();
 	}
-	
+
 	public void play() {
 		tl.play();
 	}
@@ -128,7 +127,8 @@ public class Enemy {
 	 */
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
-		int counter  = 1;
+		int counter = 1;
+
 		@Override
 		public void handle(ActionEvent arg0) {
 			if (health <= 0) {
@@ -136,20 +136,20 @@ public class Enemy {
 				isDead = true;
 				Player.addCash(cashBack);
 			}
-			
+
 			if (isExited) {
 				tl.stop();
 			}
 			Draw();
-			if(!isPaused) {
-				
+			if (!isPaused) {
+
 				moveTo();
-				//If the game should be paused set movement to zero essentially
-				if (Player.getGameState().equals(GameState.gamepaused)){
+				// If the game should be paused set movement to zero essentially
+				if (Player.getGameState().equals(GameState.gamepaused)) {
 					x += (int) md.dx * speed * 0;
 					y += (int) md.dy * speed * 0;
 				}
-				//If the game should be going at x2 speed double enemy speed
+				// If the game should be going at x2 speed double enemy speed
 				if (Player.getGameState().equals(GameState.gamex2)) {
 					float tempSpeed = speed * 2;
 					if (tempSpeed > 32) {
@@ -158,12 +158,12 @@ public class Enemy {
 					x += (int) md.dx * tempSpeed;
 					y += (int) md.dy * tempSpeed;
 				}
-				//If the game is playing normally run at regular enemy speed 
+				// If the game is playing normally run at regular enemy speed
 				if (Player.getGameState().equals(GameState.gameplay)) {
 					x += (int) md.dx * speed;
 					y += (int) md.dy * speed;
 				}
-				
+
 			}
 			if (!Player.getGameState().equals(GameState.gamepaused)) {
 				if (poisonCounter < 5 && counter % 4 == 0) {
@@ -171,13 +171,13 @@ public class Enemy {
 				}
 				counter++;
 			}
-			
+
 		}
 
 	}
 
 	/**
-	 * Checks what direction the enemy needs to move in depending on the tilemap. It
+	 * Checks what direction the enemy needs to move in depending on the tilemap. It 
 	 * will move along the tiles that are the same tile as its start tile. Goes up,
 	 * down, left, or right.
 	 */
@@ -186,7 +186,7 @@ public class Enemy {
 		getPosY();
 		boolean canGoX = x % 32 == 0;
 		boolean canGoY = y % 32 == 0;
-		
+
 		// Goes up
 		if (tm.GetTile(posX, posY - 1).getType() == startLocation.getType() && !md.state.equals("down") && canGoX
 				&& canGoY) {
@@ -216,6 +216,16 @@ public class Enemy {
 		}
 	}
 
+	private boolean reachNext(int bound, Tile nextTile) {
+		boolean reached = false;
+
+		if (x > nextTile.getX() - bound && x < nextTile.getX() + bound && y > nextTile.getY() - bound
+				&& y < nextTile.getY() + bound)
+			reached = true;
+
+		return reached;
+	}
+
 	/**
 	 * Draws the enemy
 	 */
@@ -225,15 +235,15 @@ public class Enemy {
 		DrawHealth();
 
 	}
-	
+
 	public void DrawHealth() {
-		double newWidth = (double)health / (double)maxHealth;
+		double newWidth = (double) health / (double) maxHealth;
 		if (newWidth < 0) {
 			newWidth = 0;
 		}
 		Drawer.DrawImage(ResourceManager.QuickLoad("redbar"), x, y + 16, 32, 32.0);
-		Drawer.DrawImage(ResourceManager.QuickLoad("greenbar"), x, y + 16, (double)newWidth * 32.0, 32.0);
-		
+		Drawer.DrawImage(ResourceManager.QuickLoad("greenbar"), x, y + 16, (double) newWidth * 32.0, 32.0);
+
 	}
 
 //	The getters and setters are below=================================================================
@@ -312,8 +322,6 @@ public class Enemy {
 		this.startLocation = startLocation;
 	}
 
-	
-
 	public TileMap getTm() {
 		return tm;
 	}
@@ -337,22 +345,19 @@ public class Enemy {
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
 	}
-	
+
 	public String toString() {
 		String result = "";
 		result += imgPath + " spd: " + speed + " health: " + maxHealth;
 		return result;
-		
+
 	}
-	
+
 	public Timeline getTL() {
 		return tl;
 	}
-	
+
 	public void setisPaused() {
 		this.isPaused = true;
 	}
 }
-
-	
-
