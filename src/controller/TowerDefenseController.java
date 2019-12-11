@@ -2,8 +2,6 @@
 package controller;
 
 
-
-
 import Towers.Tower;
 import Towers.Tower1;
 import Towers.Tower2;
@@ -13,12 +11,16 @@ import Towers.Tower5;
 import Towers.Tower6;
 import Towers.Tower7;
 import Towers.Tower8;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import model.GameState;
 import model.RoundManager;
+import model.TimerAll;
 import view.TowerDefenseView;
 
 /**
@@ -42,29 +44,78 @@ public class TowerDefenseController {
 	private RoundManager rm;
 	
 	
+	public EventHandler<MouseEvent> go = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent event) {
+			rm.newWaveList();
+			tdv.startPlay();
+			tdv.drawExtraButtons();
+			Player.setGameState(GameState.gameplay);
+			//rm.newWaveList();
+			//tdv.play();
+		}
+		
+		
+	};
+	
 	public EventHandler<MouseEvent> resume = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent event) {
-			tdv.play();
+			tdv.play(); 
 			tdv.drawExtraButtons();
-			rm.newWaveList();
+			//rm.newWaveList();
 		}
 		
 	};
 	
-	
-	
-	
-	public EventHandler<MouseEvent> pause = new EventHandler<MouseEvent>() {
 
+	public EventHandler<ActionEvent> pause = new EventHandler<ActionEvent>() {
+		private boolean isPaused = false;
 		@Override
-		public void handle(MouseEvent event) {
-			//tdv.pause();
-			tdv.drawGoButton();
+		public void handle(ActionEvent event) {
+			isPaused = !isPaused;
+			if (isPaused) {
+				tdv.pause();
+				//tdv.drawPlayButton();
+				Button temp = (Button) event.getSource();
+				temp.setText("PLAY");
+				Player.setGameState(GameState.gamepaused);
+			}
+			if (!isPaused) {
+				tdv.play();
+				Button temp = (Button) event.getSource();
+				temp.setText("PAUSE");
+				Player.setGameState(GameState.gameplay);
+			}
+			
 		}
 		
 	};
+	
+	public EventHandler<ActionEvent> timeTwo = new EventHandler<ActionEvent>() {
+
+		private boolean isOn = false;
+		@Override
+		public void handle(ActionEvent event) {
+			isOn = !isOn;
+			if (isOn) {
+				TimerAll.timesTwo();
+				//tdv.drawGoButton();
+				Button temp = (Button) event.getSource();
+				temp.setText("x1");
+				Player.setGameState(GameState.gamex2);
+			}
+			if (!isOn) {
+				TimerAll.play();
+				Button temp = (Button) event.getSource();
+				temp.setText("x2");
+				Player.setGameState(GameState.gameplay);
+			}
+			
+		
+	}};
 	
 	
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
@@ -82,9 +133,8 @@ public class TowerDefenseController {
 		
 	};
 
-
 	
-	
+		
 	
 
 	public TowerDefenseView getTdv() {

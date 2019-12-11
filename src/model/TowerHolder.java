@@ -13,46 +13,46 @@ import Towers.Tower5;
 import Towers.Tower6;
 import Towers.Tower7;
 import Towers.Tower8;
+import controller.Player;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
+import view.TowerDefenseView;
 
 public class TowerHolder {
 
 	private TileMap map;
-	private HashMap<String, Tower> towers2;
-	private Timeline tl;
+	private static HashMap<String, Tower> towers2;
+	private static Timeline tl;
+	
 
 	public TowerHolder(TileMap map) {
 		this.map = map;
 		this.towers2 = new HashMap<String, Tower>();
+		
 	}
 
-	public boolean addTower2(Tower newTower, int x, int y) {
+	public static boolean addTower2(Tower newTower, int x, int y) {
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
-			Tower tower = towers2.get(newKey);
-			System.out.println("A tower already exists there!");
-			tower.setIsSelected(!(tower.isSelected()));
 			return false;
 		}
 		else {
-
 			towers2.put(newKey, newTower);
 			return true;
 		}
 	}
 
-	public void update() {
+	public static void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 	}
 
-	private class AnimationHandler implements EventHandler<ActionEvent> {
+	private static class AnimationHandler implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent arg0) {
@@ -98,7 +98,7 @@ public class TowerHolder {
 	}
 
 	
-	public boolean isThereATower(int x, int y) {
+	public static boolean isThereATower(int x, int y) {
 		boolean isThere = false;
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
@@ -107,7 +107,7 @@ public class TowerHolder {
 		return isThere;
 	}
 	
-	public Tower getTower(int x, int y) {
+	public static Tower getTower(int x, int y) {
 		Tower temp = null;
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
@@ -115,6 +115,18 @@ public class TowerHolder {
 			temp.setIsSelected(!(temp.isSelected()));
 		}
 
+		return temp;
+	}
+	
+	public static Tower removeTower(int x, int y) {
+		Tower temp = null;
+		String newKey = x + "," + y;
+		if (towers2.containsKey(newKey)) {
+			temp = towers2.get(newKey);
+			towers2.remove(newKey, temp);
+			Player.addCash(temp.getSellCost());
+			update();
+		}
 		return temp;
 	}
 }

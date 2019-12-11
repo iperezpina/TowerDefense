@@ -1,8 +1,11 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.animation.Timeline;
 
 /**
  * 
@@ -26,6 +29,7 @@ public class EnemySpawner {
 	private int currentTime = 0;
 	private int healthIncr = 0;
 	private List<Enemy> enemyList;
+	private ArrayList<Timeline> tlArr = new ArrayList<Timeline>();
 
 	/**
 	 * A constructor for this class that takes in how many to spawn for this
@@ -147,10 +151,13 @@ public class EnemySpawner {
 					temp.getSpeed(), temp.getHealth() + healthIncr, temp.getTm());
 			EnemyLocator.addEnemy(enemies[index]);
 			enemies[index].update();
+			System.out.println(enemies[index].getTL());
+			tlArr.add(enemies[index].getTL());
 			index++;
 		}
 	}
-
+	
+	
 	/**
 	 * This is a debug method that is used to print out the enemies in the enemy
 	 * list
@@ -183,6 +190,10 @@ public class EnemySpawner {
 
 	public void setDone(boolean isDone) {
 		this.isDone = isDone;
+	}
+	
+	public ArrayList<Timeline> getTLArr() {
+		return tlArr;
 	}
 
 }

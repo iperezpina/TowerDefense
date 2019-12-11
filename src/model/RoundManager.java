@@ -1,11 +1,12 @@
+
 package model;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import controller.Player;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,10 +20,12 @@ public class RoundManager {
 	private boolean startedRound;
 	private int healthIncr;
 	Enemy e;
-	
-	//For second roundManager implementation
+	private ArrayList<List<Enemy>> eList = new ArrayList<List<Enemy>>();
+
+	// For second roundManager implementation
 	private List<List<Enemy>> enemyInfo;
 	private TowerDefenseView tdv;
+	private Timeline animation;
 
 	public RoundManager(int amtToSpawn, float intervalsBetween, Enemy e) {
 		this.amtToSpawn = amtToSpawn;
@@ -37,7 +40,7 @@ public class RoundManager {
 	public void update() {
 		timer.scheduleAtFixedRate(timerTask, 0, 500);
 	}
-	
+
 	public RoundManager(List<List<Enemy>> enemyInfo, float intervalsBetween, TowerDefenseView tdv) {
 		this.amtToSpawn = 0;
 		this.intervalsBetween = intervalsBetween;
@@ -59,27 +62,42 @@ public class RoundManager {
 			if (es != null) {
 				if (es.isDone() == true && startedRound) {
 					startedRound = false;
-					System.out.println("Round " + waveNumber + " ended!");
-					
-					//Add the cash at end of round
-					Platform.runLater( new Runnable() {
-	                    @Override
-	                    public void run() {
-	                        Player.addCash(100);
-	                    }
-	                });
-					
-					//Alerts the user that the round ended
-					Platform.runLater( new Runnable() {
-	                    @Override
-	                    public void run() {
-	                    	tdv.getRoundLabel().setText("Round " + waveNumber + " ended!");
-	                    }
-	                });
-						
+
+					// Add the cash at end of round
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							Player.addCash(100);
+							//This is if the Game is Won
+							System.out.println("enemysize" + enemyInfo.size());
+							if (waveNumber == enemyInfo.size()) {
+								
+								tdv.gameWon();
+								TimerAll.pause();
+								Player.setGameState(GameState.gamepaused);
+
+							}
+							
+							
+							
+						}
+					});
+
+					// Alerts the user that the round ended
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							tdv.getRoundLabel().setText("Round " + waveNumber + " ended!");
+							tdv.drawGoButton();
+						}
+					});
+
+					// newWaveList();
+					// TODO this is why new enemies come up when the last wave reaches the end
 
 				} else {
 					es.update();
+					// addEnemiesToList();
 				}
 			}
 		}
@@ -87,17 +105,18 @@ public class RoundManager {
 	};
 
 	public void newWave() {
-		
+
 		es = new EnemySpawner(amtToSpawn += 2, intervalsBetween -= .5f, healthIncr += 5, e);
 		startedRound = true;
 		waveNumber++;
 	}
-	
+
 	public void newWaveList() {
-		es = new EnemySpawner(enemyInfo.get(waveNumber), intervalsBetween -= .5f, healthIncr += 1);
+
+		es = new EnemySpawner(enemyInfo.get(waveNumber), intervalsBetween -= .10f, healthIncr++);
+		eList.add(enemyInfo.get(waveNumber));
 		startedRound = true;
 		waveNumber++;
-		System.out.println("Round " + waveNumber + " started!");
 		tdv.getRoundLabel().setText("Round " + waveNumber);
 	}
 
@@ -118,5 +137,49 @@ public class RoundManager {
 		return es;
 	}
 
+	public void pauseES() {
+		// System.out.println(this.es.getTLArr());
+
+		/*
+		 * for(Timeline t: this.es.getTLArr()) { setAnimation(t); animation.pause(); }
+		 */
+//		for (Enemy e : this.es.getEnemys()) {
+//			if (e != null) {
+//
+//				e.setisPaused();
+//				System.out.println("enemy is not null");
+//			}
+//		}
+//		System.out.println(this.es.getTLArr());
+
+	}
+
+	public void playES() {
+//		for (List<Enemy> le : eList) {
+//			for (Enemy e : le) {
+//				System.out.println(e);
+//				if (e != null) {
+//					System.out.println(e);
+//					// e.play();
+//				}
+//			}
+//		}
+	}
+
+	/*
+	 * public void startES() { for (List<Enemy> le: eList) { for(Enemy e: le) {
+	 * System.out.println(e); if(e != null) { System.out.println(e);
+	 * 
+	 * //Timeline t = e.getTL(); //System.out.println(t); //t.play();
+	 * //e.playFromStart(); } } } }
+	 * 
+	 * public void addEnemiesToList() { for(Enemy e: es.getEnemys()) { eList.add(e);
+	 * } } public ArrayList<Enemy> getEList(){ return eList; }
+	 */
+
+	// TODO get timeline from each enemy to this animation
+	public void setAnimation(Timeline animation) {
+		this.animation = animation;
+	}
 
 }

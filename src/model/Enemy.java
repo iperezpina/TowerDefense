@@ -31,10 +31,14 @@ public class Enemy {
 	private TileMap tm;
 	private Timeline tl;
 	private MoveDir md;
-	private boolean isExited = false, isDead = false;
+	private boolean isExited = false, isDead = false, isPaused = false;
 	private String imgPath;
 	private int cashBack;
-
+	
+	
+	private boolean isSlowed = false;
+	private int poisonCounter = 10;
+	
 	/**
 	 * The constructor method of the enemy class, takes in an img, a tile where the
 	 * enemy spawns from, a width and height, speed of the enemy (must be a 1, 2, 4,
@@ -70,6 +74,29 @@ public class Enemy {
 		temp += (health / 4) + speed;
 		return temp;
 	}
+	
+	//Halves an enemy speed permanently, only works once
+	public void slowEnemy() {
+		if (!isSlowed) {
+			if (speed / 2 <= 0) {
+				speed = 1;
+			}
+			else {
+				speed /= 2;
+			}
+			isSlowed = true;
+		}
+		
+	}
+	
+	public void poisonEnemy() {
+		poisonCounter = 0;
+	}
+	
+	private void poisonTick() {
+		health--;
+		poisonCounter++;
+	}
 
 	/**
 	 * Creates an animation of the enemy that moves it along the path
@@ -77,11 +104,17 @@ public class Enemy {
 	public void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
+		
+		// TODO this causes ghosts to run always
 		tl.play();
 	}
 	//TODO remove below two methods
 	public void pause() {
 		tl.pause();
+	}
+	
+	public void playFromStart() {
+		tl.playFromStart();
 	}
 	
 	public void play() {
@@ -95,6 +128,7 @@ public class Enemy {
 	 */
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
+		int counter  = 1;
 		@Override
 		public void handle(ActionEvent arg0) {
 			if (health <= 0) {
@@ -107,9 +141,37 @@ public class Enemy {
 				tl.stop();
 			}
 			Draw();
-			moveTo();
-			x += (int) md.dx * speed;
-			y += (int) md.dy * speed;
+			if(!isPaused) {
+				
+				moveTo();
+				//If the game should be paused set movement to zero essentially
+				if (Player.getGameState().equals(GameState.gamepaused)){
+					x += (int) md.dx * speed * 0;
+					y += (int) md.dy * speed * 0;
+				}
+				//If the game should be going at x2 speed double enemy speed
+				if (Player.getGameState().equals(GameState.gamex2)) {
+					float tempSpeed = speed * 2;
+					if (tempSpeed > 32) {
+						tempSpeed = 32;
+					}
+					x += (int) md.dx * tempSpeed;
+					y += (int) md.dy * tempSpeed;
+				}
+				//If the game is playing normally run at regular enemy speed 
+				if (Player.getGameState().equals(GameState.gameplay)) {
+					x += (int) md.dx * speed;
+					y += (int) md.dy * speed;
+				}
+				
+			}
+			if (!Player.getGameState().equals(GameState.gamepaused)) {
+				if (poisonCounter < 5 && counter % 4 == 0) {
+					poisonTick();
+				}
+				counter++;
+			}
+			
 		}
 
 	}
@@ -124,7 +186,7 @@ public class Enemy {
 		getPosY();
 		boolean canGoX = x % 32 == 0;
 		boolean canGoY = y % 32 == 0;
-
+		
 		// Goes up
 		if (tm.GetTile(posX, posY - 1).getType() == startLocation.getType() && !md.state.equals("down") && canGoX
 				&& canGoY) {
@@ -165,10 +227,13 @@ public class Enemy {
 	}
 	
 	public void DrawHealth() {
-		int newWidth = (width / maxHealth);
-		int healthWidth = newWidth * health;
-		Drawer.DrawImage(ResourceManager.QuickLoad("redbar"), x, y + 16, newWidth * maxHealth, 32);
-		Drawer.DrawImage(ResourceManager.QuickLoad("greenbar"), x, y + 16, healthWidth, 32);
+		double newWidth = (double)health / (double)maxHealth;
+		System.out.println(newWidth);
+		if (newWidth < 0) {
+			newWidth = 0;
+		}
+		Drawer.DrawImage(ResourceManager.QuickLoad("redbar"), x, y + 16, 32, 32.0);
+		Drawer.DrawImage(ResourceManager.QuickLoad("greenbar"), x, y + 16, (double)newWidth * 32.0, 32.0);
 		
 	}
 
@@ -279,6 +344,14 @@ public class Enemy {
 		result += imgPath + " spd: " + speed + " health: " + maxHealth;
 		return result;
 		
+	}
+	
+	public Timeline getTL() {
+		return tl;
+	}
+	
+	public void setisPaused() {
+		this.isPaused = true;
 	}
 }
 

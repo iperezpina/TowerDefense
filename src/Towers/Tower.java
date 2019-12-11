@@ -3,6 +3,8 @@ package Towers;
 import controller.Drawer;
 import controller.ResourceManager;
 import javafx.scene.image.Image;
+import model.Enemy;
+import model.Upgrade;
 
 /**
  * 
@@ -21,15 +23,22 @@ public class Tower {
 	private int width;
 	private int height;
 
-	protected int range = 100;
+	protected int range = 100, projSpeed = 0;
 	protected int currentTime = 0;
 	protected int lastTimeAttacked = 0;
 	protected int attackRate = 3;
 	protected int towerCost = 0, towerSpent = 0;
+	protected int upgradeCost=0;
 	protected int damage = 0;
-	private int towersDestroyed = 0;
+	protected int sellCost=0;
+	private int enemiesDestroyed = 0;
 	protected String towerName = "";
 	protected boolean isSelected = false;
+	protected int upgradeLevel = 0;
+	protected boolean isActive = true;
+	
+	protected Upgrade[] towerUpgrades = new Upgrade[4];
+	
 
 	/**
 	 * The basic constructor for this class, takes in an img, x and y position,
@@ -51,6 +60,22 @@ public class Tower {
 		this.height = height;
 
 	}
+	
+	
+	public int sellCost() {
+		return (int) ((this.towerCost * this.towerSpent) * 75);
+	}
+	
+	
+	
+	
+	public boolean isActive() {
+		return isActive;
+	}
+	public void changeActive() {
+		isActive = !isActive;
+	}
+	
 
 	/**
 	 * Draws the tower image
@@ -89,14 +114,57 @@ public class Tower {
 		return this.isSelected;
 	}
 
-	public int getTowerCost() {
-		return towerCost;
-	}
 
 	public void setTowerCost(int towerCost) {
 		this.towerCost = towerCost;
 	}
-	
-	
 
+	
+	public void setSellCost() {
+		this.sellCost= (int) ((this.towerCost +this.towerSpent)*.75);
+	}
+	
+	public int getSellCost() {
+		return this.sellCost;
+	}
+	
+	
+	public int getUpgradeCost() {
+		return this.upgradeCost;
+	}
+	
+	
+	
+	
+	public int getTowerCost() {
+		return towerCost;
+	}
+	
+	public int getEnemiesDestroyed() {
+		return this.enemiesDestroyed;
+	}
+	
+	public String getTowerName() {
+		return this.towerName;
+	}
+	
+	public int getRange() {
+		return this.range;
+	}
+	
+	public int getUpgradeLevel() {
+		return upgradeLevel;
+	}
+
+	public Upgrade[] getTowerUpgrades() {
+		return towerUpgrades;
+	}
+
+	public void setUpgradeLevel(int upgradeLevel) {
+		this.upgradeLevel = upgradeLevel;
+	}
+
+	public void setTowerUpgrades(Upgrade[] towerUpgrades) {
+		this.towerUpgrades = towerUpgrades;
+	}
 }

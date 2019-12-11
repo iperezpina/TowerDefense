@@ -1,7 +1,9 @@
 package Towers;
 
 import Projectile.Projectile;
+import Projectile.lazerProjectile;
 import Projectile.lightningProjectile;
+import controller.Player;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,7 +13,9 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 import model.Enemy;
 import model.EnemyLocator;
+import model.GameState;
 import model.TimerAll;
+import model.Upgrade;
 
 public class Tower4 extends Tower {
 
@@ -25,11 +29,78 @@ public class Tower4 extends Tower {
 	}
 
 	public void additionalInfo() {
-		this.attackRate = 3;
+		this.attackRate = 4;
 		this.towerCost = 750;
+		this.projSpeed = 8;
 		this.damage = 3;
 		this.range = 250;
 		this.towerName = "Lightning Tower";
+		this.towerSpent=0;
+		this.upgradeCost= 130;
+		CreateUpgradeInfo();
+	}
+	
+	public void CreateUpgradeInfo() {
+		// Upgrade 1
+		Upgrade up1 = new Upgrade("Improved Impulse", "This tower attacks a little faster", 100);
+		towerUpgrades[0] = up1;
+
+		// Upgrade2
+		Upgrade up2 = new Upgrade("Even Faster Impulse", "Attacks even faster", 200);
+		towerUpgrades[1] = up2;
+
+		// Upgrade3
+		Upgrade up3 = new Upgrade("Longer Arcs", "Increases the range of the tower to shock more ghosts", 300);
+		towerUpgrades[2] = up3;
+
+		// Upgrade4
+		Upgrade up4 = new Upgrade("Electrocution", "Triples the damage of each projectile", 500);
+		towerUpgrades[3] = up4;
+
+	}
+	
+	public void upgrade1() {
+		int upgradeCost = towerUpgrades[0].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			attackRate -= 1;
+			projSpeed += 2;
+			upgradeLevel += 1;
+			towerSpent += upgradeCost;
+
+		}
+	}
+
+	public void upgrade2() {
+		int upgradeCost = towerUpgrades[1].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			attackRate -= 1;
+			projSpeed += 2;
+			upgradeLevel += 1;
+			towerSpent += upgradeCost;
+
+		}
+	}
+
+	public void upgrade3() {
+		int upgradeCost = towerUpgrades[2].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			range += 100;
+			upgradeLevel += 1;
+			towerSpent += upgradeCost;
+		}
+	}
+
+	public void upgrade4() {
+		int upgradeCost = towerUpgrades[3].getUpgradeCost();
+		if (Player.getCurrentCash() >= upgradeCost) {
+			Player.decreaseCoins(upgradeCost);
+			damage *= 3;
+			upgradeLevel += 1;
+			towerSpent += upgradeCost;
+		}
 	}
 
 	public void setURL(String str) {
@@ -41,7 +112,10 @@ public class Tower4 extends Tower {
 	}
 
 	public void shoot() {
-		ammo = new lightningProjectile("lightning", 8, x, y ,currEnemy, damage);
+		if (Player.getGameState().equals(GameState.gamex2))
+			ammo = new lightningProjectile("lightning", projSpeed * 2, x, y ,currEnemy, damage);
+		else
+			ammo = new lightningProjectile("lightning", projSpeed, x, y ,currEnemy, damage);
 	}
 
 	/**
@@ -62,6 +136,11 @@ public class Tower4 extends Tower {
 
 		@Override
 		public void handle(ActionEvent arg0) {
+			if (!isActive) {
+				tl.stop();
+				return;
+			}
+			
 			Draw();
 			currentTime = TimerAll.getTimeInSeconds();
 			if (lastTimeAttacked > currentTime) {
