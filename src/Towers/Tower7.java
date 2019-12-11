@@ -66,7 +66,7 @@ public class Tower7 extends Tower {
 			Player.decreaseCoins(upgradeCost);
 			projSpeed += 5;
 			upgradeLevel += 1;
-
+			towerSpent += upgradeCost;
 		}
 	}
 
@@ -76,6 +76,7 @@ public class Tower7 extends Tower {
 			Player.decreaseCoins(upgradeCost);
 			damage += 3;
 			upgradeLevel += 1;
+			towerSpent += upgradeCost;
 
 		}
 	}
@@ -86,6 +87,7 @@ public class Tower7 extends Tower {
 			Player.decreaseCoins(upgradeCost);
 			canShootTwo = true;
 			upgradeLevel += 1;
+			towerSpent += upgradeCost;
 
 		}
 	}
@@ -96,7 +98,7 @@ public class Tower7 extends Tower {
 			Player.decreaseCoins(upgradeCost);
 			canShootThree = true;
 			upgradeLevel += 1;
-
+			towerSpent += upgradeCost;
 		}
 	}
 
@@ -160,6 +162,12 @@ public class Tower7 extends Tower {
 
 		@Override
 		public void handle(ActionEvent arg0) {
+			if (!isActive) {
+				tl.stop();
+				return;
+			}
+			
+			
 			Draw();
 			currentTime = TimerAll.getTimeInSeconds();
 			if (lastTimeAttacked > currentTime) {
