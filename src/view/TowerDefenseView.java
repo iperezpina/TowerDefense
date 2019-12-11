@@ -66,10 +66,12 @@ public class TowerDefenseView extends Application {
 	private Media media = new Media(new File("src/Sounds/whoosh.wav").toURI().toString());
 	private Media intro = new Media(new File("src/Sounds/introsong.wav").toURI().toString());
 	private MediaPlayer mediaPlayer = new MediaPlayer(intro);
+	private MediaPlayer mediaPlayer2 = new MediaPlayer(media);
 	private static Player currPlayer = new Player();
 	private Label rightLabel;
 	private Label roundLabel;
 	private BorderPane bpRightButtons;
+	private boolean createStart = false;
 
 	// Variables here relate to the gui elements
 	private Stage mainStage;
@@ -92,6 +94,8 @@ public class TowerDefenseView extends Application {
 	Label healthLabel = new Label();
 	Label towerLabel = new Label();
 	FlowPane playerFP = new FlowPane();
+	
+	StackPane sp;
 
 	// Other variables below
 	// Essentially the map(s) of the level(s)
@@ -152,15 +156,15 @@ public class TowerDefenseView extends Application {
 	 */
 	public void start(Stage tempStage) throws Exception {
 		mainStage = tempStage;
-		StackPane sp = new StackPane();
-		Button startGame = new Button("New Game");
-		startGame.setOnAction((event) -> {
-				//startGame.setVisible(false);
+		Button newGame = new Button("New Game");
+		sp = new StackPane();
+		newGame.setOnAction((event) -> {
+				newGame.setVisible(false);
 				sp.getChildren().remove(0);
 				createLevelSelect(sp);
 		});
 		sp.getChildren().add(new ImageView(ResourceManager.startScreenImg));
-		sp.getChildren().add(startGame);
+		sp.getChildren().add(newGame);
 		sp.getChildren().get(1).toFront();
 
 		
@@ -175,14 +179,25 @@ public class TowerDefenseView extends Application {
 
 	}
 
+	/**
+	 * In charge of creating the three buttons that will choose the difficulty
+	 * @param sp, the stackpane that the buttons will be added on.
+	 */
 	private void createLevelSelect(StackPane sp) {
 		BorderPane bpSelected = new BorderPane();
+		
 		Button easyButton = new Button("EASY");
-		easyButton.setPrefSize(60, 40);
+		easyButton.setPrefSize(70, 40);
+		easyButton.setOnAction(buttonHandler);
+		
 		Button mediumButton = new Button("MEDIUM");
-		mediumButton.setPrefSize(60, 40);
+		mediumButton.setPrefSize(70, 40);
+		mediumButton.setOnAction(buttonHandler);
+		
 		Button hardButton = new Button("HARD");
-		hardButton.setPrefSize(60, 40);
+		hardButton.setPrefSize(70, 40);
+		hardButton.setOnAction(buttonHandler);
+		
 		
 		sp.getChildren().add(easyButton);
 		sp.getChildren().add(mediumButton);
@@ -191,86 +206,133 @@ public class TowerDefenseView extends Application {
 		//Puts the image in the back of the stackpane
 		sp.getChildren().get(0).toBack();
 		
+		
 		//Adds the three buttons that when pressed create a start game button, and sets a certain difficulty
 		//EASY
-		sp.getChildren().get(1).setLayoutX(100);
-		sp.getChildren().get(1).setLayoutY(100);
-		System.out.println(sp.getChildren().get(1));
+		sp.getChildren().get(1).setTranslateX(-100);
+		sp.getChildren().get(1).setLayoutX(0);
+		sp.getChildren().get(1).setLayoutY(0);
 		
 		//MEDIUM
-		sp.getChildren().get(2).setLayoutX(200);
-		sp.getChildren().get(2).setLayoutY(200);
-		System.out.println(sp.getChildren().get(2));
+		sp.getChildren().get(2).setLayoutX(0);
+		sp.getChildren().get(2).setLayoutY(0);
 		
 		//HARD
-		sp.getChildren().get(3).setLayoutX(300);
-		sp.getChildren().get(3).setLayoutY(300);
-		System.out.println(sp.getChildren().get(3));
+		sp.getChildren().get(3).setTranslateX(100);
+		sp.getChildren().get(3).setLayoutX(0);
+		sp.getChildren().get(3).setLayoutY(0);
 		
+	}
+	
+	/**
+	 * Event handler for the three difficulty buttons, spawns a startGame button and sets difficulty
+	 */
+	private EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
+
+		@Override
+		public void handle(ActionEvent event) {
+			Button temp = (Button)event.getSource();
+			if (temp.getText().equals("EASY")) {
+				levelDifficulty = 0;
+				spawnStartGameButton();
+			}
+			else if (temp.getText().equals("MEDIUM")) {
+				levelDifficulty = 1;
+				spawnStartGameButton();
+			}
+			else if (temp.getText().equals("HARD")) {
+				levelDifficulty = 2;
+				spawnStartGameButton();
+			}
+		}
+		
+	};
+	
+	/**
+	 * The function for startGame event, loads the basic game.
+	 */
+	protected void spawnStartGameButton() {
+		if (!createStart) {
+			createStart = true;
+			if (sp != null) {
+				Button startGame = new Button("START GAME");
+				startGame.setOnAction((event) ->{
+					startGame();
+				});
+				startGame.setPrefSize(100, 40);
+				sp.getChildren().add(startGame);
+				sp.getChildren().get(4).setTranslateY(200);
+				
+			}
+			
+		}
 	}
 	
 	
 	public void startGame() {
-//		// Add the view to the controller class
-//		currPlayer.setTdv(this);
-//		tdc.setTdv(this);
-//
-//		TimerAll.play();
-//
-//		// Creating a borderpane
-//		BorderPane bp = new BorderPane();
-//
-//		// Applying an hbox that contains a canvas that will draw everything
-//		HBox hbox = new HBox();
-//		hbox.setPrefWidth(640);
-//		canvas = new Canvas(640, 480);
-//		// GraphicsContext gc = canvas.getGraphicsContext2D();
-//		hbox.getChildren().add(canvas);
-//		setupMainGrid(hbox, canvas);
-//
-//		// Rightpane will have the info about the player and where the available towers
-//		// will be located
-//		playerFP.setOrientation(Orientation.VERTICAL);
-//		playerFP.setPrefHeight(70);
-//		moneyLabel.setStyle("-fx-text-fill:gold; -fx-font: 14px Tahoma;");
-//		healthLabel.setStyle("-fx-text-fill:springgreen; -fx-font: 14px Tahoma;");
-//		towerLabel.setStyle("-fx-text-fill:crimson");
-//		playerFP.getChildren().add(moneyLabel);
-//		playerFP.getChildren().add(healthLabel);
-//		playerFP.getChildren().add(towerLabel);
-//		// rightLabel = new Label("Money: " + currPlayer.getCoins() + "\nHealth: " +
-//		// currPlayer.getHP());
-//		updatePlayerInfo(currPlayer.getCoins(), currPlayer.getHP());
-//		VBox rightPane = new VBox(playerFP);
-//
-//		rightPane.resize(160, 480);
-//		rightPane.setPrefWidth(160);
-//		rightPane.setBackground(bgd2);
-//		drawRightPane(rightPane);
-//
-//		// Bottompane will show information on a selected tower, upgrades for that tower
-//		// and a pause/start/2x speed button
-//		roundLabel = new Label("Round 0");
-//		VBox bottomPane = new VBox(roundLabel);
-//		bottomPane.resize(800, 120);
-//		bottomPane.setPrefHeight(120);
-//		bottomPane.setBackground(bgd3);
-//		drawBottomPane(bottomPane);
-//
-//		// Add the nodes to the borderpane
-//		bp.setCenter(hbox);
-//		bp.setRight(rightPane);
-//		bp.setBottom(bottomPane);
-//
-//		// Add to a scene and show the stage
-//		Scene scene = new Scene(bp, MAX_X, MAX_Y);
-//		mainStage.setScene(scene);
-//		mainStage.show();
-//
-//		// Loops the music for forever
-//		mediaPlayer.setAutoPlay(true);
-//		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		mediaPlayer.stop();
+		
+		// Add the view to the controller class
+		currPlayer.setTdv(this);
+		tdc.setTdv(this);
+
+		TimerAll.play();
+
+		// Creating a borderpane
+		BorderPane bp = new BorderPane();
+
+		// Applying an hbox that contains a canvas that will draw everything
+		HBox hbox = new HBox();
+		hbox.setPrefWidth(640);
+		canvas = new Canvas(640, 480);
+		// GraphicsContext gc = canvas.getGraphicsContext2D();
+		hbox.getChildren().add(canvas);
+		setupMainGrid(hbox, canvas);
+
+		// Rightpane will have the info about the player and where the available towers
+		// will be located
+		playerFP.setOrientation(Orientation.VERTICAL);
+		playerFP.setPrefHeight(70);
+		moneyLabel.setStyle("-fx-text-fill:gold; -fx-font: 14px Tahoma;");
+		healthLabel.setStyle("-fx-text-fill:springgreen; -fx-font: 14px Tahoma;");
+		towerLabel.setStyle("-fx-text-fill:crimson");
+		playerFP.getChildren().add(moneyLabel);
+		playerFP.getChildren().add(healthLabel);
+		playerFP.getChildren().add(towerLabel);
+		// rightLabel = new Label("Money: " + currPlayer.getCoins() + "\nHealth: " +
+		// currPlayer.getHP());
+		updatePlayerInfo(currPlayer.getCoins(), currPlayer.getHP());
+		VBox rightPane = new VBox(playerFP);
+
+		rightPane.resize(160, 480);
+		rightPane.setPrefWidth(160);
+		rightPane.setBackground(bgd2);
+		drawRightPane(rightPane);
+
+		// Bottompane will show information on a selected tower, upgrades for that tower
+		// and a pause/start/2x speed button
+		roundLabel = new Label("Round 0");
+		VBox bottomPane = new VBox(roundLabel);
+		bottomPane.resize(800, 120);
+		bottomPane.setPrefHeight(120);
+		bottomPane.setBackground(bgd3);
+		drawBottomPane(bottomPane);
+
+		// Add the nodes to the borderpane
+		bp.setCenter(hbox);
+		bp.setRight(rightPane);
+		bp.setBottom(bottomPane);
+
+		// Add to a scene and show the stage
+		Scene scene = new Scene(bp, MAX_X, MAX_Y);
+		mainStage.setScene(scene);
+		mainStage.show();
+
+		// Loops the music for forever
+		mediaPlayer2.setAutoPlay(true);
+		mediaPlayer2.setCycleCount(MediaPlayer.INDEFINITE);
 	}
+
 
 	/**
 	 * Used to test the basic gameplay stuff, so far spawning enemies and rendering
