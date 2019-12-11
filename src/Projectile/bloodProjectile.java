@@ -29,6 +29,7 @@ public class bloodProjectile extends Projectile {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
+		bloodSound.setVolume(.5f);
 
 	}
 
