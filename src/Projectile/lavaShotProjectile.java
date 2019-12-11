@@ -32,6 +32,8 @@ public class lavaShotProjectile extends Projectile {
 		tl.play();
 
 	}
+	
+
 
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
@@ -39,7 +41,7 @@ public class lavaShotProjectile extends Projectile {
 
 		@Override
 		public void handle(ActionEvent arg0) {
-			if (count > 20) {
+			if (count > 6) {
 				tl.stop();
 			}
 			// System.out.println(EtoShoot);

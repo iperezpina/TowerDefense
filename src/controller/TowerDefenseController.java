@@ -70,8 +70,8 @@ public class TowerDefenseController {
 		
 	};
 	
-	public EventHandler<ActionEvent> pause = new EventHandler<ActionEvent>() {
 
+	public EventHandler<ActionEvent> pause = new EventHandler<ActionEvent>() {
 		private boolean isPaused = false;
 		@Override
 		public void handle(ActionEvent event) {
@@ -133,9 +133,8 @@ public class TowerDefenseController {
 		
 	};
 
-
 	
-	
+		
 	
 
 	public TowerDefenseView getTdv() {

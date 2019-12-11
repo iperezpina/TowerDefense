@@ -13,6 +13,7 @@ import Towers.Tower5;
 import Towers.Tower6;
 import Towers.Tower7;
 import Towers.Tower8;
+import controller.Player;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -25,7 +26,7 @@ public class TowerHolder {
 
 	private TileMap map;
 	private static HashMap<String, Tower> towers2;
-	private Timeline tl;
+	private static Timeline tl;
 	
 
 	public TowerHolder(TileMap map) {
@@ -45,13 +46,13 @@ public class TowerHolder {
 		}
 	}
 
-	public void update() {
+	public static void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 	}
 
-	private class AnimationHandler implements EventHandler<ActionEvent> {
+	private static class AnimationHandler implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent arg0) {
@@ -114,6 +115,18 @@ public class TowerHolder {
 			temp.setIsSelected(!(temp.isSelected()));
 		}
 
+		return temp;
+	}
+	
+	public static Tower removeTower(int x, int y) {
+		Tower temp = null;
+		String newKey = x + "," + y;
+		if (towers2.containsKey(newKey)) {
+			temp = towers2.get(newKey);
+			towers2.remove(newKey, temp);
+			Player.addCash(temp.getSellCost());
+			update();
+		}
 		return temp;
 	}
 }

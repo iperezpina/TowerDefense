@@ -35,6 +35,7 @@ public class Tower {
 	protected String towerName = "";
 	protected boolean isSelected = false;
 	protected int upgradeLevel = 0;
+	protected boolean isActive = true;
 	
 	protected Upgrade[] towerUpgrades = new Upgrade[4];
 	
@@ -58,6 +59,21 @@ public class Tower {
 		this.width = width;
 		this.height = height;
 
+	}
+	
+	
+	public int sellCost() {
+		return (int) ((this.towerCost * this.towerSpent) * 75);
+	}
+	
+	
+	
+	
+	public boolean isActive() {
+		return isActive;
+	}
+	public void changeActive() {
+		isActive = !isActive;
 	}
 	
 
