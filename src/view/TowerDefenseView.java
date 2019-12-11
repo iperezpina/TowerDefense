@@ -189,12 +189,15 @@ public class TowerDefenseView extends Application {
 	private void createLevelSelect(StackPane sp) {
 		BorderPane bpSelected = new BorderPane();
 		
+		sp.getChildren().add(new ImageView(ResourceManager.startScreenImg));
+		sp.getChildren().get(0).toBack();
+		
 		Button easyButton = new Button("EASY");
-		easyButton.setPrefSize(70, 40);
+		easyButton.setPrefSize(90, 40);
 		easyButton.setOnAction(buttonHandler);
 		
 		Button mediumButton = new Button("MEDIUM");
-		mediumButton.setPrefSize(70, 40);
+		mediumButton.setPrefSize(90, 40);
 		mediumButton.setOnAction(buttonHandler);
 		
 		Button hardButton = new Button("HARD");
@@ -212,18 +215,18 @@ public class TowerDefenseView extends Application {
 		
 		//Adds the three buttons that when pressed create a start game button, and sets a certain difficulty
 		//EASY
-		sp.getChildren().get(1).setTranslateX(-100);
-		sp.getChildren().get(1).setLayoutX(0);
-		sp.getChildren().get(1).setLayoutY(0);
-		
-		//MEDIUM
+		sp.getChildren().get(2).setTranslateX(-110);
 		sp.getChildren().get(2).setLayoutX(0);
 		sp.getChildren().get(2).setLayoutY(0);
 		
-		//HARD
-		sp.getChildren().get(3).setTranslateX(100);
+		//MEDIUM
 		sp.getChildren().get(3).setLayoutX(0);
 		sp.getChildren().get(3).setLayoutY(0);
+		
+		//HARD
+		sp.getChildren().get(4).setTranslateX(100);
+		sp.getChildren().get(4).setLayoutX(0);
+		sp.getChildren().get(4).setLayoutY(0);
 		
 	}
 	
@@ -262,9 +265,9 @@ public class TowerDefenseView extends Application {
 				startGame.setOnAction((event) ->{
 					startGame();
 				});
-				startGame.setPrefSize(100, 40);
+				startGame.setPrefSize(150, 40);
 				sp.getChildren().add(startGame);
-				sp.getChildren().get(4).setTranslateY(200);
+				sp.getChildren().get(5).setTranslateY(200);
 				
 			}
 			
