@@ -68,6 +68,18 @@ public class RoundManager {
 						@Override
 						public void run() {
 							Player.addCash(100);
+							//This is if the Game is Won
+							System.out.println("enemysize" + enemyInfo.size());
+							if (waveNumber == enemyInfo.size()) {
+								
+								tdv.gameWon();
+								TimerAll.pause();
+								Player.setGameState(GameState.gamepaused);
+
+							}
+							
+							
+							
 						}
 					});
 
@@ -126,7 +138,7 @@ public class RoundManager {
 	}
 
 	public void pauseES() {
-		//System.out.println(this.es.getTLArr());
+		// System.out.println(this.es.getTLArr());
 
 		/*
 		 * for(Timeline t: this.es.getTLArr()) { setAnimation(t); animation.pause(); }

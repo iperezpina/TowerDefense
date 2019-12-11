@@ -12,8 +12,11 @@ import Towers.Tower6;
 import Towers.Tower7;
 import Towers.Tower8;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -63,10 +66,12 @@ public class Player {
 
 	private static void gameOver() {
 		if (health <= 0) {
+			
+			tdv.gameOver();
 			TimerAll.pause();
-			Platform.exit();
-			
-			
+			Player.setGameState(GameState.gamepaused);
+			//Platform.exit();
+
 		}
 	}
 
@@ -236,7 +241,7 @@ public class Player {
 				// Check if there is a tower from the selectX and selectY variables
 				if (TowerHolder.isThereATower(selectX, selectY)) {
 
-					//Will attempt to update a tower if possible
+					// Will attempt to update a tower if possible
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -512,5 +517,22 @@ public class Player {
 	public static int getCurrentCash() {
 		return coins;
 	}
-	
+
+	public static EventHandler<ActionEvent> sellTower = new EventHandler<ActionEvent>() {
+
+		@Override
+		public void handle(ActionEvent event) {
+			System.out.println("hello");
+			// Tower tobeRem = TowerHolder.getTower(selectX, selectY);
+			if (TowerHolder.isThereATower(selectX, selectY)) {
+				TowerHolder.getTower(selectX, selectY).changeActive();
+				TowerHolder.removeTower(selectX, selectY);
+				tdv.setAllBlank();
+			}
+			
+			
+		}
+
+	};
+
 }

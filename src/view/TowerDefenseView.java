@@ -10,13 +10,16 @@ import controller.TowerDefenseController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -363,6 +366,7 @@ public class TowerDefenseView extends Application {
 		}
 
 		fr.read("src/level1.txt");
+		System.out.println("EnemyList size: " + fr.getEnemies().size());
 		rm = new RoundManager(fr.getEnemies(), 7f, this);
 		tdc.setRm(rm);
 
@@ -408,6 +412,9 @@ public class TowerDefenseView extends Application {
 		upgradeCostLabel.setText("$" + cost + " ");
 		rangeLabel.setText("Current Range: " + range);
 		sellButton.setText("Sell for $" + sell);
+
+		// here I sell them
+		sellButton.setOnAction(Player.sellTower);
 
 		// Upgrade Info stuff (Blue panel)
 		upgradeNameLabel.setText(currentUpgrade.getUpgradeName());
@@ -551,6 +558,29 @@ public class TowerDefenseView extends Application {
 //		bpRightButtons.setBottom(null);
 //		
 //	}
+	
+	
+	public void gameWon() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Game Won");
+		alert.setHeaderText("Winner Winner Chicken Dinner");
+		alert.setContentText("good job!");
+		alert.setOnHidden(evt -> Platform.exit());
+
+		alert.show();
+	}
+
+	public void gameOver() {
+
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Game Over");
+		alert.setHeaderText("Try Again!");
+		alert.setContentText("Shaking my Head");
+		alert.setOnHidden(evt -> Platform.exit());
+
+		alert.show();
+
+	}
 
 	public TileMap getTm() {
 		return tm;

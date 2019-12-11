@@ -1,5 +1,5 @@
 *1
-ghost_4_3_5
+ghost_32_3_5
 *2
 ghost_4_5_5
 *3
@@ -128,5 +128,5 @@ redghost_16_6_25
 ghost_16_3_25
 *30
 ghoully_16_300_1
-
+*Done
 
