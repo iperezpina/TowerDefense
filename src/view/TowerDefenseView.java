@@ -5,8 +5,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 import controller.Player;
+import controller.ResourceManager;
 import controller.TowerDefenseController;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -24,6 +27,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -60,13 +64,15 @@ public class TowerDefenseView extends Application {
 	private Background bgd2 = new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY));
 	private Background bgd3 = new Background(new BackgroundFill(Color.LIGHTSTEELBLUE, CornerRadii.EMPTY, Insets.EMPTY));
 	private Media media = new Media(new File("src/Sounds/whoosh.wav").toURI().toString());
-	private MediaPlayer mediaPlayer = new MediaPlayer(media);
+	private Media intro = new Media(new File("src/Sounds/introsong.wav").toURI().toString());
+	private MediaPlayer mediaPlayer = new MediaPlayer(intro);
 	private static Player currPlayer = new Player();
 	private Label rightLabel;
 	private Label roundLabel;
 	private BorderPane bpRightButtons;
 
 	// Variables here relate to the gui elements
+	private Stage mainStage;
 	private ArrayList<Enemy> enemiesList;
 	FlowPane fp = new FlowPane();
 	Label towerNameLabel = new Label();
@@ -144,75 +150,126 @@ public class TowerDefenseView extends Application {
 	/**
 	 * The basic setup of the application
 	 */
-	public void start(Stage mainStage) throws Exception {
-		// Add the view to the controller class
-		currPlayer.setTdv(this);
-		tdc.setTdv(this);
+	public void start(Stage tempStage) throws Exception {
+		mainStage = tempStage;
+		StackPane sp = new StackPane();
+		Button startGame = new Button("New Game");
+		startGame.setOnAction((event) -> {
+				//startGame.setVisible(false);
+				sp.getChildren().remove(0);
+				createLevelSelect(sp);
+		});
+		sp.getChildren().add(new ImageView(ResourceManager.startScreenImg));
+		sp.getChildren().add(startGame);
+		sp.getChildren().get(1).toFront();
 
-		TimerAll.play();
-
+		
 		// Setting up title and icon for app
 		mainStage.setTitle("Highway outta HELL");
 		mainStage.getIcons().add(new Image("Images/logo.png"));
-
-		// Creating a borderpane
-		BorderPane bp = new BorderPane();
-
-		// Applying an hbox that contains a canvas that will draw everything
-		HBox hbox = new HBox();
-		hbox.setPrefWidth(640);
-		canvas = new Canvas(640, 480);
-		// GraphicsContext gc = canvas.getGraphicsContext2D();
-		hbox.getChildren().add(canvas);
-		setupMainGrid(hbox, canvas);
-
-		// Rightpane will have the info about the player and where the available towers
-		// will be located
-		playerFP.setOrientation(Orientation.VERTICAL);
-		playerFP.setPrefHeight(70);
-		moneyLabel.setStyle("-fx-text-fill:gold; -fx-font: 14px Tahoma;");
-		healthLabel.setStyle("-fx-text-fill:springgreen; -fx-font: 14px Tahoma;");
-		towerLabel.setStyle("-fx-text-fill:crimson");
-		playerFP.getChildren().add(moneyLabel);
-		playerFP.getChildren().add(healthLabel);
-		playerFP.getChildren().add(towerLabel);
-		// rightLabel = new Label("Money: " + currPlayer.getCoins() + "\nHealth: " +
-		// currPlayer.getHP());
-		updatePlayerInfo(currPlayer.getCoins(), currPlayer.getHP());
-		VBox rightPane = new VBox(playerFP);
-
-		rightPane.resize(160, 480);
-		rightPane.setPrefWidth(160);
-		rightPane.setBackground(bgd2);
-		drawRightPane(rightPane);
-
-		// Bottompane will show information on a selected tower, upgrades for that tower
-		// and a pause/start/2x speed button
-		roundLabel = new Label("Round 0");
-		VBox bottomPane = new VBox(roundLabel);
-		bottomPane.resize(800, 120);
-		bottomPane.setPrefHeight(120);
-		bottomPane.setBackground(bgd3);
-		drawBottomPane(bottomPane);
-
-		// Add the nodes to the borderpane
-		bp.setCenter(hbox);
-		bp.setRight(rightPane);
-		bp.setBottom(bottomPane);
-
-		// Add to a scene and show the stage
-		Scene scene = new Scene(bp, MAX_X, MAX_Y);
-		mainStage.setScene(scene);
+		Scene tempScene = new Scene(sp, 800, 600);
+		mainStage.setScene(tempScene);
 		mainStage.show();
-
-		// TODO below doesnt work
-		/*
-		 * mainStage.setOnCloseRequest(closeEvent -> { TimerAll.cancel(); });
-		 */
-
-		// Loops the music for forever
 		mediaPlayer.setAutoPlay(true);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+
+	}
+
+	private void createLevelSelect(StackPane sp) {
+		BorderPane bpSelected = new BorderPane();
+		Button easyButton = new Button("EASY");
+		easyButton.setPrefSize(60, 40);
+		Button mediumButton = new Button("MEDIUM");
+		mediumButton.setPrefSize(60, 40);
+		Button hardButton = new Button("HARD");
+		hardButton.setPrefSize(60, 40);
+		
+		sp.getChildren().add(easyButton);
+		sp.getChildren().add(mediumButton);
+		sp.getChildren().add(hardButton);
+		
+		//Puts the image in the back of the stackpane
+		sp.getChildren().get(0).toBack();
+		
+		//Adds the three buttons that when pressed create a start game button, and sets a certain difficulty
+		//EASY
+		sp.getChildren().get(1).setLayoutX(100);
+		sp.getChildren().get(1).setLayoutY(100);
+		System.out.println(sp.getChildren().get(1));
+		
+		//MEDIUM
+		sp.getChildren().get(2).setLayoutX(200);
+		sp.getChildren().get(2).setLayoutY(200);
+		System.out.println(sp.getChildren().get(2));
+		
+		//HARD
+		sp.getChildren().get(3).setLayoutX(300);
+		sp.getChildren().get(3).setLayoutY(300);
+		System.out.println(sp.getChildren().get(3));
+		
+	}
+	
+	
+	public void startGame() {
+//		// Add the view to the controller class
+//		currPlayer.setTdv(this);
+//		tdc.setTdv(this);
+//
+//		TimerAll.play();
+//
+//		// Creating a borderpane
+//		BorderPane bp = new BorderPane();
+//
+//		// Applying an hbox that contains a canvas that will draw everything
+//		HBox hbox = new HBox();
+//		hbox.setPrefWidth(640);
+//		canvas = new Canvas(640, 480);
+//		// GraphicsContext gc = canvas.getGraphicsContext2D();
+//		hbox.getChildren().add(canvas);
+//		setupMainGrid(hbox, canvas);
+//
+//		// Rightpane will have the info about the player and where the available towers
+//		// will be located
+//		playerFP.setOrientation(Orientation.VERTICAL);
+//		playerFP.setPrefHeight(70);
+//		moneyLabel.setStyle("-fx-text-fill:gold; -fx-font: 14px Tahoma;");
+//		healthLabel.setStyle("-fx-text-fill:springgreen; -fx-font: 14px Tahoma;");
+//		towerLabel.setStyle("-fx-text-fill:crimson");
+//		playerFP.getChildren().add(moneyLabel);
+//		playerFP.getChildren().add(healthLabel);
+//		playerFP.getChildren().add(towerLabel);
+//		// rightLabel = new Label("Money: " + currPlayer.getCoins() + "\nHealth: " +
+//		// currPlayer.getHP());
+//		updatePlayerInfo(currPlayer.getCoins(), currPlayer.getHP());
+//		VBox rightPane = new VBox(playerFP);
+//
+//		rightPane.resize(160, 480);
+//		rightPane.setPrefWidth(160);
+//		rightPane.setBackground(bgd2);
+//		drawRightPane(rightPane);
+//
+//		// Bottompane will show information on a selected tower, upgrades for that tower
+//		// and a pause/start/2x speed button
+//		roundLabel = new Label("Round 0");
+//		VBox bottomPane = new VBox(roundLabel);
+//		bottomPane.resize(800, 120);
+//		bottomPane.setPrefHeight(120);
+//		bottomPane.setBackground(bgd3);
+//		drawBottomPane(bottomPane);
+//
+//		// Add the nodes to the borderpane
+//		bp.setCenter(hbox);
+//		bp.setRight(rightPane);
+//		bp.setBottom(bottomPane);
+//
+//		// Add to a scene and show the stage
+//		Scene scene = new Scene(bp, MAX_X, MAX_Y);
+//		mainStage.setScene(scene);
+//		mainStage.show();
+//
+//		// Loops the music for forever
+//		mediaPlayer.setAutoPlay(true);
+//		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 	}
 
 	/**
@@ -295,11 +352,10 @@ public class TowerDefenseView extends Application {
 		upgradeDetailLabel.setText(currentUpgrade.getUpgradeDetail());
 		if (currentUpgrade.getUpgradeCost() <= 0) {
 			upgradeCostLabel.setText("");
-		}
-		else {
+		} else {
 			upgradeCostLabel.setText(currentUpgrade.getUpgradeCost() + "");
 		}
-		
+
 	}
 
 	public void setAllBlank() {
@@ -353,8 +409,8 @@ public class TowerDefenseView extends Application {
 		upgradeNameLabel.setText("");
 		upgradeDetailLabel.setText("");
 		upgradeDetailLabel.setPrefWidth(440);
-		
-		//Setting font for bpUpgrade labels to 15 arial
+
+		// Setting font for bpUpgrade labels to 15 arial
 		upgradeNameLabel.setStyle("-fx-font: 15 arial;");
 		upgradeDetailLabel.setStyle("-fx-font: 15 arial;");
 
