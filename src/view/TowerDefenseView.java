@@ -393,6 +393,7 @@ public class TowerDefenseView extends Application {
 
 		// The start tile for easyMap is (0, 1), mediumMap is (10, 7), hardMap is (0, 5)
 		// This choose which map to go on
+		TowerHolder towers = null;
 		if (levelDifficulty == 0) {
 			tm = new TileMap(easyMap);
 			towers = new TowerHolder(tm);
@@ -408,7 +409,6 @@ public class TowerDefenseView extends Application {
 		}
 
 		fr.read("src/level1.txt");
-		System.out.println("EnemyList size: " + fr.getEnemies().size());
 		rm = new RoundManager(fr.getEnemies(), 7f, this);
 		tdc.setRm(rm);
 
