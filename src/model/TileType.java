@@ -39,6 +39,7 @@ public enum TileType {
 	// Setter
 	public void setCanPlace(boolean canPlace) {
 		this.canPlace = canPlace;
+		
 	}
 
 }
