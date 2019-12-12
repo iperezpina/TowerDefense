@@ -13,12 +13,10 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 /**
+ * This class represent the Enemy
  * 
- * @author Alberto Villareal, Laura Bolanos, Ivan [Last Name], and Marissa [Last
- *         Name]
+ * @author Ivan, Marisa, Laura, Albert
  * 
- *         Summary: [Summary goes here]
- *
  */
 public class Enemy {
 
@@ -68,13 +66,28 @@ public class Enemy {
 		this.cashBack = calculateCashBack();
 	}
 
+	/**
+	 * This function calculates the cash to get back
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return int temp (cash)
+	 * @throws n/a
+	 */
 	private int calculateCashBack() {
 		int temp = 0;
 		temp += (health / 4) + speed;
 		return temp;
 	}
 
-	// Halves an enemy speed permanently, only works once
+	/**
+	 * Halves an enemy speed permanently, only works once
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void slowEnemy() {
 		if (!isSlowed) {
 			if (speed / 2 <= 0) {
@@ -87,10 +100,26 @@ public class Enemy {
 
 	}
 
+	/**
+	 * Sets the Poison for the enemy
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void poisonEnemy() {
 		poisonCounter = 0;
 	}
 
+	/**
+	 * This is if the Tower applies the posion tick
+	 *
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	private void poisonTick() {
 		health--;
 		poisonCounter++;
@@ -98,6 +127,11 @@ public class Enemy {
 
 	/**
 	 * Creates an animation of the enemy that moves it along the path
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
@@ -107,15 +141,38 @@ public class Enemy {
 		tl.play();
 	}
 
-	// TODO remove below two methods
+	/**
+	 * Pause the game
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void pause() {
 		tl.pause();
 	}
 
+	/**
+	 * Play at the start of the game
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void playFromStart() {
 		tl.playFromStart();
 	}
 
+	/**
+	 * Play button
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void play() {
 		tl.play();
 	}
@@ -124,6 +181,12 @@ public class Enemy {
 	 * An animation handler that moves the enemy along various directions along a
 	 * path, and draws a newer version of itself
 	 *
+	 * Draw method that draws the enemy
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent arg0
+	 * @return n/a
+	 * @throws n/a
 	 */
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
@@ -177,9 +240,14 @@ public class Enemy {
 	}
 
 	/**
-	 * Checks what direction the enemy needs to move in depending on the tilemap. It 
+	 * Checks what direction the enemy needs to move in depending on the tilemap. It
 	 * will move along the tiles that are the same tile as its start tile. Goes up,
 	 * down, left, or right.
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void moveTo() {
 		getPosX();
@@ -216,6 +284,14 @@ public class Enemy {
 		}
 	}
 
+	/**
+	 * This function reads the Next spot to go to
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param int bound, Tile nextTile
+	 * @return boolean reached
+	 * @throws n/a
+	 */
 	private boolean reachNext(int bound, Tile nextTile) {
 		boolean reached = false;
 
@@ -227,7 +303,12 @@ public class Enemy {
 	}
 
 	/**
-	 * Draws the enemy
+	 * Draw method that draws the enemy
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void Draw() {
 		// tm.Draw();
@@ -236,6 +317,14 @@ public class Enemy {
 
 	}
 
+	/**
+	 * This function draws the health bar on the enemies
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void DrawHealth() {
 		double newWidth = (double) health / (double) maxHealth;
 		if (newWidth < 0) {
@@ -247,105 +336,136 @@ public class Enemy {
 	}
 
 //	The getters and setters are below=================================================================
-
+	// Getter
 	public int getPosX() {
 		posX = (int) Math.floor(x / 32);
 		return posX;
 	}
 
+	// Getter
 	public int getPosY() {
 		posY = (int) Math.floor(y / 32);
 		return posY;
 	}
 
+	// Getter
 	public int getX() {
 		return x;
 	}
 
+	// Getter
 	public int getY() {
 		return y;
 	}
 
+	// Getter
 	public int getWidth() {
 		return width;
 	}
 
+	// Getter
 	public int getHeight() {
 		return height;
 	}
 
+	// Getter
 	public int getHealth() {
 		return health;
 	}
 
+	// Getter
 	public float getSpeed() {
 		return speed;
 	}
 
+	// Getter
 	public Image getImg() {
 		return img;
 	}
 
+	// Getter
 	public Tile getStartLocation() {
 		return startLocation;
 	}
 
+	// Setter
 	public void setX(int x) {
 		this.x = x;
 	}
 
+	// Setter
 	public void setY(int y) {
 		this.y = y;
 	}
 
+	// Setter
 	public void setWidth(int width) {
 		this.width = width;
 	}
 
+	// Setter
 	public void setHeight(int height) {
 		this.height = height;
 	}
 
+	// Setter
 	public void setHealth(int health) {
 		this.health = health;
 	}
 
+	// Setter
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
 
+	// Setter
 	public void setImg(Image img) {
 		this.img = img;
 	}
 
+	// Setter
 	public void setStartLocation(Tile startLocation) {
 		this.startLocation = startLocation;
 	}
 
+	// Getter
 	public TileMap getTm() {
 		return tm;
 	}
 
+	// Setter
 	public void setTm(TileMap tm) {
 		this.tm = tm;
 	}
 
+	// Getter
 	public boolean isDead() {
 		return isDead;
 	}
 
+	// Setter
 	public void setDead(boolean isDead) {
 		this.isDead = isDead;
 	}
 
+	// Getter
 	public String getImgPath() {
 		return imgPath;
 	}
 
+	// Setter
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
 	}
 
+	/**
+	 * A string representation of the enemies
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return String result
+	 * @throws n/a
+	 */
 	public String toString() {
 		String result = "";
 		result += imgPath + " spd: " + speed + " health: " + maxHealth;
@@ -353,10 +473,12 @@ public class Enemy {
 
 	}
 
+	// Getter
 	public Timeline getTL() {
 		return tl;
 	}
 
+	// Setter
 	public void setisPaused() {
 		this.isPaused = true;
 	}

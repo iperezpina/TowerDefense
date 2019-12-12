@@ -1,7 +1,6 @@
 
 package controller;
 
-
 import Towers.Tower;
 import Towers.Tower1;
 import Towers.Tower2;
@@ -24,12 +23,10 @@ import model.TimerAll;
 import view.TowerDefenseView;
 
 /**
+ * The Controller
  * 
- * @author Alberto Villareal, Laura [Last Name], Ivan [Last Name], and Marissa
- *         [Last Name]
+ * @author Ivan, Marisa, Laura, Albert
  * 
- *         Summary: [Summary goes here]
- *
  */
 public class TowerDefenseController {
 
@@ -42,8 +39,15 @@ public class TowerDefenseController {
 	private String id;
 	private Player player;
 	private RoundManager rm;
-	
-	
+
+	/**
+	 * Event Handler that deals with the GO button functionality
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param MouseEvent event
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public EventHandler<MouseEvent> go = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -52,33 +56,48 @@ public class TowerDefenseController {
 			tdv.startPlay();
 			tdv.drawExtraButtons();
 			Player.setGameState(GameState.gameplay);
-			//rm.newWaveList();
-			//tdv.play();
+			// rm.newWaveList();
+			// tdv.play();
 		}
-		
-		
+
 	};
-	
+
+	/**
+	 * Event Handler that deals with the Resume button that resumes the game
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param MouseEvent event
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public EventHandler<MouseEvent> resume = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent event) {
-			tdv.play(); 
+			tdv.play();
 			tdv.drawExtraButtons();
-			//rm.newWaveList();
+			// rm.newWaveList();
 		}
-		
-	};
-	
 
+	};
+
+	/**
+	 * Event Handler that deals with the pause button that pauses the game
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent event
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public EventHandler<ActionEvent> pause = new EventHandler<ActionEvent>() {
 		private boolean isPaused = false;
+
 		@Override
 		public void handle(ActionEvent event) {
 			isPaused = !isPaused;
 			if (isPaused) {
 				tdv.pause();
-				//tdv.drawPlayButton();
+				// tdv.drawPlayButton();
 				Button temp = (Button) event.getSource();
 				temp.setText("PLAY");
 				Player.setGameState(GameState.gamepaused);
@@ -89,20 +108,29 @@ public class TowerDefenseController {
 				temp.setText("PAUSE");
 				Player.setGameState(GameState.gameplay);
 			}
-			
+
 		}
-		
+
 	};
-	
+
+	/**
+	 * Deals times two button that makes the game double the speed
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent event
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public EventHandler<ActionEvent> timeTwo = new EventHandler<ActionEvent>() {
 
 		private boolean isOn = false;
+
 		@Override
 		public void handle(ActionEvent event) {
 			isOn = !isOn;
 			if (isOn) {
 				TimerAll.timesTwo();
-				//tdv.drawGoButton();
+				// tdv.drawGoButton();
 				Button temp = (Button) event.getSource();
 				temp.setText("x1");
 				Player.setGameState(GameState.gamex2);
@@ -113,45 +141,50 @@ public class TowerDefenseController {
 				temp.setText("x2");
 				Player.setGameState(GameState.gameplay);
 			}
-			
-		
-	}};
-	
-	
+
+		}
+	};
+
+	/**
+	 * Event Handler that chooseTower and makes the class
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param MouseEvent event
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
 
-
-		@SuppressWarnings( "deprecation" )
+		@SuppressWarnings("deprecation")
 		@Override
 		public void handle(MouseEvent event) {
 			currTowerImgView = (ImageView) event.getSource();
 			currTowerImg = (Image) currTowerImgView.getImage();
 			currURL = currTowerImg.impl_getUrl();
-			id = currURL.substring(currURL.length()-10);
+			id = currURL.substring(currURL.length() - 10);
 			System.out.println("Tower chosen: " + id);
 		}
-		
+
 	};
 
-	
-		
-	
-
+	// Getter
 	public TowerDefenseView getTdv() {
 		return tdv;
 	}
 
+	// Setter
 	public void setTdv(TowerDefenseView tdv) {
 		this.tdv = tdv;
 	}
 
+	// Getter
 	public RoundManager getRm() {
 		return rm;
 	}
 
+	// Getter
 	public void setRm(RoundManager rm) {
 		this.rm = rm;
 	}
 
 }
-
