@@ -28,6 +28,12 @@ import model.TowerHolder;
 import model.Upgrade;
 import view.TowerDefenseView;
 
+/**
+ * Player class that represents the things a player can do
+ * 
+ * @author Ivan, Marisa, Laura, Albert
+ *
+ */
 public class Player {
 	private static int health;
 	private static int coins;
@@ -41,74 +47,147 @@ public class Player {
 	private static boolean towerSelected = false;
 	private static int selectX, selectY;
 
+	/**
+	 * Constructor, set the health and the coins
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public Player() {
 		health = 100;
 		coins = 1000;
 	}
 
+	// Getter
 	public int getHP() {
 		return health;
 	}
 
+	// Getter
 	public int getCoins() {
 		return coins;
 	}
 
+	// Getter
 	public TowerDefenseView getTdv() {
 		return tdv;
 	}
 
+	/**
+	 * This function decreases healh from the player, and updates the GUI in turn
+	 * and if the game is over, calls Game OVer
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void takeDmg() {
 		health -= 1;
 		updatePlayerGUI();
 		gameOver();
 	}
 
+	/**
+	 * This function serves calls game over as a Alert It checks to see if the
+	 * health is under zero and then closes the game
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	private static void gameOver() {
 		if (health <= 0) {
-			
+
 			tdv.gameOver();
 			TimerAll.pause();
 			Player.setGameState(GameState.gamepaused);
-			//Platform.exit();
+			// Platform.exit();
 
 		}
 	}
 
+	// Setter
 	public void setTdv(TowerDefenseView tdv) {
 		this.tdv = tdv;
 	}
 
+	/**
+	 * This function serves as all purpose function that draws on the GUI the image,
+	 * the location, and the postion
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Image img, int x, int y, double d, double e
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void decreaseCoins(int shift) {
 		coins -= shift;
 		updatePlayerGUI();
 	}
 
+	/**
+	 * This function adds coins to the Player
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param int shift
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void increaseCoins(int shift) {
 		coins += shift;
 	}
 
+	/**
+	 * This function adds Cash to the player or coins to the player
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void addCash(int cash) {
 		coins += cash;
 		updatePlayerGUI();
 	}
 
+	// Getter
 	public static GameState getGameState() {
 		// System.out.println("Gamestate: " + gameState);
 		return gameState;
 	}
 
+	// Setter
 	public static void setGameState(GameState state) {
 		// System.out.println("Changing " + gameState + " to " + state);
 		gameState = state;
 
 	}
 
+	/**
+	 * This function updates the GUI from with new coins and health
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void updatePlayerGUI() {
 		// tdv.getRightLabel().setText("Money: " + coins + "\nHealth: " + health);
 		tdv.updatePlayerInfo(coins, health);
 	}
 
+	/**
+	 * This EventHandler chooses the Tower and sends it back
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param MouseEvent event
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public EventHandler<MouseEvent> chooseTower = new EventHandler<MouseEvent>() {
 
 		@SuppressWarnings("deprecation")
@@ -128,6 +207,14 @@ public class Player {
 		}
 	};
 
+	/**
+	 * This function places a Tower at the location specified at that point
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param MouseEvent event
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static EventHandler<MouseEvent> placeTower = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -200,6 +287,14 @@ public class Player {
 
 	};
 
+	/**
+	 * This makes a tempTower tower to create the classes
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param String towerId, int x, int y
+	 * @return Tower currTower
+	 * @throws n/a
+	 */
 	public static Tower makeTempTower(String towerId, int x, int y) {
 		Tower currTower = null;
 
@@ -230,6 +325,14 @@ public class Player {
 		return currTower;
 	}
 
+	/**
+	 * This Event Handler that selects the Tower
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Image img, int x, int y, double d, double e
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static EventHandler<MouseEvent> upgradeTower = new EventHandler<MouseEvent>() {
 
 		@SuppressWarnings("deprecation")
@@ -282,7 +385,15 @@ public class Player {
 		}
 	};
 
-	// Deals with calculations for upgrading a tower that is from the Tower1 class
+	/**
+	 * Deals with calculations for upgrading a tower that is from the Tower1 class
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Tower tower
+	 * @return n/a
+	 * @throws n/a
+	 */
+
 	public static void checkUpgradeTower1(Tower tower) {
 		Tower1 temp1 = (Tower1) tower;
 		if (temp1.getUpgradeLevel() == 0) {
@@ -311,7 +422,15 @@ public class Player {
 		towerSelected = true;
 	}
 
-	// Deals with calculations for upgrading a tower that is from the Tower2 class
+	/**
+	 * Deals with calculations for upgrading a tower that is from the Tower2 class
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Tower tower
+	 * @return n/a
+	 * @throws n/a
+	 */
+
 	public static void checkUpgradeTower2(Tower tower) {
 		Tower2 temp2 = (Tower2) tower;
 		if (temp2.getUpgradeLevel() == 0) {
@@ -340,7 +459,14 @@ public class Player {
 		towerSelected = true;
 	}
 
-	// Deals with calculations for upgrading a tower that is from the Tower3 class
+	/**
+	 * Deals with calculations for upgrading a tower that is from the Tower3 class
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Tower tower
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void checkUpgradeTower3(Tower tower) {
 		Tower3 temp3 = (Tower3) tower;
 		if (temp3.getUpgradeLevel() == 0) {
@@ -369,7 +495,14 @@ public class Player {
 		towerSelected = true;
 	}
 
-	// Deals with calculations for upgrading a tower that is from the Tower4 class
+	/**
+	 * Deals with calculations for upgrading a tower that is from the Tower4 class
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Tower tower
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void checkUpgradeTower4(Tower tower) {
 		Tower4 temp4 = (Tower4) tower;
 		if (temp4.getUpgradeLevel() == 0) {
@@ -398,7 +531,14 @@ public class Player {
 		towerSelected = true;
 	}
 
-	// Deals with calculations for upgrading a tower that is from the Tower5 class
+	/**
+	 * Deals with calculations for upgrading a tower that is from the Tower5 class
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Tower tower
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void checkUpgradeTower5(Tower tower) {
 		Tower5 temp5 = (Tower5) tower;
 		if (temp5.getUpgradeLevel() == 0) {
@@ -427,7 +567,14 @@ public class Player {
 		towerSelected = true;
 	}
 
-	// Deals with calculations for upgrading a tower that is from the Tower6 class
+	/**
+	 * Deals with calculations for upgrading a tower that is from the Tower6 class
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Tower tower
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void checkUpgradeTower6(Tower tower) {
 		Tower6 temp6 = (Tower6) tower;
 		if (temp6.getUpgradeLevel() == 0) {
@@ -456,7 +603,14 @@ public class Player {
 		towerSelected = true;
 	}
 
-	// Deals with calculations for upgrading a tower that is from the Tower7 class
+	/**
+	 * Deals with calculations for upgrading a tower that is from the Tower7 class
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Tower tower
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void checkUpgradeTower7(Tower tower) {
 		Tower7 temp7 = (Tower7) tower;
 		if (temp7.getUpgradeLevel() == 0) {
@@ -485,7 +639,14 @@ public class Player {
 		towerSelected = true;
 	}
 
-	// Deals with calculations for upgrading a tower that is from the Tower8 class
+	/**
+	 * Deals with calculations for upgrading a tower that is from the Tower8 class
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Tower tower
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void checkUpgradeTower8(Tower tower) {
 		Tower8 temp8 = (Tower8) tower;
 		if (temp8.getUpgradeLevel() == 0) {
@@ -514,23 +675,31 @@ public class Player {
 		towerSelected = true;
 	}
 
+	// Getter
 	public static int getCurrentCash() {
 		return coins;
 	}
 
+	/**
+	 * This EventHandler handles the sell Tower methods
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent event
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static EventHandler<ActionEvent> sellTower = new EventHandler<ActionEvent>() {
 
 		@Override
 		public void handle(ActionEvent event) {
-			System.out.println("hello");
+			// System.out.println("hello");
 			// Tower tobeRem = TowerHolder.getTower(selectX, selectY);
 			if (TowerHolder.isThereATower(selectX, selectY)) {
 				TowerHolder.getTower(selectX, selectY).changeActive();
 				TowerHolder.removeTower(selectX, selectY);
 				tdv.setAllBlank();
 			}
-			
-			
+
 		}
 
 	};

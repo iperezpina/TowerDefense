@@ -12,13 +12,27 @@ import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import model.Enemy;
 
+/**
+ * This class handles the arrow projectile class
+ * 
+ * @author Ivan, Marisa, Laura, Albert
+ * 
+ */
 public class arrowProjectile extends Projectile {
 
 	private Timeline tl;
 	private AudioClip arrowSound = new AudioClip(new File("src/Sounds/arrow.wav").toURI().toString());
 	private Tower tower;
 
-
+	/**
+	 * Constructor for arrow Projectile
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param String imageName, int speed, int x, int y, Enemy EtoShoot, int damage,
+	 *               Tower tower
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public arrowProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage, Tower tower) {
 		super(imageName, speed, x, y, EtoShoot, damage);
 		this.tower = tower;
@@ -27,6 +41,14 @@ public class arrowProjectile extends Projectile {
 
 	}
 
+	/**
+	 * Update Mehtod that starts the timeline for the animation
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
@@ -34,6 +56,15 @@ public class arrowProjectile extends Projectile {
 
 	}
 
+	/**
+	 * Event Handler that shoots out a projectile and the tracking to get to the
+	 * enemy It uses a algortihm to find it way to the enemy
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent arg0
+	 * @return n/a
+	 * @throws n/a
+	 */
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
 		int count = 0;
@@ -50,7 +81,7 @@ public class arrowProjectile extends Projectile {
 			x = x + ((EtoShoot.getX() - x) / length * speed);
 
 			y = y + ((EtoShoot.getY() - y) / length * speed);
-			
+
 			if (handleCol()) {
 				arrowSound.play();
 				if (EtoShoot.getHealth() - damage <= 0) {
@@ -59,8 +90,7 @@ public class arrowProjectile extends Projectile {
 				TowerDamage(EtoShoot);
 				tl.stop();
 			}
-			
-			
+
 			draw();
 			count++;
 		}

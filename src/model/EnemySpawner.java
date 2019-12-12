@@ -8,12 +8,10 @@ import java.util.TimerTask;
 import javafx.animation.Timeline;
 
 /**
+ * This class spawns the enemies
  * 
- * @author Alberto Villareal, Laura [Last Name], Ivan [Last Name], and Marissa
- *         [Last Name]
+ * @author Ivan, Marisa, Laura, Albert
  * 
- *         Summary: [Summary goes here]
- *
  */
 public class EnemySpawner {
 
@@ -35,9 +33,10 @@ public class EnemySpawner {
 	 * A constructor for this class that takes in how many to spawn for this
 	 * EnemySpawner, the time between each enemy spawned, and the enemy to spawn
 	 * 
-	 * @param amtToSpawn
-	 * @param intervalsBetween
-	 * @param e
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param int amtToSpawn, float intervalsBetween, int healthIncr, Enemy e
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public EnemySpawner(int amtToSpawn, float intervalsBetween, int healthIncr, Enemy e) {
 		this.amtToSpawn = amtToSpawn;
@@ -49,6 +48,15 @@ public class EnemySpawner {
 		this.healthIncr = healthIncr;
 	}
 
+	/**
+	 * A constructor for this class that takes in how many to spawn for this
+	 * EnemySpawner, in this case takes in the list of enemies
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param List<Enemy> enemyList, float intervalsBetween, int healthIncr
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public EnemySpawner(List<Enemy> enemyList, float intervalsBetween, int healthIncr) {
 		this.amtToSpawn = enemyList.size();
 		this.intervalsBetween = intervalsBetween;
@@ -63,8 +71,15 @@ public class EnemySpawner {
 	// A timer that will be used to spawn an enemy every so often
 	Timer timer = new Timer();
 
-	// A task that will occur every so often that spawns an enemy if it can, and
-	// checks if all the enemies are all dead.
+	/**
+	 * A task that will occur every so often that spawns an enemy if it can, and
+	 * checks if all the enemies are all dead.
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	TimerTask timerTask = new TimerTask() {
 		public void run() {
 			int counter = 0;
@@ -87,6 +102,11 @@ public class EnemySpawner {
 
 	/**
 	 * Calls the timertask above to occur at a given rate.
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void start() {
 		long start = (long) (1000 * intervalsBetween);
@@ -96,18 +116,22 @@ public class EnemySpawner {
 	/**
 	 * The basic update method for the enemy spawner, will eventually spawn the
 	 * enemies after a certain time.
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void update() {
 		int counter = 0;
-		if (intervalsBetween <= 0) 
-		{
+		if (intervalsBetween <= 0) {
 			intervalsBetween = .5f;
 		}
 		currentTime = TimerAll.getTimeInSeconds();
 		if (lastTimeSpawned > currentTime) {
 			lastTimeSpawned = 0;
 		}
-		//System.out.println(currentTime);
+		// System.out.println(currentTime);
 		if (index < amtToSpawn) {
 			if (Math.abs(currentTime - lastTimeSpawned) >= intervalsBetween) {
 				lastTimeSpawned = currentTime;
@@ -128,6 +152,11 @@ public class EnemySpawner {
 
 	/**
 	 * Spawns an enemy if the number of spawned enemies has not gone over the limit.
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void spawnEnemy() {
 		if (index < amtToSpawn) {
@@ -143,6 +172,11 @@ public class EnemySpawner {
 	/**
 	 * Spawns an enemy if the number of spawned enemies has not gone over the limit.
 	 * NOTE: This uses the up-to-date file reader code
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void spawnEnemyList() {
 		if (index < amtToSpawn) {
@@ -156,13 +190,15 @@ public class EnemySpawner {
 			index++;
 		}
 	}
-	
-	
+
 	/**
 	 * This is a debug method that is used to print out the enemies in the enemy
 	 * list
 	 * 
-	 * @return
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return String result
+	 * @throws n/a
 	 */
 	public String printSpawner() {
 		String result = "[";
@@ -179,19 +215,23 @@ public class EnemySpawner {
 
 	}
 
+	// Getter
 	public Enemy[] getEnemys() {
 		return enemies;
 
 	}
 
+	// Getter
 	public boolean isDone() {
 		return isDone;
 	}
 
+	// Setter
 	public void setDone(boolean isDone) {
 		this.isDone = isDone;
 	}
-	
+
+	// Getter
 	public ArrayList<Timeline> getTLArr() {
 		return tlArr;
 	}

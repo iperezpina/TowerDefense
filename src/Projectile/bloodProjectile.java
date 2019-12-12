@@ -12,6 +12,12 @@ import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import model.Enemy;
 
+/**
+ * This class handles the blood projectile class
+ * 
+ * @author Ivan, Marisa, Laura, Albert
+ * 
+ */
 public class bloodProjectile extends Projectile {
 
 	private Timeline tl;
@@ -19,15 +25,34 @@ public class bloodProjectile extends Projectile {
 	private boolean canSlow, canPoison;
 	private Tower tower;
 
-	public bloodProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage, boolean canSlow, boolean canPoison, Tower tower) {
+	/**
+	 * Constructor for blood Projectile
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param String imageName, int speed, int x, int y, Enemy EtoShoot, int damage,
+	 *               boolean canSlow, boolean canPoison Tower tower
+	 * @return n/a
+	 * @throws n/a
+	 */
+	public bloodProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage, boolean canSlow,
+			boolean canPoison, Tower tower) {
 		super(imageName, speed, x, y, EtoShoot, damage);
 		this.canSlow = canSlow;
 		this.canPoison = canPoison;
-		this.tower = tower;;
+		this.tower = tower;
+		;
 		update();
 
 	}
 
+	/**
+	 * Update Mehtod that starts the timeline for the animation
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
@@ -36,6 +61,15 @@ public class bloodProjectile extends Projectile {
 
 	}
 
+	/**
+	 * Event Handler that shoots out a projectile and the tracking to get to the
+	 * enemy It uses a algortihm to find it way to the enemy
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent arg0
+	 * @return n/a
+	 * @throws n/a
+	 */
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
 		int count = 0;
@@ -58,18 +92,17 @@ public class bloodProjectile extends Projectile {
 					tower.setKillCount();
 				}
 				TowerDamage(EtoShoot);
-				if(canSlow) {
-					EtoShoot.slowEnemy();	
-					
+				if (canSlow) {
+					EtoShoot.slowEnemy();
+
 				}
-				if(canPoison) {
+				if (canPoison) {
 					EtoShoot.poisonEnemy();
 				}
-				
+
 				tl.stop();
 			}
-			
-			
+
 			draw();
 			count++;
 		}

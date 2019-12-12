@@ -2,12 +2,10 @@
 package model;
 
 /**
+ * This class Moves direction and sets the enums
  * 
- * @author Alberto Villareal, Laura [Last Name], Ivan [Last Name], and Marissa
- *         [Last Name]
+ * @author Ivan, Marisa, Laura, Albert
  * 
- *         Summary: [Summary goes here]
- *
  */
 public enum MoveDir {
 
@@ -22,7 +20,10 @@ public enum MoveDir {
 	 * The constructor for this enum, takes in a string specifying one of the four
 	 * states
 	 * 
-	 * @param state
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param String state
+	 * @return n/a
+	 * @throws n/a
 	 */
 	MoveDir(String state) {
 		if (state.toLowerCase().equals("up")) {
@@ -48,4 +49,3 @@ public enum MoveDir {
 
 	}
 }
-

@@ -3,7 +3,6 @@ package view;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import controller.Player;
 import controller.ResourceManager;
 import controller.TowerDefenseController;
@@ -46,11 +45,10 @@ import model.TowerHolder;
 import model.Upgrade;
 
 /**
+ * This is the View
  * 
- * @author Alberto Villareal, Laura [Last Name], Ivan [Last Name], and Marissa
- *         [Last Name]
  * 
- *         Summary: [Summary goes here]
+ * @author Ivan, Marisa, Laura, Albert
  *
  */
 public class TowerDefenseView extends Application {
@@ -97,7 +95,7 @@ public class TowerDefenseView extends Application {
 	Label healthLabel = new Label();
 	Label towerLabel = new Label();
 	FlowPane playerFP = new FlowPane();
-	
+
 	StackPane sp;
 
 	// Other variables below
@@ -117,7 +115,7 @@ public class TowerDefenseView extends Application {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 } };
-
+	// mediumMap
 	private int[][] mediumMap = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -133,7 +131,7 @@ public class TowerDefenseView extends Application {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-
+	// HardMap
 	private int[][] hardMap = { { 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2 },
 			{ 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2 },
 			{ 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2 },
@@ -150,27 +148,40 @@ public class TowerDefenseView extends Application {
 			{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2 },
 			{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 } };
 
+	/**
+	 * Launches the Game !
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void main(String args[]) {
 		launch(args);
 	}
 
 	/**
 	 * The basic setup of the application
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void start(Stage tempStage) throws Exception {
 		mainStage = tempStage;
 		Button newGame = new Button("New Game");
 		sp = new StackPane();
 		newGame.setOnAction((event) -> {
-				newGame.setVisible(false);
-				sp.getChildren().remove(0);
-				createLevelSelect(sp);
+			newGame.setVisible(false);
+			sp.getChildren().remove(0);
+			createLevelSelect(sp);
 		});
 		sp.getChildren().add(new ImageView(ResourceManager.startScreenImg));
 		sp.getChildren().add(newGame);
 		sp.getChildren().get(1).toFront();
 
-		
 		// Setting up title and icon for app
 		mainStage.setTitle("Highway outta HELL");
 		mainStage.getIcons().add(new Image("Images/logo.png"));
@@ -184,97 +195,118 @@ public class TowerDefenseView extends Application {
 
 	/**
 	 * In charge of creating the three buttons that will choose the difficulty
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
 	 * @param sp, the stackpane that the buttons will be added on.
+	 * @return n/a
+	 * @throws n/a
 	 */
 	private void createLevelSelect(StackPane sp) {
 		BorderPane bpSelected = new BorderPane();
-		
+
 		Button easyButton = new Button("EASY");
 		easyButton.setPrefSize(70, 40);
 		easyButton.setOnAction(buttonHandler);
-		
+
 		Button mediumButton = new Button("MEDIUM");
 		mediumButton.setPrefSize(70, 40);
 		mediumButton.setOnAction(buttonHandler);
-		
+
 		Button hardButton = new Button("HARD");
 		hardButton.setPrefSize(70, 40);
 		hardButton.setOnAction(buttonHandler);
-		
-		
+
 		sp.getChildren().add(easyButton);
 		sp.getChildren().add(mediumButton);
 		sp.getChildren().add(hardButton);
-		
-		//Puts the image in the back of the stackpane
+
+		// Puts the image in the back of the stackpane
 		sp.getChildren().get(0).toBack();
-		
-		
-		//Adds the three buttons that when pressed create a start game button, and sets a certain difficulty
-		//EASY
+
+		// Adds the three buttons that when pressed create a start game button, and sets
+		// a certain difficulty
+		// EASY
 		sp.getChildren().get(1).setTranslateX(-100);
 		sp.getChildren().get(1).setLayoutX(0);
 		sp.getChildren().get(1).setLayoutY(0);
-		
-		//MEDIUM
+
+		// MEDIUM
 		sp.getChildren().get(2).setLayoutX(0);
 		sp.getChildren().get(2).setLayoutY(0);
-		
-		//HARD
+
+		// HARD
 		sp.getChildren().get(3).setTranslateX(100);
 		sp.getChildren().get(3).setLayoutX(0);
 		sp.getChildren().get(3).setLayoutY(0);
-		
+
 	}
-	
+
 	/**
-	 * Event handler for the three difficulty buttons, spawns a startGame button and sets difficulty
+	 * Event handler for the three difficulty buttons, spawns a startGame button and
+	 * sets difficulty
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent event
+	 * @return n/a
+	 * @throws n/a
 	 */
 	private EventHandler<ActionEvent> buttonHandler = new EventHandler<ActionEvent>() {
 
 		@Override
 		public void handle(ActionEvent event) {
-			Button temp = (Button)event.getSource();
+			Button temp = (Button) event.getSource();
 			if (temp.getText().equals("EASY")) {
 				levelDifficulty = 0;
 				spawnStartGameButton();
-			}
-			else if (temp.getText().equals("MEDIUM")) {
+			} else if (temp.getText().equals("MEDIUM")) {
 				levelDifficulty = 1;
 				spawnStartGameButton();
-			}
-			else if (temp.getText().equals("HARD")) {
+			} else if (temp.getText().equals("HARD")) {
 				levelDifficulty = 2;
 				spawnStartGameButton();
 			}
 		}
-		
+
 	};
-	
+
 	/**
 	 * The function for startGame event, loads the basic game.
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	protected void spawnStartGameButton() {
 		if (!createStart) {
 			createStart = true;
 			if (sp != null) {
 				Button startGame = new Button("START GAME");
-				startGame.setOnAction((event) ->{
+				startGame.setOnAction((event) -> {
 					startGame();
 				});
 				startGame.setPrefSize(100, 40);
 				sp.getChildren().add(startGame);
 				sp.getChildren().get(4).setTranslateY(200);
-				
+
 			}
-			
+
 		}
 	}
-	
-	
+
+	/**
+	 * Starts the Game!
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void startGame() {
 		mediaPlayer.stop();
-		
+
 		// Add the view to the controller class
 		currPlayer.setTdv(this);
 		tdc.setTdv(this);
@@ -336,13 +368,16 @@ public class TowerDefenseView extends Application {
 		mediaPlayer2.setCycleCount(MediaPlayer.INDEFINITE);
 	}
 
-
 	/**
 	 * Used to test the basic gameplay stuff, so far spawning enemies and rendering
 	 * the level, and enemies
 	 * 
 	 * @param hbox
 	 * @param canvas
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void setupMainGrid(HBox hbox, Canvas canvas) {
 
@@ -380,6 +415,10 @@ public class TowerDefenseView extends Application {
 	 * Adds the tower imgs to the rightPane. Only 8 towers at the moment.
 	 * 
 	 * @param rightPane
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @return n/a
+	 * @throws n/a
 	 */
 	private void drawRightPane(VBox rightPane) {
 		GridPane gp = new GridPane();
@@ -401,10 +440,20 @@ public class TowerDefenseView extends Application {
 		rightPane.getChildren().add(gp);
 	}
 
+	// Getter
 	public Label getRightLabel() {
 		return rightLabel;
 	}
 
+	/**
+	 * Sets the Towers specification
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param String name, int enemies, int cost, int range, int sell, Upgrade
+	 *               currentUpgrade
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void setTowerSpecification(String name, int enemies, int cost, int range, int sell, Upgrade currentUpgrade) {
 		// Tower Info stuff (Yellow panel)
 		towerNameLabel.setText("Tower Name: " + name);
@@ -427,6 +476,15 @@ public class TowerDefenseView extends Application {
 
 	}
 
+	/**
+	 * Sets all the gui elements to blank to avoid bugs
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void setAllBlank() {
 		// Tower Info stuff (Yellow panel)
 		towerNameLabel.setText("");
@@ -446,6 +504,9 @@ public class TowerDefenseView extends Application {
 	 * Adds the tower info and play button to the bottomPane.
 	 * 
 	 * @param bottomPane
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @return n/a
+	 * @throws n/a
 	 */
 	private void drawBottomPane(VBox bottomPane) {
 
@@ -514,10 +575,20 @@ public class TowerDefenseView extends Application {
 		bottomPane.getChildren().add(bpBottom);
 	}
 
+	// Getter
 	public BorderPane getBPRight() {
 		return bpRightButtons;
 	}
 
+	/**
+	 * Gets the draw Extra Buttons
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void drawExtraButtons() {
 		Button pause = new Button("Pause");
 		pause.setPrefSize(150, 50);
@@ -535,6 +606,15 @@ public class TowerDefenseView extends Application {
 
 	}
 
+	/**
+	 * Draws the go button
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void drawGoButton() {
 		Button goButton = new Button("GO");
 		goButton.setPrefSize(150, 50);
@@ -558,8 +638,16 @@ public class TowerDefenseView extends Application {
 //		bpRightButtons.setBottom(null);
 //		
 //	}
-	
-	
+
+	/**
+	 * Calls an alert if the game is won
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void gameWon() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Game Won");
@@ -570,6 +658,15 @@ public class TowerDefenseView extends Application {
 		alert.show();
 	}
 
+	/**
+	 * Calls an alert if a game is lost
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void gameOver() {
 
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -582,48 +679,75 @@ public class TowerDefenseView extends Application {
 
 	}
 
+	// Getter
 	public TileMap getTm() {
 		return tm;
 	}
 
+	// Setter
 	public void setTm(TileMap tm) {
 		this.tm = tm;
 	}
 
+	// Getter
 	public static TowerHolder getTowers() {
 		return towers;
 	}
 
+	// Setter
 	public static void setTowers(TowerHolder towers) {
 		TowerDefenseView.towers = towers;
 	}
 
+	// Getter
 	public Label getRoundLabel() {
 		return roundLabel;
 	}
 
+	// Setter
 	public void setRoundLabel(Label roundLabel) {
 		this.roundLabel = roundLabel;
 	}
 
+	// Setter
 	public void startPlay() {
 		TimerAll.runTimer();
 	}
 
+	// Setter
 	public void play() {
 		TimerAll.play();
 	}
 
+	// Setter
 	public void pause() {
 		TimerAll.pause();
 	}
 
+	/**
+	 * Updates the player information with the money and health
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void updatePlayerInfo(int money, int health) {
 		moneyLabel.setText("Money:\t" + money);
 		healthLabel.setText("Health:\t" + health);
 		updateTowerLabel("");
 	}
 
+	/**
+	 * Updates the Tower lable with all the right things
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void updateTowerLabel(String newText) {
 		towerLabel.setText(newText);
 	}

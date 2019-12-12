@@ -12,13 +12,27 @@ import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import model.Enemy;
 
+/**
+ * This class handles the lazer projectile class
+ * 
+ * @author Ivan, Marisa, Laura, Albert
+ *
+ */
 public class lazerProjectile extends Projectile {
 
 	private Timeline tl;
 	private AudioClip laserSound = new AudioClip(new File("src/Sounds/laser.wav").toURI().toString());
 	private Tower tower;
 
-
+	/**
+	 * Constructor for lazor Projectile
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param String imageName, int speed, int x, int y, Enemy EtoShoot, int damage,
+	 *               Tower tower
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public lazerProjectile(String imageName, int speed, int x, int y, Enemy EtoShoot, int damage, Tower tower) {
 		super(imageName, speed, x, y, EtoShoot, damage);
 		this.tower = tower;
@@ -27,6 +41,14 @@ public class lazerProjectile extends Projectile {
 
 	}
 
+	/**
+	 * Update Mehtod that starts the timeline for the animation
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
@@ -34,6 +56,15 @@ public class lazerProjectile extends Projectile {
 
 	}
 
+	/**
+	 * Event Handler that shoots out a projectile and the tracking to get to the
+	 * enemy It uses a algortihm to find it way to the enemy
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent arg0
+	 * @return n/a
+	 * @throws n/a
+	 */
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
 		int count = 0;
@@ -50,7 +81,6 @@ public class lazerProjectile extends Projectile {
 
 			y = y + ((EtoShoot.getY() - y) / length * speed);
 
-			
 			if (handleCol()) {
 				laserSound.play();
 				if (EtoShoot.getHealth() - damage <= 0) {
@@ -59,8 +89,7 @@ public class lazerProjectile extends Projectile {
 				TowerDamage(EtoShoot);
 				tl.stop();
 			}
-			
-			
+
 			draw();
 			count++;
 		}

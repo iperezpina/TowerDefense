@@ -12,6 +12,12 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 import model.Enemy;
 
+/**
+ * This class is a Super class for all the projectiles
+ * 
+ * @author Ivan, Marisa, Laura, Albert
+ *
+ */
 public class Projectile {
 
 	Image Amunition;
@@ -22,6 +28,14 @@ public class Projectile {
 	private Timeline tl;
 	int damage;
 
+	/**
+	 * Contructor for superClass
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param String imgName, int speed, int x, int y, Enemy EtoShoot, int damage
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public Projectile(String imgName, int speed, int x, int y, Enemy EtoShoot, int damage) {
 		if (this.Amunition == null) {
 			this.Amunition = ResourceManager.getProjectileImg(imgName);
@@ -33,12 +47,27 @@ public class Projectile {
 		this.damage = damage;
 
 	}
-	
-	
+
+	/**
+	 * Tower damage that takes a enmy and damages
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Enemy e
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void TowerDamage(Enemy e) {
 		e.setHealth(e.getHealth() - damage);
 	}
-	
+
+	/**
+	 * Collision chekcer that checks to see if a projectile collides with a enemy
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param boolean true or false
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public boolean handleCol() {
 		double ProjectileX1 = x;
 		double ProjectileX2 = x + 32;
@@ -68,10 +97,15 @@ public class Projectile {
 
 	}
 
+	/**
+	 * Another draw method that draws on the gui
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Enemy e
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void draw() {
-		
-		
-		
 		Drawer.DrawImageDouble(Amunition, x, y, Amunition.getWidth(), Amunition.getHeight());
 
 	}

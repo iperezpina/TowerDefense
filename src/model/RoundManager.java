@@ -12,6 +12,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import view.TowerDefenseView;
 
+/**
+ * This calass takes care of the Rounds that take place
+ * 
+ * @author Ivan, Marisa, Laura, Albert
+ * 
+ */
 public class RoundManager {
 
 	private int amtToSpawn, waveNumber;
@@ -27,6 +33,14 @@ public class RoundManager {
 	private TowerDefenseView tdv;
 	private Timeline animation;
 
+	/**
+	 * Contructor that takes in amt to spawn and enemies and intervals inbetween
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param int amtToSpawn, float intervalsBetween, Enemy e
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public RoundManager(int amtToSpawn, float intervalsBetween, Enemy e) {
 		this.amtToSpawn = amtToSpawn;
 		this.intervalsBetween = intervalsBetween;
@@ -37,10 +51,27 @@ public class RoundManager {
 		this.startedRound = false;
 	}
 
+	/**
+	 * Update the method that updates the TimerTask
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void update() {
 		timer.scheduleAtFixedRate(timerTask, 0, 500);
 	}
 
+	/**
+	 * Another constructor that takes in a different set of parameters
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param List<List<Enemy>> enemyInfo, float intervalsBetween, TowerDefenseView
+	 *        tdv
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public RoundManager(List<List<Enemy>> enemyInfo, float intervalsBetween, TowerDefenseView tdv) {
 		this.amtToSpawn = 0;
 		this.intervalsBetween = intervalsBetween;
@@ -55,8 +86,15 @@ public class RoundManager {
 
 	Timer timer = new Timer();
 
-	// A task that will occur every so often that spawns an enemy if it can, and
-	// checks if all the enemies are all dead.
+	/**
+	 * A task that will occur every so often that spawns an enemy if it can, and
+	 * checks if all the enemies are all dead.
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	TimerTask timerTask = new TimerTask() {
 		public void run() {
 			if (es != null) {
@@ -68,18 +106,16 @@ public class RoundManager {
 						@Override
 						public void run() {
 							Player.addCash(100);
-							//This is if the Game is Won
+							// This is if the Game is Won
 							System.out.println("enemysize" + enemyInfo.size());
 							if (waveNumber == enemyInfo.size()) {
-								
+
 								tdv.gameWon();
 								TimerAll.pause();
 								Player.setGameState(GameState.gamepaused);
 
 							}
-							
-							
-							
+
 						}
 					});
 
@@ -104,13 +140,28 @@ public class RoundManager {
 
 	};
 
+	/**
+	 * This function calls a new Wave that comes in
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void newWave() {
-
 		es = new EnemySpawner(amtToSpawn += 2, intervalsBetween -= .5f, healthIncr += 5, e);
 		startedRound = true;
 		waveNumber++;
 	}
 
+	/**
+	 * this makes a new Wave list
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void newWaveList() {
 
 		es = new EnemySpawner(enemyInfo.get(waveNumber), intervalsBetween -= .10f, healthIncr++);
@@ -123,7 +174,12 @@ public class RoundManager {
 	/**
 	 * Event handler that will start a new round will turn the into a x2 button if
 	 * clicked on, then paused button if pressed again it will cycle between those
-	 * two until the round is over and return to a go button.
+	 * two until the round is over and return to a go button..
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent event
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public EventHandler<ActionEvent> startRound = new EventHandler<ActionEvent>() {
 
@@ -133,51 +189,12 @@ public class RoundManager {
 		}
 	};
 
+	// Getter
 	public EnemySpawner getES() {
 		return es;
 	}
 
-	public void pauseES() {
-		// System.out.println(this.es.getTLArr());
-
-		/*
-		 * for(Timeline t: this.es.getTLArr()) { setAnimation(t); animation.pause(); }
-		 */
-//		for (Enemy e : this.es.getEnemys()) {
-//			if (e != null) {
-//
-//				e.setisPaused();
-//				System.out.println("enemy is not null");
-//			}
-//		}
-//		System.out.println(this.es.getTLArr());
-
-	}
-
-	public void playES() {
-//		for (List<Enemy> le : eList) {
-//			for (Enemy e : le) {
-//				System.out.println(e);
-//				if (e != null) {
-//					System.out.println(e);
-//					// e.play();
-//				}
-//			}
-//		}
-	}
-
-	/*
-	 * public void startES() { for (List<Enemy> le: eList) { for(Enemy e: le) {
-	 * System.out.println(e); if(e != null) { System.out.println(e);
-	 * 
-	 * //Timeline t = e.getTL(); //System.out.println(t); //t.play();
-	 * //e.playFromStart(); } } } }
-	 * 
-	 * public void addEnemiesToList() { for(Enemy e: es.getEnemys()) { eList.add(e);
-	 * } } public ArrayList<Enemy> getEList(){ return eList; }
-	 */
-
-	// TODO get timeline from each enemy to this animation
+	// Setter
 	public void setAnimation(Timeline animation) {
 		this.animation = animation;
 	}
