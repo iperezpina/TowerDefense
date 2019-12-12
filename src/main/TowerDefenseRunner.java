@@ -4,15 +4,14 @@ import javafx.application.Application;
 import view.TowerDefenseView;
 
 /**
+ * This class runs the entire program
  * 
- * @author Alberto Villareal, Laura [Last Name], Ivan [Last Name], and Marissa
- *         [Last Name]
- * 
- *         Summary: [Summary goes here]
- *
+ * @author Ivan, Marisa, Laura, Albert
+ * @param String[] args
+ * @return n/a
+ * @throws n/a
  */
 public class TowerDefenseRunner {
-
 	public static void main(String[] args) {
 		Application.launch(TowerDefenseView.class);
 	}

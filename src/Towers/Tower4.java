@@ -17,17 +17,43 @@ import model.GameState;
 import model.TimerAll;
 import model.Upgrade;
 
+/**
+ * Tower4 class that represents fourth Tower
+ * 
+ * 
+ * @author Ivan, Marisa, Laura, Albert
+ * 
+ */
 public class Tower4 extends Tower {
 
 	private String url;
 	private Projectile ammo;
 	private Timeline tl;
 
+	/**
+	 * The basic constructor for this class, takes in an img, x and y position,
+	 * width and height.
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param String imgName, int x, int y, int width, int height
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public Tower4(String imgName, int x, int y, int width, int height) {
 		super(imgName, x, y, width, height);
 		additionalInfo();
 	}
 
+	/**
+	 * The other constructor for this class, the stats for this tower
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void additionalInfo() {
 		this.attackRate = 4;
 		this.towerCost = 750;
@@ -35,11 +61,20 @@ public class Tower4 extends Tower {
 		this.damage = 3;
 		this.range = 250;
 		this.towerName = "Lightning Tower";
-		this.towerSpent=0;
-		this.upgradeCost= 130;
+		this.towerSpent = 0;
+		this.upgradeCost = 130;
 		CreateUpgradeInfo();
 	}
-	
+
+	/**
+	 * The upgrades that are listed for this tower ! WOW factor
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void CreateUpgradeInfo() {
 		// Upgrade 1
 		Upgrade up1 = new Upgrade("Improved Impulse", "This tower attacks a little faster", 100);
@@ -58,7 +93,16 @@ public class Tower4 extends Tower {
 		towerUpgrades[3] = up4;
 
 	}
-	
+
+	/**
+	 * The first Upgrade for this Tower
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void upgrade1() {
 		int upgradeCost = towerUpgrades[0].getUpgradeCost();
 		if (Player.getCurrentCash() >= upgradeCost) {
@@ -71,6 +115,15 @@ public class Tower4 extends Tower {
 		}
 	}
 
+	/**
+	 * The second Upgrade for this Tower
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void upgrade2() {
 		int upgradeCost = towerUpgrades[1].getUpgradeCost();
 		if (Player.getCurrentCash() >= upgradeCost) {
@@ -83,6 +136,15 @@ public class Tower4 extends Tower {
 		}
 	}
 
+	/**
+	 * The third Upgrade for this Tower
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void upgrade3() {
 		int upgradeCost = towerUpgrades[2].getUpgradeCost();
 		if (Player.getCurrentCash() >= upgradeCost) {
@@ -93,6 +155,15 @@ public class Tower4 extends Tower {
 		}
 	}
 
+	/**
+	 * The fourth Upgrade for this Tower
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void upgrade4() {
 		int upgradeCost = towerUpgrades[3].getUpgradeCost();
 		if (Player.getCurrentCash() >= upgradeCost) {
@@ -103,24 +174,49 @@ public class Tower4 extends Tower {
 		}
 	}
 
+	/**
+	 * This function sets the url
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void setURL(String str) {
 		url = str;
 	}
 
+	// Getter
 	public String getURL() {
 		return url;
 	}
 
+	/**
+	 * This is the shoot method that shoots out a porjectile class
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void shoot() {
 		if (Player.getGameState().equals(GameState.gamex2))
-			ammo = new lightningProjectile("lightning", projSpeed * 2, x, y ,currEnemy, damage, this);
+			ammo = new lightningProjectile("lightning", projSpeed * 2, x, y, currEnemy, damage, this);
 		else
-			ammo = new lightningProjectile("lightning", projSpeed, x, y ,currEnemy, damage, this);
+			ammo = new lightningProjectile("lightning", projSpeed, x, y, currEnemy, damage, this);
 	}
 
 	/**
 	 * Update method in charge of any movement (rotation) of the tower and drawing
 	 * of the tower
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(500), new AnimationHandler()));
@@ -129,8 +225,12 @@ public class Tower4 extends Tower {
 	}
 
 	/**
-	 * A basic animation handler that just draws the tower at the moment
-	 *
+	 * A basic animation handler that just draws the tower at the moment *
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent arg0
+	 * @return n/a
+	 * @throws n/a
 	 */
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 
@@ -140,7 +240,7 @@ public class Tower4 extends Tower {
 				tl.stop();
 				return;
 			}
-			
+
 			Draw();
 			currentTime = TimerAll.getTimeInSeconds();
 			if (lastTimeAttacked > currentTime) {
@@ -154,11 +254,19 @@ public class Tower4 extends Tower {
 
 	}
 
-
 	private Enemy currEnemy = null;
 
 	private int lockMech = 1;
 
+	/**
+	 * This is the Range method for the Tower also the lock mechanism
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public void drawRange() {
 
 		for (Enemy e : EnemyLocator.getEnemies()) {
@@ -172,12 +280,12 @@ public class Tower4 extends Tower {
 					shoot();
 				}
 			}
-			
+
 		}
 
 		lockMech = 0;
 	}
-
+	// Getter
 	public Enemy getcurrEnemy() {
 		return currEnemy;
 	}

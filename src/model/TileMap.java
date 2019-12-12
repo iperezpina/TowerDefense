@@ -12,12 +12,9 @@ import javafx.event.EventHandler;
 import javafx.util.Duration;
 
 /**
+ * Tile Map class that represnts a grid of tiles classes
  * 
- * @author Alberto Villareal, Laura [Last Name], Ivan [Last Name], and Marissa
- *         [Last Name]
- * 
- *         Summary: [Summary goes here]
- *
+ * @author Ivan, Marisa, Laura, Albert
  */
 public class TileMap {
 
@@ -27,6 +24,11 @@ public class TileMap {
 
 	/**
 	 * The default constructor class that would make a map of only grass tiles.
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public TileMap() {
 		this.tileGrid = new ArrayList<List<Tile>>();
@@ -46,7 +48,10 @@ public class TileMap {
 	 * what tiles should be used in creating a map. Makes creating a level easier to
 	 * do.
 	 * 
-	 * @param tileMap
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param int[][] tileMap
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public TileMap(int[][] tileMap) {
 		Random rnd = new Random();
@@ -77,14 +82,12 @@ public class TileMap {
 				case 2:
 					if (rndNumLava != 0 && rndNumLava != 1) {
 						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Lava1));
-					}
-					else if (rndNumLava == 0) {
+					} else if (rndNumLava == 0) {
 						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Lava2));
-					}
-					else if (rndNumLava == 1) {
+					} else if (rndNumLava == 1) {
 						temp.add(new Tile(i * 32, j * 32, 32, 32, TileType.Lava3));
 					}
-					
+
 					break;
 				}
 			}
@@ -95,9 +98,10 @@ public class TileMap {
 	/**
 	 * Sets a certain tile within the Tilemap
 	 * 
-	 * @param x
-	 * @param y
-	 * @param type
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param int x, int y, TileType type
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void SetTile(int x, int y, TileType type) {
 		Tile newTile = new Tile(x * 32, y * 32, 32, 32, type);
@@ -106,10 +110,11 @@ public class TileMap {
 
 	/**
 	 * Gets the tile at a certain indexed value
-	 * 
-	 * @param x
-	 * @param y
-	 * @return
+	 *
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param int x, int y
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public Tile GetTile(int x, int y) {
 		if (x < 0 || y < 0 || x >= 20 || y >= 15)
@@ -120,6 +125,12 @@ public class TileMap {
 
 	/**
 	 * Draws all the tiles in the Tilemap
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void Draw() {
 		for (List<Tile> list : tileGrid) {
@@ -131,7 +142,12 @@ public class TileMap {
 
 	/**
 	 * Creates an animation that draws the level, NOTE: This update should be used
-	 * before any other update function in the view.
+	 * before any other update function in the view
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
 	 */
 	public void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
@@ -141,7 +157,12 @@ public class TileMap {
 
 	/**
 	 * A basic animation that draws the level.
-	 *
+	 * 
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent arg0
+	 * @return n/a
+	 * @throws n/a
 	 */
 	private class AnimationHandler implements EventHandler<ActionEvent> {
 

@@ -22,42 +22,80 @@ import javafx.event.EventHandler;
 import javafx.util.Duration;
 import view.TowerDefenseView;
 
+/**
+ * Tower Holder class that holds all the Tower using a map
+ * 
+ * @author Ivan, Marisa, Laura, Albert
+ * @param n/a
+ * @return n/a
+ * @throws n/a
+ */
 public class TowerHolder {
 
 	private TileMap map;
 	private static HashMap<String, Tower> towers2;
 	private static Timeline tl;
-	
 
+	/**
+	 * Constructor
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param TileMap map
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public TowerHolder(TileMap map) {
 		this.map = map;
 		this.towers2 = new HashMap<String, Tower>();
-		
+
 	}
 
+	/**
+	 * Adds a tower to the TowerHolderMap that maps the location to the Tower
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param Tower newTower, int x, int y
+	 * @return boolean
+	 * @throws n/a
+	 */
 	public static boolean addTower2(Tower newTower, int x, int y) {
 		String newKey = x + "," + y;
 		if (towers2.containsKey(newKey)) {
 			return false;
-		}
-		else {
+		} else {
 			towers2.put(newKey, newTower);
 			return true;
 		}
 	}
 
+	/**
+	 * update method that makes the timeline and plays it
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param n/a
+	 * @return n/a
+	 * @throws n/a
+	 */
 	public static void update() {
 		tl = new Timeline(new KeyFrame(Duration.millis(250), new AnimationHandler()));
 		tl.setCycleCount(Animation.INDEFINITE);
 		tl.play();
 	}
 
+	/**
+	 * Event Handler that casts the Tower into their classes
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param ActionEvent arg0
+	 * @return n/a
+	 * @throws n/a
+	 */
 	private static class AnimationHandler implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent arg0) {
-			Collection<Tower> temp =  towers2.values();
-			for (Tower t: temp) {
+			Collection<Tower> temp = towers2.values();
+			for (Tower t : temp) {
 				if (t instanceof Tower1) {
 					Tower1 newtemp = (Tower1) t;
 					newtemp.update();
@@ -90,14 +128,20 @@ public class TowerHolder {
 					Tower8 newtemp = (Tower8) t;
 					newtemp.update();
 				}
-				
 
 			}
 		}
 
 	}
 
-	
+	/**
+	 * Function that return a boolean given a postion and if there is a tower there
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param int x, int y
+	 * @return boolean isThere
+	 * @throws n/a
+	 */
 	public static boolean isThereATower(int x, int y) {
 		boolean isThere = false;
 		String newKey = x + "," + y;
@@ -106,7 +150,15 @@ public class TowerHolder {
 		}
 		return isThere;
 	}
-	
+
+	/**
+	 * Function that gets a Tower at a given postion
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param int x, int y
+	 * @return Tower temp
+	 * @throws n/a
+	 */
 	public static Tower getTower(int x, int y) {
 		Tower temp = null;
 		String newKey = x + "," + y;
@@ -117,7 +169,15 @@ public class TowerHolder {
 
 		return temp;
 	}
-	
+
+	/**
+	 * Removes a tower at a given postion
+	 * 
+	 * @author Ivan, Marisa, Laura, Albert
+	 * @param int x, int y
+	 * @return Tower temp
+	 * @throws n/a
+	 */
 	public static Tower removeTower(int x, int y) {
 		Tower temp = null;
 		String newKey = x + "," + y;
@@ -130,4 +190,3 @@ public class TowerHolder {
 		return temp;
 	}
 }
-
