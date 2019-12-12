@@ -24,7 +24,7 @@ public enum TileType {
 	 * @author Ivan, Marisa, Laura, Albert
 	 * @param String imgName, boolean canPlace
 	 * @return n/a
-	 * @throws n/a
+	 * @throws n/a 
 	 */
 	TileType(String imgName, boolean canPlace) {
 		this.img = ResourceManager.QuickLoad(imgName);
