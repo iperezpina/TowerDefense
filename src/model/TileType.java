@@ -27,7 +27,6 @@ public enum TileType {
 	 * @throws n/a
 	 */
 	TileType(String imgName, boolean canPlace) {
-		img = ResourceManager.QuickLoad(imgName);
 		this.canPlace = canPlace;
 	}
 

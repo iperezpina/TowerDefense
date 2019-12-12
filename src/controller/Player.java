@@ -99,7 +99,7 @@ public class Player {
 	 * @return n/a
 	 * @throws n/a
 	 */
-	private static void gameOver() {
+	public static void gameOver() {
 		if (health <= 0) {
 
 			tdv.gameOver();
