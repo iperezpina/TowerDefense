@@ -25,7 +25,7 @@ import view.TowerDefenseView;
 
 public class TowerDefenseTests {
 	
-	private TowerDefenseController tdc = new TowerDefenseController();
+	/*private TowerDefenseController tdc = new TowerDefenseController();
 	private RoundManager rm = new RoundManager(1, 1, null);
 	//private ResourceManager reM = new ResourceManager();
 	private Player pl = new Player();
@@ -41,14 +41,14 @@ public class TowerDefenseTests {
 		assertTrue(true);
 	}
 	
-	/*@Test
+	@Test
 	void testResourceManager() {
 		reM.QuickLoad("");
 		reM.getEnemyImg("");
 		reM.getProjectileImg("");
 		reM.getTowerImg("");
 		assertTrue(true);
-	}*/
+	}
 	@Test
 	void testPlayer() {
 		pl.getCoins();
@@ -59,14 +59,14 @@ public class TowerDefenseTests {
 		pl.increaseCoins(1);
 		//pl.decreaseCoins(1);
 		//pl.addCash(1);
-		/*pl.checkUpgradeTower1(new Tower(null, 1, 1, 1, 1));
+		pl.checkUpgradeTower1(new Tower(null, 1, 1, 1, 1));
 		pl.checkUpgradeTower2(new Tower(null, 1, 1, 1, 1));
 		pl.checkUpgradeTower3(new Tower(null, 1, 1, 1, 1));
 		pl.checkUpgradeTower4(new Tower(null, 1, 1, 1, 1));
 		pl.checkUpgradeTower5(new Tower(null, 1, 1, 1, 1));
 		pl.checkUpgradeTower6(new Tower(null, 1, 1, 1, 1));
 		pl.checkUpgradeTower7(new Tower(null, 1, 1, 1, 1));
-		pl.checkUpgradeTower8(new Tower(null, 1, 1, 1, 1));*/
+		pl.checkUpgradeTower8(new Tower(null, 1, 1, 1, 1));
 		//pl.takeDmg();
 		pl.gameOver();
 		//pl.updatePlayerGUI();
@@ -78,16 +78,16 @@ public class TowerDefenseTests {
 	@Test
 	void testDrawer() {
 		d.DrawCircle(1, 1, 1);
-		/*d.DrawImage(new Image("Images/enemy.png"), 1, 1, 1.0, 1.0);
+		d.DrawImage(new Image("Images/enemy.png"), 1, 1, 1.0, 1.0);
 		d.DrawImage2(new Image("Images/enemy.png"), 1, 1);
 		d.DrawImageDouble(new Image("Images/enemy.png"), 1.0, 1.0, 1.0, 1.0);
-		d.RotateImage(new Image("Images/enemy.png"), 1, 1, 1);*/
+		d.RotateImage(new Image("Images/enemy.png"), 1, 1, 1);
 		assertTrue(true);
 	}
 	
 	@Test
 	void testEnemy() {
-		/*Enemy e = new Enemy("Images/enemy.png", new Tile(0, 0, 0, 0, null), 0, 0, 0, 0, new TileMap());
+		Enemy e = new Enemy("Images/enemy.png", new Tile(0, 0, 0, 0, null), 0, 0, 0, 0, new TileMap());
 		e.slowEnemy();
 		e.poisonEnemy();
 		e.Draw();
@@ -105,7 +105,7 @@ public class TowerDefenseTests {
 		e.getWidth();
 		e.getX();
 		e.getY();
-		assertTrue(true);*/
+		assertTrue(true);
 	}
 	
 	@Test
@@ -221,17 +221,19 @@ public class TowerDefenseTests {
 	
 	@Test
 	void testArrow() {
-		/*Projective p = new Projectile(null, 0, 0, 0, null, 0, null);
+		//TODO comment
+		Projective p = new Projectile(null, 0, 0, 0, null, 0, null);
 		p.draw();
 		p.handleCol();
 		p.TowerDamage(null);
-		p.update();*/
+		p.update();
 		assertTrue(true);
 	}
 	
 	@Test
 	void testTower() {
-		/*Tower t = new Tower("", 0, 0, 0, 0);
+		//TODO comment
+		Tower t = new Tower("", 0, 0, 0, 0);
 		t.changeActive();
 		t.Draw();
 		t.getEnemiesDestroyed();
@@ -244,10 +246,10 @@ public class TowerDefenseTests {
 		t.getUpgradeCost();
 		t.getUpgradeLevel();
 		t.getX();
-		t.getY();*/
+		t.getY();
 		
 		assertTrue(true);
-	}
+	}*/
 	
 	
 	
